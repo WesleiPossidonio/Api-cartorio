@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
     "debug": "nodemon --inspect",
+    "prestart": "chmod +x src/server.js",
     "start": "src/server.js"
   },
   "keywords": [],
