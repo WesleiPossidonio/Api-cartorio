@@ -1,15 +1,13 @@
 {
   "name": "api-cartorio-oficial",
   "version": "1.0.0",
-  "type": "module",
   "description": "",
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
-    "debug": "nodemon --inspect",
-    "prestart": "chmod +x src/server.js",
-    "start": "node src/server.js"
+    "start": "src/server.js",
+    "debug": "nodemon --inspect"
   },
   "keywords": [],
   "author": "",
