@@ -10,6 +10,7 @@ class UserController {
       email: Yup.string().email().required(),
       password: Yup.string().required().min(6),
       admin: Yup.boolean(),
+      registration: Yup.string().required(),
     })
 
     try {
@@ -18,7 +19,7 @@ class UserController {
       return response.status(400).json({ error: err.errors })
     }
 
-    const { name, email, password, admin } = request.body
+    const { name, email, password, admin, registration } = request.body
 
     const userExists = await User.findOne({
       where: { email },
@@ -28,15 +29,16 @@ class UserController {
       return response.status(409).json({ error: 'User already exists' })
     }
 
-    const user = await User.create({
+    await User.create({
       id: v4(),
       name,
       email,
       password,
       admin,
+      registration,
     })
 
-    return response.status(201).json({ id: user.id, name, email, admin })
+    return response.status(201).json()
   }
 
   async update(request, response) {

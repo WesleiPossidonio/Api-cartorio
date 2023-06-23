@@ -6,6 +6,7 @@ class Requeriment extends Model {
       {
         numero_do_protocolo: Sequelize.STRING,
         nome_da_instituicao: Sequelize.STRING,
+        estado_do_requerimento: Sequelize.STRING,
         cnpj: Sequelize.STRING,
         nome_do_representante: Sequelize.STRING,
         email_do_representante: Sequelize.STRING,

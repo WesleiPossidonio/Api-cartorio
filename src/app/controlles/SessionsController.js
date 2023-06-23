@@ -26,9 +26,13 @@ class SessionController {
       where: { email },
     })
 
-    users || emailOrPasswordIncorrect()
+    if (!users) {
+      return emailOrPasswordIncorrect()
+    }
 
-    !(await users.checkPassword(password)) && emailOrPasswordIncorrect()
+    if (!(await users.checkPassword(password))) {
+      return emailOrPasswordIncorrect()
+    }
 
     return response.json({
       id: users.id,

@@ -7,9 +7,10 @@ class RequerimentController {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
       numero_do_protocolo: Yup.string().required(),
+      estado_do_requerimento: Yup.string().required(),
       cnpj: Yup.string().required(),
       nome_do_representante: Yup.string().required(),
-      email_do_representante: Yup.string().email().required(),
+      email_do_representante: Yup.string().email(),
       telefone_contato: Yup.string().required(),
       declaracao_sindical: Yup.string().required(),
       lista_e_edital: Yup.string().required(),
@@ -40,6 +41,7 @@ class RequerimentController {
     const {
       nome_da_instituicao,
       numero_do_protocolo,
+      estado_do_requerimento,
       cnpj,
       nome_do_representante,
       email_do_representante,
@@ -73,7 +75,7 @@ class RequerimentController {
     })
 
     const dataRequerimentInstitutionName = await Requeriment.findOne({
-      where: { numero_do_protocolo },
+      where: { nome_da_instituicao },
     })
 
     const oneOfDateVerification =
@@ -95,6 +97,7 @@ class RequerimentController {
     const requeriment = await Requeriment.create({
       nome_da_instituicao,
       numero_do_protocolo,
+      estado_do_requerimento,
       cnpj,
       nome_do_representante,
       email_do_representante,
@@ -123,6 +126,7 @@ class RequerimentController {
       id: requeriment.id,
       nome_da_instituicao,
       numero_do_protocolo,
+      estado_do_requerimento,
       cnpj,
       nome_do_representante,
       email_do_representante,
@@ -162,6 +166,7 @@ class RequerimentController {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string(),
       numero_do_protocolo: Yup.string(),
+      estado_do_requerimento: Yup.string().required(),
       cnpj: Yup.string(),
       nome_do_representante: Yup.string(),
       email_do_representante: Yup.string().email(),
@@ -205,6 +210,7 @@ class RequerimentController {
     const {
       nome_da_instituicao,
       numero_do_protocolo,
+      estado_do_requerimento,
       cnpj,
       nome_do_representante,
       email_do_representante,
@@ -233,6 +239,7 @@ class RequerimentController {
       {
         nome_da_instituicao,
         numero_do_protocolo,
+        estado_do_requerimento,
         cnpj,
         nome_do_representante,
         email_do_representante,

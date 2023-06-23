@@ -13,6 +13,10 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      estado_do_requerimento: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       nome_da_instituicao: {
         type: Sequelize.STRING,
         allowNull: false,

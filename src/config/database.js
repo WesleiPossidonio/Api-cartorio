@@ -1,9 +1,9 @@
 module.exports = {
   dialect: 'postgres',
-  host: "db-cartorio.cwzrut96eev3.us-east-2.rds.amazonaws.com",
-  username: 'db_cartorio',
+  host: 'apicartorio.cwzrut96eev3.us-east-2.rds.amazonaws.com',
+  username: 'apicartorio',
   password: 'cartorio123',
-  database: 'db_cartorio',
+  database: 'api_cartorio',
   define: {
     timespamps: true,
     underscored: true,
