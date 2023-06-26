@@ -37,7 +37,6 @@ export const sendMail = async (request, response) => {
     cnpj,
     nome_do_representante,
     email_do_representante,
-    itens_da_lista_concluidos,
     itens_da_lista_pendetes,
   } = request.body
 
@@ -47,7 +46,6 @@ export const sendMail = async (request, response) => {
     cnpj,
     nome_do_representante,
     email_do_representante,
-    itens_da_lista_concluidos,
     itens_da_lista_pendetes,
     process.env.PASSWORD_EMAIL
   )
@@ -84,168 +82,54 @@ export const sendMail = async (request, response) => {
             <mj-text>
                 <h2 margin-botton="1rem" class="Title-list">Lista de Exigência</h2>
                 <h3>Lista de Exigências Concluídas:</h3>
-                <ul>
-    ${
-      itens_da_lista_concluidos.lista_e_edital &&
-      `<li margin-bottom="10px">Apresentou lista de presença e edital; (CNCGJ Art. 951)</li>`
-    }
-    ${
-      itens_da_lista_concluidos.listCompletedFiltered &&
-      `<li margin-bottom="10px">Apresentou declaração emitida pelo Ministério do Trabalho referente a unicidade sindical e da base territorial; (CNCGJ Art. 935 § 4º)</li>`
-    }
-    ${
-      itens_da_lista_concluidos.assinatura_do_advogado &&
-      `<li margin-bottom="10px">Colheu assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)</li>`
-    }
-    ${
-      itens_da_lista_concluidos.declaracao_de_desimpedimento &&
-      `<li margin-bottom="10px">Colheu assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)</li>`
-    }
-    ${
-      itens_da_lista_concluidos.livro_rasao &&
-      `<li margin-bottom="10px">Apresentou livro razão ou contábil anteriormente registrado; (CNCGJ Art. 960 § 1º)</li>`
-    }
-    ${
-      itens_da_lista_concluidos.ppe &&
-      `<li margin-bottom="10px">Apresentou declaração de pessoa politicamente exposta (PPE)</li>`
-    }
-    ${
-      itens_da_lista_concluidos.dissolucao_ou_exticao &&
-      `<li margin-bottom="10px">No caso de dissolução ou extinção deverá conter no documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)</li>`
-    }
-    ${
-      itens_da_lista_pendetes.reconhecimento_de_firma &&
-      `<li margin-bottom="10px">No caso de dissolução ou extinção deverá conter no documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)</li>`
-    }
-    ${
-      itens_da_lista_pendetes.preechimento_completo &&
-      `<li margin-bottom="10px">Preencheu todos os campos do formulário/requerimento</li>`
-    }
-    ${
-      itens_da_lista_pendetes.oab &&
-      `<li margin-bottom="10px">Apresentou cópia da OAB do representante jurídico do ato apresentado</li>`
-    }
-    ${
-      itens_da_lista_pendetes.documentacao_de_identificacao &&
-      `<li margin-bottom="10px">Apresentou cópia simples do documento de identificação de</li>`
-    }
-  </ul>
+                
+               ${
+                 itens_da_lista_pendetes.lista_e_edital
+                   ? `<p margin-bottom="10px">Apresentou lista de presença e edital; (CNCGJ Art. 951)</p>`
+                   : null
+               }
+               ${
+                 itens_da_lista_pendetes.listCompletedFiltered
+                   ? `<p margin-bottom="10px">Apresentou declaração emitida pelo Ministério do Trabalho referente a unicidade sindical e da base territorial; (CNCGJ Art. 935 § 4º)</p>`
+                   : null
+               }
+               ${
+                 itens_da_lista_pendetes.assinatura_do_advogado
+                   ? `<p margin-bottom="10px">Colheu assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)</p>`
+                   : null
+               }
+               ${
+                 itens_da_lista_pendetes.declaracao_de_desimpedimento
+                   ? `<p margin-bottom="10px">Colheu assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)</p>`
+                   : null
+               }
+               ${
+                 itens_da_lista_pendetes.livro_rasao
+                   ? `<p margin-bottom="10px">Apresentou livro razão ou contábil anteriormente registrado; (CNCGJ Art. 960 § 1º)</p>`
+                   : null
+               }
+               ${
+                 itens_da_lista_pendetes.ppe
+                   ? `<p margin-bottom="10px">Apresentou declaração de pessoa politicamente exposta (PPE)</p>`
+                   : null
+               }
+               ${
+                 itens_da_lista_pendetes.dissolucao_ou_exticao
+                   ? `<p margin-bottom="10px">No caso de dissolução ou extinção deverá conter no documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)</p>`
+                   : null
+               }
+               ${
+                 itens_da_lista_pendetes.reconhecimento_de_firma
+                   ? `<p margin-bottom="10px">No caso de dissolução ou extinção deverá conter no documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)</p>`
+                   : null
+               }
+               ${
+                 itens_da_lista_pendetes.preechimento_completo
+                   ? `<p margin-bottom="10px">Preencheu todos os campos do formulário/requerimento</p>`
+                   : null
+               }
             </mj-text>
 
-            <mj-text>
-                <h3>Lista de Exigências Pendentes:</h3>
-                <ul>
-                ${
-                  itens_da_lista_pendetes.lista_e_edital &&
-                  `
-                    <li margin-bottom="10px">
-                      Apresentar lista de presença e edital; (CNCGJ Art. 951)
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_pendetes.listCompletedFiltered &&
-                  `
-                    <li margin-bottom="10px">
-                      Apresentar declaração emitida pelo Ministério do Trabalho
-                      referente a unicidade sindical e da base territorial;
-                      (CNCGJ Art. 935 § 4º)
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_pendetes.assinatura_do_advogado &&
-                  `
-                    <li margin-bottom="10px">
-                      Colher assinatura do advogado no ato apresentado para
-                      registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_pendetes.declaracao_de_desimpedimento &&
-                  `
-                    <li margin-bottom="10px">
-                      Colher assinatura do advogado no ato apresentado para
-                      registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_pendetes.livro_rasao &&
-                  `
-                    <li margin-bottom="10px">
-                      Apresentar livro razão ou contábil anteriormente
-                      registrado; (CNCGJ Art. 960 § 1º)
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_pendetes.ppe &&
-                  `
-                    <li margin-bottom="10px">
-                      Apresentar declaração de pessoa politicamente exposta
-                      (PPE)
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_pendetes.dissolucao_ou_exticao &&
-                  `
-                    <li margin-bottom="10px">
-                      No caso de dissolução ou extinção deverá conter no
-                      documento: (liquidação, divisão de cotas de sócios,
-                      inexistência de ativo e passivo, guarda dos livros etc.)
-                      (CNCGJ Art. 953)
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_concluidos.reconhecimento_de_firma &&
-                  `
-                    <li margin-bottom="10px">
-                      Apresentar reconhecimento de firme no requerimento do DBE
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_concluidos.reconhecimento_de_firma &&
-                  `
-                    <li margin-bottom="10px">
-                      No caso de dissolução ou extinção deverá conter no
-                      documento: (liquidação, divisão de cotas de sócios,
-                      inexistência de ativo e passivo, guarda dos livros etc.)
-                      (CNCGJ Art. 953)
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_concluidos.preechimento_completo &&
-                  `
-                    <li margin-bottom="10px">
-                      Preencher todos os campos do formulário/requerimento
-                    </li>
-                  `
-                }
-                ${
-                  itens_da_lista_concluidos.oab &&
-                  `
-                    <li margin-bottom="10px">
-                      Apresentar cópia da OAB do representante jurídico do ato
-                      apresentado
-                    </li>
-                  `
-                }  
-                ${
-                  itens_da_lista_concluidos.documentacao_de_identificacao &&
-                  `
-                    <li margin-bottom="10px">
-                      Apresentar cópia simples do documento de identificação de
-                    </li>
-                    `
-                }
-                </ul>
-            </mj-text>
             <mj-text>
                  <h4><strong>Funcionário responsável pela análise:</strong> CARLA DE ALMEIDA Matricula: 00/000</h4>
             </mj-text>
@@ -264,7 +148,7 @@ export const sendMail = async (request, response) => {
             <mj-text color="#000">
                 <h3 color="#000">Duvidas? Entre em contato conosco no Whatsapp!</h3>
             </mj-text>
-            <mj-button background-color="#25D366" href="#" paddimg="20px"> Enviar Menssagem </mj-button>
+            <mj-button background-color="#25D366" href="https://wa.me/5522999796222" paddimg="20px"> Enviar Menssagem </mj-button>
 
         </mj-column>
     </mj-section>
@@ -317,7 +201,6 @@ export const sendMail = async (request, response) => {
     cnpj,
     nome_do_representante,
     email_do_representante,
-    itens_da_lista_concluidos,
     itens_da_lista_pendetes,
   })
 }
