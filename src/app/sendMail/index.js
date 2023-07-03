@@ -21,7 +21,6 @@ export const sendMail = async (request, response) => {
     cnpj: Yup.string().required(),
     nome_do_representante: Yup.string().required(),
     email_do_representante: Yup.string().email(),
-    itens_da_lista_concluidos: Yup.object().required(),
     itens_da_lista_pendetes: Yup.object().required(),
   })
 
