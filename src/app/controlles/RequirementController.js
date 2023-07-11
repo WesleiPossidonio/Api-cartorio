@@ -30,6 +30,9 @@ class RequerimentController {
       retificacao_de_redacao: Yup.string(),
       informacao_divergente: Yup.string(),
       quais_informacoes_divergentes: Yup.string(),
+      requisitos_criacao_de_estatuto: Yup.string(),
+      requisitos_de_estatutos_fundadores: Yup.string(),
+      Data_da_Recepcao: Yup.string(),
     })
 
     try {
@@ -64,6 +67,9 @@ class RequerimentController {
       retificacao_de_redacao,
       informacao_divergente,
       quais_informacoes_divergentes,
+      Data_da_Recepcao,
+      requisitos_de_estatutos_fundadores,
+      requisitos_criacao_de_estatuto,
     } = request.body
 
     const dataRequerimentProtocolNumber = await Requeriment.findOne({
@@ -120,6 +126,9 @@ class RequerimentController {
       retificacao_de_redacao,
       informacao_divergente,
       quais_informacoes_divergentes,
+      Data_da_Recepcao,
+      requisitos_de_estatutos_fundadores,
+      requisitos_criacao_de_estatuto,
     })
 
     return response.status(201).json({
@@ -149,6 +158,9 @@ class RequerimentController {
       retificacao_de_redacao,
       informacao_divergente,
       quais_informacoes_divergentes,
+      Data_da_Recepcao,
+      requisitos_de_estatutos_fundadores,
+      requisitos_criacao_de_estatuto,
     })
   }
 
@@ -189,6 +201,10 @@ class RequerimentController {
       retificacao_de_redacao: Yup.string(),
       informacao_divergente: Yup.string(),
       quais_informacoes_divergentes: Yup.string(),
+      requisitos_criacao_de_estatuto: Yup.string(),
+      requisitos_de_estatutos_fundadores: Yup.string(),
+      Data_da_Recepcao: Yup.string(),
+      Data_da_Atualizacao: Yup.string(),
     })
 
     try {
@@ -233,6 +249,10 @@ class RequerimentController {
       retificacao_de_redacao,
       informacao_divergente,
       quais_informacoes_divergentes,
+      Data_da_Recepcao,
+      requisitos_de_estatutos_fundadores,
+      requisitos_criacao_de_estatuto,
+      Data_da_Atualizacao,
     } = request.body
 
     await Requeriment.update(
@@ -262,6 +282,10 @@ class RequerimentController {
         retificacao_de_redacao,
         informacao_divergente,
         quais_informacoes_divergentes,
+        Data_da_Recepcao,
+        requisitos_de_estatutos_fundadores,
+        requisitos_criacao_de_estatuto,
+        Data_da_Atualizacao,
       },
       { where: { id } }
     )

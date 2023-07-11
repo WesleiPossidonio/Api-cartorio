@@ -71,11 +71,19 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      requisitos_criacao_de_estatuto: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       dissolucao_ou_exticao: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       fundacoes: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      requisitos_de_estatutos_fundadores: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -108,6 +116,14 @@ module.exports = {
         allowNull: false,
       },
       quais_informacoes_divergentes: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      Data_da_Recepcao: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      Data_da_Atualizacao: {
         type: Sequelize.STRING,
         allowNull: true,
       },

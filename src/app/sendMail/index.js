@@ -22,6 +22,8 @@ export const sendMail = async (request, response) => {
     nome_do_representante: Yup.string().required(),
     email_do_representante: Yup.string().email(),
     itens_da_lista_pendetes: Yup.object().required(),
+    Data_da_Recepcao: Yup.string().required(),
+    telefone_contato: Yup.string().required(),
   })
 
   try {
@@ -37,17 +39,9 @@ export const sendMail = async (request, response) => {
     nome_do_representante,
     email_do_representante,
     itens_da_lista_pendetes,
+    Data_da_Recepcao,
+    telefone_contato,
   } = request.body
-
-  console.log(
-    nome_da_instituicao,
-    numero_do_protocolo,
-    cnpj,
-    nome_do_representante,
-    email_do_representante,
-    itens_da_lista_pendetes,
-    process.env.PASSWORD_EMAIL
-  )
 
   const mjmlCode = `
   <mjml version="3.3.3">
@@ -67,11 +61,18 @@ export const sendMail = async (request, response) => {
             <mj-text color="#000">
                 <h2 class="Title-list">Dados Da Empresa</h2>
                 <h3>Nº do Exame: ${numero_do_protocolo}</h3>
+                <4>Data da Recepção: ${Data_da_Recepcao}</4>
                 <p color="#000"><strong>Nome da Instituição:</strong> ${nome_da_instituicao}</p>
                 <p color="#000"><strong>Cnpj:</strong> ${cnpj}</p>
                 <p color="#000"><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
                 <p color="#000"><strong>E-mail: </strong> ${email_do_representante}</p>
-                <p color="#000"><strong>Telefone de contato: </strong> 22 999.99-99.99</p>
+                <p color="#000"><strong>Contato do Solicitante: </strong> ${telefone_contato}</p>
+                
+                
+                
+                
+                
+                <p color="#000"><strong>Telefone de contato: </strong> {</p>
             </mj-text>
         </mj-column>
     </mj-section>
@@ -80,53 +81,82 @@ export const sendMail = async (request, response) => {
       <mj-column>
             <mj-text>
                 <h2 margin-botton="1rem" class="Title-list">Lista de Exigência</h2>
-                <h3>Lista de Exigências Concluídas:</h3>
+                <h3>Lista de Exigências Pendentes:</h3>
                 
                ${
-                 itens_da_lista_pendetes.lista_e_edital
-                   ? `<p margin-bottom="10px">Apresentou lista de presença e edital; (CNCGJ Art. 951)</p>`
-                   : null
+                 itens_da_lista_pendetes.lista_e_edital &&
+                 `<p margin-bottom="10px">Apresentar lista de presença e edital; (CNCGJ Art. 951)</p>`
                }
                ${
-                 itens_da_lista_pendetes.listCompletedFiltered
-                   ? `<p margin-bottom="10px">Apresentou declaração emitida pelo Ministério do Trabalho referente a unicidade sindical e da base territorial; (CNCGJ Art. 935 § 4º)</p>`
-                   : null
+                 itens_da_lista_pendetes.declaracao_sindical &&
+                 `<p margin-bottom="10px">Apresentar declaração emitida pelo Ministério do Trabalho
+                 referente a unicidade sindical e da base territorial; (CNCGJ Art. 935 § 4º)</p>`
                }
                ${
-                 itens_da_lista_pendetes.assinatura_do_advogado
-                   ? `<p margin-bottom="10px">Colheu assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)</p>`
-                   : null
+                 itens_da_lista_pendetes.assinatura_do_advogado &&
+                 `<p margin-bottom="10px">Colheu assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)</p>`
                }
                ${
-                 itens_da_lista_pendetes.declaracao_de_desimpedimento
-                   ? `<p margin-bottom="10px">Colheu assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)</p>`
-                   : null
+                 itens_da_lista_pendetes.declaracao_criminal &&
+                 `<p margin-bottom="10px">Apresentar declaração de desimpedimento e/ou certidão
+                 criminal; (CNCGJ Art. 932 § 1º)  </p>`
                }
                ${
-                 itens_da_lista_pendetes.livro_rasao
-                   ? `<p margin-bottom="10px">Apresentou livro razão ou contábil anteriormente registrado; (CNCGJ Art. 960 § 1º)</p>`
-                   : null
+                 itens_da_lista_pendetes.requisitos_estatuto &&
+                 `<p margin-bottom="10px"> Apresentar cópia do estatuto registrado no Distrito Federal (Obs:para diretórios de partidos políticos); (CNCGJ Art.
+                  945)</p>`
                }
                ${
-                 itens_da_lista_pendetes.ppe
-                   ? `<p margin-bottom="10px">Apresentou declaração de pessoa politicamente exposta (PPE)</p>`
-                   : null
+                 itens_da_lista_pendetes.declaracao_de_desimpedimento &&
+                 `<p margin-bottom="10px"> Apresentar declaração de  (contratos e averbações de sociedade simples, ME, EPP);
+                 (CNCGJ Art. 938)</p>`
                }
                ${
-                 itens_da_lista_pendetes.dissolucao_ou_exticao
-                   ? `<p margin-bottom="10px">No caso de dissolução ou extinção deverá conter no documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)</p>`
-                   : null
+                 itens_da_lista_pendetes.dissolucao_ou_exticao &&
+                 `<p margin-bottom="10px">No caso de dissolução ou extinção deverá conter no documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)</p>`
                }
                ${
-                 itens_da_lista_pendetes.reconhecimento_de_firma
-                   ? `<p margin-bottom="10px">No caso de dissolução ou extinção deverá conter no documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)</p>`
-                   : null
+                 itens_da_lista_pendetes.requisitos_criacao_de_estatuto &&
+                 `<p margin-bottom="10px">Apresentar os requisitos obrigatórios no Estatuto: relação de
+                 documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120 / Lei 10.406 Art.
+                 46)</p>`
                }
                ${
-                 itens_da_lista_pendetes.preechimento_completo
-                   ? `<p margin-bottom="10px">Preencheu todos os campos do formulário/requerimento</p>`
-                   : null
+                 itens_da_lista_pendetes.requisitos_de_estatutos_fundadores &&
+                 `<p margin-bottom="10px"> Apresentar os requisitos obrigatórios no Estatuto: relação de
+                 documentos de fundadores;</p>`
                }
+               ${
+                 itens_da_lista_pendetes.ppe &&
+                 `<p margin-bottom="10px">Apresentar declaração de pessoa politicamente exposta (PPE)</p>`
+               }
+              ${
+                itens_da_lista_pendetes.dissolucao_ou_exticao &&
+                `<p margin-bottom="10px">No caso de dissolução ou extinção apresentar o documento:</p>`
+              }
+              ${
+                itens_da_lista_pendetes.fundacoes &&
+                `<p margin-bottom="10px">Nos atos referentes a fundações, exigir-se-á aprovação prévia
+                do Ministério Público; (CNCGJ Art. 941)</p>`
+              }
+              ${
+                itens_da_lista_pendetes.reconhecimento_de_firma &&
+                `<p margin-bottom="10px">Apresentar reconhecimento de firme no requerimento do DBE</p>`
+              }
+              ${
+                itens_da_lista_pendetes.preechimento_completo &&
+                `<p margin-bottom="10px">Preencher todos os campos do
+                formulário/requerimento</p>`
+              }
+              ${
+                itens_da_lista_pendetes.oab &&
+                `<p margin-bottom="10px">Apresentar cópia da OAB do representante jurídico do ato
+                apresentado</p>`
+              }
+              ${
+                itens_da_lista_pendetes.documentacao_de_identificacao &&
+                `<p margin-bottom="10px">Apresentar cópia simples do documento de identificação</p>`
+              }
             </mj-text>
 
             <mj-text>
