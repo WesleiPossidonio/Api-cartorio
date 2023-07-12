@@ -67,11 +67,6 @@ export const sendMail = async (request, response) => {
                 <p color="#000"><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
                 <p color="#000"><strong>E-mail: </strong> ${email_do_representante}</p>
                 <p color="#000"><strong>Contato do Solicitante: </strong> ${telefone_contato}</p>
-                
-                
-                
-                
-                
                 <p color="#000"><strong>Telefone de contato: </strong> {</p>
             </mj-text>
         </mj-column>

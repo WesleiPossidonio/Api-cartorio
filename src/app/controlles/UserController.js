@@ -43,7 +43,6 @@ class UserController {
 
   async update(request, response) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
       password: Yup.string().required().min(6),
     })
 
@@ -53,14 +52,8 @@ class UserController {
       return response.status(400).json({ error: err.errors })
     }
 
-    const { admin: isAdmin } = await User.findByPk(request.userId)
-
-    if (!isAdmin) {
-      return response.status(401).json()
-    }
-
     const { id } = request.params
-    const { name, password } = request.body
+    const { password } = request.body
 
     const userExists = await User.findOne({
       where: { id },
@@ -70,7 +63,7 @@ class UserController {
       return response.status(400).json({ error: 'User not found' })
     }
 
-    await User.update({ name, password }, { where: { id } })
+    await User.update({ password }, { where: { id } })
 
     return response.status(200).json()
   }
