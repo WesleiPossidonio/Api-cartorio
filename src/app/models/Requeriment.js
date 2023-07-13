@@ -31,8 +31,8 @@ class Requeriment extends Model {
         quais_informacoes_divergentes: Sequelize.STRING,
         requisitos_criacao_de_estatuto: Sequelize.STRING,
         requisitos_de_estatutos_fundadores: Sequelize.STRING,
-        Data_da_Recepcao: Sequelize.STRING,
-        Data_da_Atualizacao: Sequelize.STRING,
+        data_da_recepcao: Sequelize.STRING,
+        data_atualizacao: Sequelize.STRING,
       },
       {
         sequelize,

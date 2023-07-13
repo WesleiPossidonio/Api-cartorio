@@ -8,6 +8,10 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
+      data_da_recepcao: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       numero_do_protocolo: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -115,15 +119,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      data_atualizacao: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       quais_informacoes_divergentes: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      Data_da_Recepcao: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      Data_da_Atualizacao: {
         type: Sequelize.STRING,
         allowNull: true,
       },

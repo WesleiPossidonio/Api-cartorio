@@ -32,7 +32,7 @@ class RequerimentController {
       quais_informacoes_divergentes: Yup.string(),
       requisitos_criacao_de_estatuto: Yup.string(),
       requisitos_de_estatutos_fundadores: Yup.string(),
-      Data_da_Recepcao: Yup.string(),
+      data_da_recepcao: Yup.string(),
     })
 
     try {
@@ -67,7 +67,7 @@ class RequerimentController {
       retificacao_de_redacao,
       informacao_divergente,
       quais_informacoes_divergentes,
-      Data_da_Recepcao,
+      data_da_recepcao,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
     } = request.body
@@ -126,7 +126,7 @@ class RequerimentController {
       retificacao_de_redacao,
       informacao_divergente,
       quais_informacoes_divergentes,
-      Data_da_Recepcao,
+      data_da_recepcao,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
     })
@@ -158,7 +158,7 @@ class RequerimentController {
       retificacao_de_redacao,
       informacao_divergente,
       quais_informacoes_divergentes,
-      Data_da_Recepcao,
+      data_da_recepcao,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
     })
@@ -203,8 +203,8 @@ class RequerimentController {
       quais_informacoes_divergentes: Yup.string(),
       requisitos_criacao_de_estatuto: Yup.string(),
       requisitos_de_estatutos_fundadores: Yup.string(),
-      Data_da_Recepcao: Yup.string(),
-      Data_da_Atualizacao: Yup.string(),
+      data_da_recepcao: Yup.string(),
+      data_atualizacao: Yup.string(),
     })
 
     try {
@@ -249,10 +249,10 @@ class RequerimentController {
       retificacao_de_redacao,
       informacao_divergente,
       quais_informacoes_divergentes,
-      Data_da_Recepcao,
+      data_da_recepcao,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
-      Data_da_Atualizacao,
+      data_atualizacao,
     } = request.body
 
     await Requeriment.update(
@@ -282,10 +282,10 @@ class RequerimentController {
         retificacao_de_redacao,
         informacao_divergente,
         quais_informacoes_divergentes,
-        Data_da_Recepcao,
+        data_da_recepcao,
         requisitos_de_estatutos_fundadores,
         requisitos_criacao_de_estatuto,
-        Data_da_Atualizacao,
+        data_atualizacao,
       },
       { where: { id } }
     )
