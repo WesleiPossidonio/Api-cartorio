@@ -3,8 +3,9 @@ import User from '../app/models/User'
 
 import configDataBase from '../config/database'
 import Requeriment from '../app/models/Requeriment'
+import RequerimentNotListed from '../app/models/RequerimentNotListed'
 
-const models = [User, Requeriment]
+const models = [User, Requeriment, RequerimentNotListed]
 
 class Database {
   constructor() {
@@ -13,7 +14,11 @@ class Database {
 
   init() {
     this.connection = new Sequelize(configDataBase)
-    models.map((model) => model.init(this.connection))
+    models
+      .map((model) => model.init(this.connection))
+      .map(
+        (model) => model.associate && model.associate(this.connection.models)
+      )
   }
 }
 

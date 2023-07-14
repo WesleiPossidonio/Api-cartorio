@@ -40,6 +40,13 @@ class Requeriment extends Model {
     )
     return this
   }
+
+  static associate(models) {
+    this.hasOne(models.RequerimentNotListed, {
+      foreignKey: 'exigencias_nao_listadas_id',
+      as: 'exigencias_nao_listadas',
+    })
+  }
 }
 
 export default Requeriment

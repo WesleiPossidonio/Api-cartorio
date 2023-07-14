@@ -8,6 +8,17 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
+      existe_exigencias_nao_listadas: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      exigencias_nao_listadas_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'requirements_not_listed', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+        allowNull: true,
+      },
       data_da_recepcao: {
         type: Sequelize.STRING,
         allowNull: true,

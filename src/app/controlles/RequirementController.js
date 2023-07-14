@@ -1,6 +1,7 @@
 import * as Yup from 'yup'
 
 import Requeriment from '../models/Requeriment'
+import RequerimentNotListed from '../models/RequerimentNotListed'
 
 class RequerimentController {
   async store(request, response) {
@@ -166,7 +167,28 @@ class RequerimentController {
 
   async index(request, response) {
     try {
-      const requirements = await Requeriment.findAll()
+      const requirements = await Requeriment.findAll({
+        include: [
+          {
+            Model: RequerimentNotListed,
+            as: 'lista_nao_selecionada',
+            attributes: [
+              'id',
+              'primeira_exigencia',
+              'estado_da_primeira_exigencia',
+              'segunda_exigencia',
+              'estado_da_segunda_exigencia',
+              'terceira_exigencia',
+              'estado_da_terceira_exigencia',
+              'quarta_exigencia',
+              'estado_da_quarta_exigencia',
+              'quinta_exigencia',
+              'estado_da_quinta_exigencia',
+            ],
+          },
+        ],
+      })
+
       response.status(200).json(requirements)
     } catch (error) {
       console.log(error)

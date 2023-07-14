@@ -2,6 +2,7 @@ import { Router } from 'express'
 
 import UserController from './app/controlles/UserController'
 import SessionsController from './app/controlles/SessionsController'
+import RequerimentNotListedController from './app/controlles/RequerimentNotListController'
 
 import authMiddlewares from './app/meddlewares/auth'
 import RequirementController from './app/controlles/RequirementController'
@@ -19,6 +20,7 @@ routes.put('/users/:id', UserController.update)
 
 routes.post('/requerimentData', RequirementController.store)
 routes.get('/requeriment', RequirementController.index)
+routes.get('/requerimentNotListed', RequerimentNotListedController.index)
 routes.put('/requeriment/:id', RequirementController.update)
 routes.patch('/updatePassword/:id', UserController.update)
 
