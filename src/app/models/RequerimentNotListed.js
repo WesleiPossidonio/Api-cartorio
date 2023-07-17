@@ -1,12 +1,13 @@
 import Sequelize, { Model } from 'sequelize'
 
-class RequerimentNotListed extends Model {
+class NotListedRequeriment extends Model {
   static init(sequelize) {
     super.init(
       {
         primeira_exigencia: Sequelize.STRING,
         estado_da_primeira_exigencia: Sequelize.STRING,
         segunda_exigencia: Sequelize.STRING,
+        estado_da_segunda_exigencia: Sequelize.STRING,
         terceira_exigencia: Sequelize.STRING,
         estado_da_terceira_exigencia: Sequelize.STRING,
         quarta_exigencia: Sequelize.STRING,
@@ -20,13 +21,6 @@ class RequerimentNotListed extends Model {
     )
     return this
   }
-
-  static associate(models) {
-    this.belongsTo(models.Requeriment, {
-      foreignKey: 'exigencias_nao_listadas_id',
-      as: 'exigencias_nao_listadas',
-    })
-  }
 }
 
-export default RequerimentNotListed
+export default NotListedRequeriment

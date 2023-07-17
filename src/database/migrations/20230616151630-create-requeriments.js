@@ -1,4 +1,5 @@
 'use strict'
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('requeriments', {
@@ -8,16 +9,16 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      existe_exigencias_nao_listadas: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       exigencias_nao_listadas_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'requirements_not_listed', key: 'id' },
+        references: { model: 'listed_requirements', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
         allowNull: true,
+      },
+      existe_exigencias_nao_listadas: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       data_da_recepcao: {
         type: Sequelize.STRING,

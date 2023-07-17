@@ -33,6 +33,7 @@ class Requeriment extends Model {
         requisitos_de_estatutos_fundadores: Sequelize.STRING,
         data_da_recepcao: Sequelize.STRING,
         data_atualizacao: Sequelize.STRING,
+        existe_exigencias_nao_listadas: Sequelize.STRING,
       },
       {
         sequelize,
@@ -42,7 +43,7 @@ class Requeriment extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.RequerimentNotListed, {
+    this.belongsTo(models.NotListedRequeriment, {
       foreignKey: 'exigencias_nao_listadas_id',
       as: 'exigencias_nao_listadas',
     })

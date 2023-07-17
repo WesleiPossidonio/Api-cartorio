@@ -20,7 +20,7 @@ routes.put('/users/:id', UserController.update)
 
 routes.post('/requerimentData', RequirementController.store)
 routes.get('/requeriment', RequirementController.index)
-routes.get('/requerimentNotListed', RequerimentNotListedController.store)
+routes.post('/requerimentNotListed', RequerimentNotListedController.store)
 routes.put('/requeriment/:id', RequirementController.update)
 routes.patch('/updatePassword/:id', UserController.update)
 

@@ -3,9 +3,10 @@ import User from '../app/models/User'
 
 import configDataBase from '../config/database'
 import Requeriment from '../app/models/Requeriment'
-import RequerimentNotListed from '../app/models/RequerimentNotListed'
 
-const models = [User, Requeriment, RequerimentNotListed]
+import NotListedRequeriment from '../app/models/RequerimentNotListed'
+
+const models = [User, Requeriment, NotListedRequeriment]
 
 class Database {
   constructor() {

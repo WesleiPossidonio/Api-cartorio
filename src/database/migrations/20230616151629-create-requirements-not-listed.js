@@ -1,9 +1,6 @@
-'use strict'
-
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('requirements_not_listed', {
+    await queryInterface.createTable('listed_requirements', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -61,7 +58,7 @@ module.exports = {
     })
   },
 
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('requirements_not_listed')
+  async down(queryInterface) {
+    await queryInterface.dropTable('not_listed_requirements')
   },
 }

@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-import RequerimentNotListed from '../models/RequerimentNotListed'
+import NotListedRequeriment from '../models/RequerimentNotListed'
 
 class RequerimentNotListedController {
   async store(request, response) {
@@ -10,7 +10,7 @@ class RequerimentNotListedController {
       segunda_exigencia: Yup.string(),
       estado_da_segunda_exigencia: Yup.string(),
       terceira_exigencia: Yup.string(),
-      estado_da_terceira_exigencia: Yup.string().email(),
+      estado_da_terceira_exigencia: Yup.string(),
       quarta_exigencia: Yup.string(),
       estado_da_quarta_exigencia: Yup.string(),
       quinta_exigencia: Yup.string(),
@@ -36,7 +36,18 @@ class RequerimentNotListedController {
       estado_da_quinta_exigencia,
     } = request.body
 
-    const requeriment = await RequerimentNotListed.create({})
+    const requeriment = await NotListedRequeriment.create({
+      primeira_exigencia,
+      estado_da_primeira_exigencia,
+      segunda_exigencia,
+      estado_da_segunda_exigencia,
+      terceira_exigencia,
+      estado_da_terceira_exigencia,
+      quarta_exigencia,
+      estado_da_quarta_exigencia,
+      quinta_exigencia,
+      estado_da_quinta_exigencia,
+    })
 
     return response.status(201).json({
       id: requeriment.id,
@@ -75,7 +86,7 @@ class RequerimentNotListedController {
 
     const { id } = request.params
 
-    const userExists = await RequerimentNotListed.findOne({
+    const userExists = await NotListedRequeriment.findOne({
       where: { id },
     })
 
@@ -96,7 +107,7 @@ class RequerimentNotListedController {
       estado_da_quinta_exigencia,
     } = request.body
 
-    await RequerimentNotListed.update(
+    await NotListedRequeriment.update(
       {
         primeira_exigencia,
         estado_da_primeira_exigencia,
