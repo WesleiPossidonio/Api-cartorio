@@ -1,11 +1,23 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('listed_requirements', {
+    await queryInterface.createTable('not_listed_requeriments', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
+      },
+      exigencias_nao_listadas_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        primaryKey: true,
+        autoIncrement: true,
+        references: {
+          model: 'requeriments',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       primeira_exigencia: {
         type: Sequelize.STRING,
@@ -59,6 +71,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('not_listed_requirements')
+    await queryInterface.dropTable('not_listed_requeriments')
   },
 }

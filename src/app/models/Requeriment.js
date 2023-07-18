@@ -1,4 +1,4 @@
-import Sequelize, { Model } from 'sequelize'
+import { Sequelize, Model } from 'sequelize'
 
 class Requeriment extends Model {
   static init(sequelize) {
@@ -40,13 +40,6 @@ class Requeriment extends Model {
       }
     )
     return this
-  }
-
-  static associate(models) {
-    this.belongsTo(models.NotListedRequeriment, {
-      foreignKey: 'exigencias_nao_listadas_id',
-      as: 'exigencias_nao_listadas',
-    })
   }
 }
 
