@@ -24,6 +24,8 @@ export const sendMail = async (request, response) => {
     itens_da_lista_pendetes: Yup.object().required(),
     data_da_recepcao: Yup.string().required(),
     telefone_contato: Yup.string().required(),
+    name: Yup.string().required(),
+    registration: Yup.string().required()
   })
 
   try {
@@ -41,6 +43,8 @@ export const sendMail = async (request, response) => {
     itens_da_lista_pendetes,
     Data_da_Recepcao,
     telefone_contato,
+    name, 
+    registration
   } = request.body
 
   const mjmlCode = `
@@ -67,7 +71,6 @@ export const sendMail = async (request, response) => {
                 <p color="#000"><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
                 <p color="#000"><strong>E-mail: </strong> ${email_do_representante}</p>
                 <p color="#000"><strong>Contato do Solicitante: </strong> ${telefone_contato}</p>
-                <p color="#000"><strong>Telefone de contato: </strong> {</p>
             </mj-text>
         </mj-column>
     </mj-section>
@@ -155,7 +158,7 @@ export const sendMail = async (request, response) => {
             </mj-text>
 
             <mj-text>
-                 <h4><strong>Funcionário responsável pela análise:</strong> CARLA DE ALMEIDA Matricula: 00/000</h4>
+                 <h4><strong>Funcionário responsável pela análise:</strong> ${name} Matricula: ${registration}</h4>
             </mj-text>
         </mj-column>
     </mj-section>
