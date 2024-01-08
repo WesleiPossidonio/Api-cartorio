@@ -1,9 +1,14 @@
+const dotenv = require('dotenv');
+const pg = require('pg');
+dotenv.config();
+
 module.exports = {
   dialect: 'postgres',
-  host: 'apicartorio.cwzrut96eev3.us-east-2.rds.amazonaws.com',
-  username: 'apicartorio',
-  password: 'cartorio123',
-  database: 'api_cartorio',
+  dialectModule: pg,
+  host: process.env.DB_HOSTNAME,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   define: {
     timespamps: true,
     underscored: true,
