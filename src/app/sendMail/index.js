@@ -22,7 +22,7 @@ export const sendMail = async (request, response) => {
     nome_do_representante: Yup.string().required(),
     email_do_representante: Yup.string().email(),
     itens_da_lista_pendetes: Yup.object().required(),
-    Data_da_Recepcao: Yup.string().required(),
+    data_da_recepcao: Yup.string().required(),
     telefone_contato: Yup.string().required(),
   })
 
