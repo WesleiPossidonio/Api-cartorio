@@ -128,10 +128,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      quais_informacoes_divergentes: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
