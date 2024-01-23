@@ -9,10 +9,6 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      existe_exigencias_nao_listadas: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       data_da_recepcao: {
         type: Sequelize.STRING,
         allowNull: true,

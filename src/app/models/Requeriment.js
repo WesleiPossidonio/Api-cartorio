@@ -32,7 +32,6 @@ class Requeriment extends Model {
         requisitos_de_estatutos_fundadores: Sequelize.STRING,
         data_da_recepcao: Sequelize.STRING,
         data_atualizacao: Sequelize.STRING,
-        existe_exigencias_nao_listadas: Sequelize.STRING,
       },
       {
         sequelize,

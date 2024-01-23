@@ -33,7 +33,6 @@ class RequerimentController {
       requisitos_criacao_de_estatuto: Yup.string().optional(),
       requisitos_de_estatutos_fundadores: Yup.string().optional(),
       data_da_recepcao: Yup.string().optional(),
-      existe_exigencias_nao_listadas: Yup.string().optional(),
     })
 
     try {
@@ -70,7 +69,6 @@ class RequerimentController {
       data_da_recepcao,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
-      existe_exigencias_nao_listadas,
     } = request.body
 
     const dataRequerimentProtocolNumber = await Requeriment.findOne({
@@ -129,7 +127,6 @@ class RequerimentController {
       data_da_recepcao,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
-      existe_exigencias_nao_listadas,
     })
 
     return response.status(201).json({
@@ -225,7 +222,6 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores: Yup.string().optional(),
       data_da_recepcao: Yup.string().optional(),
       data_atualizacao: Yup.string().optional(),
-      existe_exigencias_nao_listadas: Yup.string().optional(),
     })
 
     try {
@@ -273,7 +269,6 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
       data_atualizacao,
-      existe_exigencias_nao_listadas,
     } = request.body
 
     await Requeriment.update(
@@ -306,7 +301,7 @@ class RequerimentController {
         requisitos_de_estatutos_fundadores,
         requisitos_criacao_de_estatuto,
         data_atualizacao,
-        existe_exigencias_nao_listadas,
+
       },
       { where: { id } }
     )
