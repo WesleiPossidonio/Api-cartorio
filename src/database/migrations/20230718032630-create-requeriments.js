@@ -18,7 +18,7 @@ module.exports = {
         allowNull: true,
       },
       numero_do_protocolo: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
       },

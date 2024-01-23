@@ -7,7 +7,7 @@ class RequerimentController {
   async store(request, response) {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
-      numero_do_protocolo: Yup.string().required(),
+      numero_do_protocolo: Yup.number().required(),
       estado_do_requerimento: Yup.string().optional(),
       cnpj: Yup.string().required(),
       nome_do_representante: Yup.string().required(),
@@ -198,7 +198,7 @@ class RequerimentController {
   async update(request, response) {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().optional(),
-      numero_do_protocolo: Yup.string().optional(),
+      numero_do_protocolo: Yup.number().optional(),
       estado_do_requerimento: Yup.string().optional(),
       cnpj: Yup.string().optional(),
       nome_do_representante: Yup.string().optional(),

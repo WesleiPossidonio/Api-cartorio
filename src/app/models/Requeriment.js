@@ -4,7 +4,7 @@ class Requeriment extends Model {
   static init(sequelize) {
     super.init(
       {
-        numero_do_protocolo: Sequelize.STRING,
+        numero_do_protocolo: Sequelize.INTEGER,
         nome_da_instituicao: Sequelize.STRING,
         estado_do_requerimento: Sequelize.STRING,
         cnpj: Sequelize.STRING,
