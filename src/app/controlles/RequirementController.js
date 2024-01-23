@@ -2,37 +2,36 @@ import * as Yup from 'yup'
 
 import Requeriment from '../models/Requeriment'
 import RequerimentNotListed from '../models/RequerimentNotListed'
-
 class RequerimentController {
   async store(request, response) {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
       numero_do_protocolo: Yup.number().required(),
-      estado_do_requerimento: Yup.string().optional(),
+      estado_do_requerimento: Yup.string().required(),
       cnpj: Yup.string().required(),
       nome_do_representante: Yup.string().required(),
       email_do_representante: Yup.string().email().required(),
       telefone_contato: Yup.string().required(),
-      declaracao_sindical: Yup.string().optional(),
-      lista_e_edital: Yup.string().optional(),
-      assinatura_do_advogado: Yup.string().optional(),
-      declaracao_criminal: Yup.string().optional(),
-      declaracao_de_desimpedimento: Yup.string().optional(),
-      livro_rasao: Yup.string().optional(),
-      ppe: Yup.string().optional(),
-      requisitos_estatuto: Yup.string().optional(),
-      dissolucao_ou_exticao: Yup.string().optional(),
-      fundacoes: Yup.string().optional(),
-      reconhecimento_de_firma: Yup.string().optional(),
-      preechimento_completo: Yup.string().optional(),
-      oab: Yup.string().optional(),
-      documentacao_de_identificacao: Yup.string().optional(),
-      campo_de_assinatura: Yup.string().optional(),
-      retificacao_de_redacao: Yup.string().optional(),
-      informacao_divergente: Yup.string().optional(),
-      requisitos_criacao_de_estatuto: Yup.string().optional(),
-      requisitos_de_estatutos_fundadores: Yup.string().optional(),
-      data_da_recepcao: Yup.string().optional(),
+      declaracao_sindical: Yup.string().required(),
+      lista_e_edital: Yup.string().required(),
+      assinatura_do_advogado: Yup.string().required(),
+      declaracao_criminal: Yup.string().required(),
+      declaracao_de_desimpedimento: Yup.string().required(),
+      livro_rasao: Yup.string().required(),
+      ppe: Yup.string().required(),
+      requisitos_estatuto: Yup.string().required(),
+      dissolucao_ou_exticao: Yup.string().required(),
+      fundacoes: Yup.string().required(),
+      reconhecimento_de_firma: Yup.string().required(),
+      preechimento_completo: Yup.string().required(),
+      oab: Yup.string().required(),
+      documentacao_de_identificacao: Yup.string().required(),
+      campo_de_assinatura: Yup.string().required(),
+      retificacao_de_redacao: Yup.string().required(),
+      informacao_divergente: Yup.string().required(),
+      requisitos_criacao_de_estatuto: Yup.string().required(),
+      requisitos_de_estatutos_fundadores: Yup.string().required(),
+      data_da_recepcao: Yup.string().required(),
     })
 
     try {
@@ -268,7 +267,7 @@ class RequerimentController {
       data_da_recepcao,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
-      data_atualizacao,
+      data_atualizacao, 
     } = request.body
 
     await Requeriment.update(
