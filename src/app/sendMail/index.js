@@ -82,7 +82,7 @@ export const sendMail = async (request, response) => {
                 <h3>Lista de Exigências Pendentes:</h3>
                 
                ${
-                 itens_da_lista_pendetes.lista_e_edital === 'sim' ?
+                 itens_da_lista_pendetes.lista_e_edital === 'Sim' ?
                  `<p margin-bottom="10px">Apresentar lista de presença e edital; (CNCGJ Art. 951)</p>` : ''
                }
                ${
@@ -91,17 +91,17 @@ export const sendMail = async (request, response) => {
                  referente a unicidade sindical e da base territorial; (CNCGJ Art. 935 § 4º)</p>` : ''
                }
                ${
-                 itens_da_lista_pendetes.assinatura_do_advogado === 'sim' ?
+                 itens_da_lista_pendetes.assinatura_do_advogado === 'Sim' ?
                  `<p margin-bottom="10px">Colheu assinatura do advogado no ato 
                  apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)</p>` : ''
                }
                ${
-                 itens_da_lista_pendetes.declaracao_criminal === 'sim' ?
+                 itens_da_lista_pendetes.declaracao_criminal === 'Sim' ?
                  `<p margin-bottom="10px">Apresentar declaração de desimpedimento e/ou certidão 
                  criminal; (CNCGJ Art. 932 § 1º)  </p>` : ''
                }
                ${
-                 itens_da_lista_pendetes.requisitos_estatuto === 'sim' ?
+                 itens_da_lista_pendetes.requisitos_estatuto === 'Sim' ?
                  `<p margin-bottom="10px"> Apresentar cópia do estatuto registrado no Distrito Federal 
                  (Obs:para diretórios de partidos políticos); (CNCGJ Art.
                   945)</p>` : ''
