@@ -58,20 +58,28 @@ export const sendMail = async (request, response) => {
 
     <mj-section background-color="#ffffff" background-repeat="repeat" padding="20px 0" text-align="center" vertical-align="top">
         <mj-column>
-            <mj-text>
+          <mj-text>
             <h3 color="#000"><strong>Data da Análise:</strong> 07/12/2022</h3>
+          </mj-text>
+
+          <mj-text color="#000">
+            <h2 class="Title-list">Dados Da Empresa</h2>
+            <h3>Nº do Exame: ${numero_do_protocolo}</h3>
+            <h4>Data da Recepção: ${data_da_recepcao}</h4>
+            <p color="#000"><strong>Nome da Instituição:</strong> ${nome_da_instituicao}</p>
+          </mj-text>
+
+          <mj-row text-align='center' justify-content='space-between'>
+            <mj-text>
+              <p color="#000"><strong>Cnpj:</strong> ${cnpj}</p>
+              <p color="#000"><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
             </mj-text>
 
-            <mj-text color="#000">
-                <h2 class="Title-list">Dados Da Empresa</h2>
-                <h3>Nº do Exame: ${numero_do_protocolo}</h3>
-                <h4>Data da Recepção: ${data_da_recepcao}</h4>
-                <p color="#000"><strong>Nome da Instituição:</strong> ${nome_da_instituicao}</p>
-                <p color="#000"><strong>Cnpj:</strong> ${cnpj}</p>
-                <p color="#000"><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
-                <p color="#000"><strong>E-mail: </strong> ${email_do_representante}</p>
-                <p color="#000"><strong>Contato do Solicitante: </strong> ${telefone_contato}</p>
+            <mj-text>
+              <p color="#000"><strong>E-mail: </strong> ${email_do_representante}</p>
+              <p color="#000"><strong>Contato do Solicitante: </strong> ${telefone_contato}</p>
             </mj-text>
+          </mj-row>
         </mj-column>
     </mj-section>
 
