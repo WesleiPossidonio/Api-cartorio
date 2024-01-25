@@ -82,129 +82,129 @@ export const sendMail = async (request, response) => {
                 <h3>Lista de Exigências Pendentes:</h3>
                 
                ${
-                 itens_da_lista_pendetes.lista_e_edital === 'Sim' &&
+                 itens_da_lista_pendetes.lista_e_edital === 'Sim' ?
                  `<p margin-bottom="10px">
                     Apresentar lista de presença e edital; (CNCGJ Art. 951)
-                  </p>` 
+                  </p>` : '' 
                }
                ${
-                 itens_da_lista_pendetes.declaracao_sindical === 'sim' &&
+                 itens_da_lista_pendetes.declaracao_sindical === 'sim' ?
                  `<p margin-bottom="10px"> 
                     Apresentar declaração emitida pelo Ministério do Trabalho referente 
                     a unicidade sindical e da base territorial (CNCGJ Art. 935 § 4º)
-                  </p>` 
+                  </p>` : '' 
                }
                ${
-                 itens_da_lista_pendetes.assinatura_do_advogado === 'Sim' &&
+                 itens_da_lista_pendetes.assinatura_do_advogado === 'Sim' ?
                  `<p margin-bottom="10px">
                     Colher assinatura do advogado no ato apresentado para registro;
                     (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)
-                  </p>` 
+                  </p>` : '' 
                }
                ${
-                 itens_da_lista_pendetes.declaracao_criminal === 'Sim' &&
+                 itens_da_lista_pendetes.declaracao_criminal === 'Sim' ?
                  `<p margin-bottom="10px">
                     Apresentar declaração de desimpedimento e/ou certidão criminal;
                     (CNCGJ Art. 932 § 1º)
-                  </p>` 
+                  </p>` : '' 
                }
                ${
-                 itens_da_lista_pendetes.requisitos_estatuto === 'Sim' &&
+                 itens_da_lista_pendetes.requisitos_estatuto === 'Sim' ?
                  `<p margin-bottom="10px"> 
                     Apresentar cópia do estatuto registrado no Distrito Federal
                     Obs:para diretórios de partidos políticos); (CNCGJ Art. 945)
-                  </p>` 
+                  </p>` : '' 
                }
                ${
-                 itens_da_lista_pendetes.declaracao_de_desimpedimento === 'Sim' &&
+                 itens_da_lista_pendetes.declaracao_de_desimpedimento === 'Sim' ?
                  `<p margin-bottom="10px"> 
                     Apresentar declaração de desimpedimento;
                     (contratos e averbações de sociedade simples, ME, EPP); (CNCGJ)
-                  </p>` 
+                  </p>` : '' 
                }
                ${
-                 itens_da_lista_pendetes.livro_rasao === 'Sim' &&
+                 itens_da_lista_pendetes.livro_rasao === 'Sim' ?
                  `<p margin-bottom="10px">
                     Apresentar livro razão ou contábil anteriormente registrado;
                     (CNCGJ Art. 960 § 1º)
-                  </p>` 
+                  </p>` : '' 
                }
                ${
-                 itens_da_lista_pendetes.requisitos_criacao_de_estatuto === 'Sim' &&
+                 itens_da_lista_pendetes.requisitos_criacao_de_estatuto === 'Sim' ?
                  `<p margin-bottom="10px">Apresentar os requisitos obrigatórios no Estatuto: relação de
                  documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120 / Lei 10.406 Art.
-                 46)</p>` 
+                 46)</p>` : '' 
                }
                ${
-                 itens_da_lista_pendetes.ppe === 'Sim' &&
+                 itens_da_lista_pendetes.ppe === 'Sim' ?
                  `<p margin-bottom="10px"> 
                     Apresentar declaração de pessoa politicamente exposta (PPE)
-                  </p>` 
+                  </p>` : '' 
                }
                ${
-                 itens_da_lista_pendetes.dissolucao_ou_exticao === 'Sim' &&
+                 itens_da_lista_pendetes.dissolucao_ou_exticao === 'Sim' ?
                  `<p margin-bottom="10px">
                     No caso de dissolução ou extinção apresentar o documento:
                     (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo,
                     guarda dos livros etc.) (CNCGJ Art. 953)
-                  </p>` 
+                  </p>` : '' 
                } 
               ${
-                itens_da_lista_pendetes.fundacoes === 'Sim' &&
+                itens_da_lista_pendetes.fundacoes === 'Sim' ?
                 ` <p margin-bottom="10px">
                     Nos atos referentes a fundações, exigir-se-á aprovação prévia do Ministério Público;
                     (CNCGJ Art. 941)
-                  </p>` 
+                  </p>` : '' 
               }
               ${
-                itens_da_lista_pendetes.reconhecimento_de_firma === 'Sim' && 
+                itens_da_lista_pendetes.reconhecimento_de_firma === 'Sim' ? 
                 ` <p margin-bottom="10px">
                     Apresentar reconhecimento de firme no requerimento do DBE;
-                  </p>` 
+                  </p>` : '' 
               }
               ${
-                itens_da_lista_pendetes.preechimento_completo === 'Sim' &&
+                itens_da_lista_pendetes.preechimento_completo === 'Sim' ?
                 ` <p margin-bottom="10px">
                     Preencher todos os campos do formulário/requerimento
-                  </p>` 
+                  </p>` : '' 
               }
               ${
-                itens_da_lista_pendetes.oab === 'Sim' &&
+                itens_da_lista_pendetes.oab === 'Sim' ?
                 ` <p margin-bottom="10px">
                     Apresentar cópia da OAB do representante jurídico do ato apresentado;
-                  </p>` 
+                  </p>` : '' 
               }
               ${
-                itens_da_lista_pendetes.documentacao_de_identificacao === 'Sim' &&
+                itens_da_lista_pendetes.documentacao_de_identificacao === 'Sim' ?
                 ` <p margin-bottom="10px">
                     Apresentar cópia simples do documento de identificação;
-                  </p>` 
+                  </p>` : '' 
               }
               ${
-                itens_da_lista_pendetes.requisitos_de_estatutos_fundadores === 'Sim' &&
+                itens_da_lista_pendetes.requisitos_de_estatutos_fundadores === 'Sim' ?
                 ` <p margin-bottom="10px">
                     Apresentar os requisitos obrigatórios no Estatuto: relação de documentos de fundadores;
                     ( CNCGJ Art. 945 / Lei 6.015 no Art. 120  / Lei 10.406 Art. 46)
-                  </p>` 
+                  </p>` : '' 
               }
               ${
-                itens_da_lista_pendetes.requisitos_criacao_de_estatuto === 'Sim' &&
+                itens_da_lista_pendetes.requisitos_criacao_de_estatuto === 'Sim' ?
                 ` <p margin-bottom="10px">
                     Apresentar os requisitos obrigatórios para criação do estatuto;
                     (Lei 10.406/2002 Art. 54)
-                  </p>` 
+                  </p>` : '' 
               }
               ${
-                itens_da_lista_pendetes.retificacao_de_redacao === 'Sim' &&
+                itens_da_lista_pendetes.retificacao_de_redacao === 'Sim' ?
                 `<p margin-bottom="10px">
                     Retificar redação do documento apresentado:
-                 </p>` 
+                 </p>` : '' 
               }
               ${
-                itens_da_lista_pendetes.campo_de_assinatura === 'Sim' &&
-                ` <p margin-bottom="10px">
+                itens_da_lista_pendetes.campo_de_assinatura === 'Sim' ?
+                `<p margin-bottom="10px">
                     Preencher todos os campos de assinatura;
-                  </p>` 
+                 </p>` : '' 
               }
             </mj-text>
 
