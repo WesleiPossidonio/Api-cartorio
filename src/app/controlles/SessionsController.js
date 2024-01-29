@@ -10,14 +10,14 @@ class SessionController {
       password: Yup.string().required(),
     })
 
-    const emailOrPasswordIncorrect = () => {
+    const nameOrPasswordIncorrect = () => {
       return response
         .status(400)
-        .json({ error: 'Make sure your password or email are correct' })
+        .json({ error: 'Make sure your password or name are correct' })
     }
 
     if (!(await schema.isValid(request.body))) {
-      return emailOrPasswordIncorrect()
+      return nameOrPasswordIncorrect()
     }
 
     const { name, password } = request.body
@@ -27,18 +27,18 @@ class SessionController {
     })
 
     if (!users) {
-      return emailOrPasswordIncorrect()
+      return nameOrPasswordIncorrect()
     }
 
     if (!(await users.checkPassword(password))) {
-      return emailOrPasswordIncorrect()
+      return nameOrPasswordIncorrect()
     }
 
     return response.json({
       id: users.id,
-      email,
       name: users.name,
       admin: users.admin,
+      email: users.email,
       registration: users.registration,
       token: jwt.sign({ id: users.id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,

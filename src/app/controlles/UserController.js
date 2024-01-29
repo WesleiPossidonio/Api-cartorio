@@ -21,12 +21,20 @@ class UserController {
 
     const { name, email, password, admin, registration } = request.body
 
-    const userExists = await User.findOne({
-      where: { email, name },
+    const emailUserExists = await User.findOne({
+      where: { email },
     })
 
-    if (userExists) {
-      return response.status(409).json({ error: 'User already exists' })
+    const nameUserExists = await User.findOne({
+      where: { name },
+    })
+
+    if (emailUserExists) {
+      return response.status(409).json({ error: 'email user already exists' })
+    }
+
+    if (nameUserExists) {
+      return response.status(409).json({ error: 'name user already exists' })
     }
 
     await User.create({
