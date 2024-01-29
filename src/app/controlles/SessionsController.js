@@ -6,7 +6,7 @@ import authConfig from '../../config/auth'
 class SessionController {
   async store(request, response) {
     const schema = Yup.object().shape({
-      email: Yup.string().email().required(),
+      name: Yup.string().required(),
       password: Yup.string().required(),
     })
 
@@ -20,10 +20,10 @@ class SessionController {
       return emailOrPasswordIncorrect()
     }
 
-    const { email, password } = request.body
+    const { name, password } = request.body
 
     const users = await User.findOne({
-      where: { email },
+      where: { name },
     })
 
     if (!users) {

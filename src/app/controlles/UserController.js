@@ -22,7 +22,7 @@ class UserController {
     const { name, email, password, admin, registration } = request.body
 
     const userExists = await User.findOne({
-      where: { email },
+      where: { email, name },
     })
 
     if (userExists) {

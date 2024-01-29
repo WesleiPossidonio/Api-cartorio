@@ -32,6 +32,7 @@ class RequerimentController {
       requisitos_criacao_de_estatuto: Yup.string().required(),
       requisitos_de_estatutos_fundadores: Yup.string().required(),
       data_da_recepcao: Yup.string().required(),
+     
     })
 
     try {
