@@ -306,7 +306,36 @@ class RequerimentController {
       { where: { id } }
     )
 
-    return response.json({ message: 'status was update sucessfully' })
+    return response.status(201).json({ 
+      nome_da_instituicao,
+      numero_do_protocolo,
+      estado_do_requerimento,
+      cnpj,
+      nome_do_representante,
+      email_do_representante,
+      telefone_contato,
+      declaracao_sindical,
+      lista_e_edital,
+      assinatura_do_advogado,
+      declaracao_criminal,
+      declaracao_de_desimpedimento,
+      livro_rasao,
+      ppe,
+      requisitos_estatuto,
+      dissolucao_ou_exticao,
+      fundacoes,
+      reconhecimento_de_firma,
+      preechimento_completo,
+      oab,
+      documentacao_de_identificacao,
+      campo_de_assinatura,
+      retificacao_de_redacao,
+      informacao_divergente,
+      data_da_recepcao,
+      requisitos_de_estatutos_fundadores,
+      requisitos_criacao_de_estatuto,
+      data_atualizacao,
+    })
   }
 }
 
