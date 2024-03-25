@@ -2,17 +2,16 @@ import mjml2html from 'mjml'
 import nodemailer from 'nodemailer'
 import * as Yup from 'yup'
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    type: 'QAuth2',
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD_EMAIL,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
-  },
-})
+const transporter = nodemailer.createTransport ({ 
+  service : "Gmail" , 
+  host : "smtp.gmail.com" , 
+  port : 465 , 
+  secure : true, 
+  auth : { 
+    user : process.env.EMAIL, 
+    pass : "seu_app_password" , 
+  }, 
+});
 
 export const sendMail = async (request, response) => {
   const schema = Yup.object().shape({
@@ -50,16 +49,20 @@ export const sendMail = async (request, response) => {
   const mjmlCode = `
   <mjml version="3.3.3">
   <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
-    <mj-section background-color="#006EAF" background-repeat="repeat" padding="20px 0" text-align="center" vertical-align="top">
+    <mj-section>
       <mj-column>
-        <mj-image align="center" padding="10px 25px" src="https://imgbly.com/ib/OBPEpkQbUD.png" width="128px"></mj-image>
+        <mj-image align="center" src="https://imgbly.com/ib/Iumarcjy6U.jpg" width="100%"></mj-image>
       </mj-column>
     </mj-section>
 
     <mj-section background-color="#ffffff" background-repeat="repeat" padding="20px 0" text-align="center" vertical-align="top">
         <mj-column>
             <mj-text>
-            <h3 color="#000"><strong>Data da Análise:</strong> 07/12/2022</h3>
+              Olá, ${nome_do_representante}! Estamos entrando em contato para informa-lo(a) os documentos para serem entregues.
+            </mj-text>
+
+            <mj-text>
+              <h3 color="#000"><strong>Data da Análise:</strong> 07/12/2022</h3>
             </mj-text>
 
             <mj-text color="#000">
@@ -231,7 +234,7 @@ export const sendMail = async (request, response) => {
         </mj-column>
     </mj-section>
 
-    <mj-section background-color="#006EAF" background-repeat="repeat" padding="20px 0" text-align="center" vertical-align="top">
+    <mj-section background-color="#d1d1d1" background-repeat="repeat" padding="20px 0" text-align="center" vertical-align="top">
         <mj-column>
             <mj-text align="center" color="#ffffff" font-family="Arial, sans-serif" font-size="13px" line-height="22px">
                 <p color="#FFF"><strong>Rua Pereira de Souza, nº 104 - Centro, Macaé, RJ CEP:27.913-110</strong></p>
