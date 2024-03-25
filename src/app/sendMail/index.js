@@ -3,14 +3,15 @@ import nodemailer from 'nodemailer'
 import * as Yup from 'yup'
 
 const transporter = nodemailer.createTransport ({ 
-  service : "Gmail" , 
-  host : "smtp.gmail.com" , 
-  port : 465 , 
-  secure : true, 
-  auth : { 
-    user : process.env.EMAIL, 
-    pass : process.env.PASSWORD_EMAIL, 
-  }, 
+  service: 'gmail',
+  auth: {
+    type: 'QAuth2',
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD_EMAIL,
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken: process.env.REFRESH_TOKEN,
+  },
 });
 
 export const sendMail = async (request, response) => {
