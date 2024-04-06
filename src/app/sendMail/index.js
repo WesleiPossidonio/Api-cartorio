@@ -50,12 +50,11 @@ export const sendMail = async (request, response) => {
   const mjmlCode = `
   <mjml version="3.3.3">
   <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
-    <mj-section>
-      <mj-column>
-        <mj-image align="center" src="https://imgbly.com/ib/Iumarcjy6U.jpg" width="100%"></mj-image>
-      </mj-column>
+    <mj-section full-width="full-width" background-color="#F4F4F4">
+        <mj-column width="100%">
+          <mj-image align="center" src="https://imgbly.com/ib/Iumarcjy6U.jpg" width="100%"></mj-image>
+        </mj-column>
     </mj-section>
-
     <mj-section background-color="#ffffff" background-repeat="repeat" padding="20px 0" text-align="center" vertical-align="top">
         <mj-column>
             <mj-text>
