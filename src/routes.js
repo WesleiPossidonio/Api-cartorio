@@ -12,10 +12,10 @@ import ConfirmEmail from './app/controlles/ConfirmEmail'
 const routes = new Router()
 
 routes.post('/sessions', SessionsController.store)
-routes.post('/users', UserController.store)
 routes.post('/confirmMail', ConfirmEmail.store)
 
 routes.use(authMiddlewares)
+routes.post('/users', UserController.store)
 routes.put('/users/:id', UserController.update)
 
 routes.post('/requerimentData', RequirementController.store)
