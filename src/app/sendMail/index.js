@@ -47,6 +47,10 @@ export const sendMail = async (request, response) => {
   <mjml version="3.3.3">
   <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
 
+    <mj-column> 
+        <mj-image src="https://imgbly.com/ib/gxPjbmr9kN.png" width="180px"></mj-image>
+    </mj-column>
+
     <mj-section background-color="#d1d1d1" background-repeat="repeat" padding="20px" display="flex" align-itens="center" >
       <mj-column> 
         <mj-text line-height="1.6" margin-top="15px" font-size="14px">
@@ -54,10 +58,6 @@ export const sendMail = async (request, response) => {
             Cartório <br/> 1º Ofício de Justiça de Macaé
           </h3>
         </mj-text>
-      </mj-column>
-
-      <mj-column> 
-        <mj-image src="https://imgbly.com/ib/gxPjbmr9kN.png" width="180px"></mj-image>
       </mj-column>
     </mj-section>
 
