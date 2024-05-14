@@ -27,7 +27,7 @@ class App {
   checkOrigin(origin, callback) {
     const allowedOrigins = [
         'http://localhost:5173', 
-        'https://project-cartorio.vercel.app/'
+        'https://project-cartorio.vercel.app'
       ];
   
     if (!origin || allowedOrigins.includes(origin)) {
