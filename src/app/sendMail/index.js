@@ -5,8 +5,8 @@ import * as Yup from 'yup'
 const transporter = nodemailer.createTransport ({ 
   service: 'gmail',
   auth: { 
-    user: 'sac@macae1oficio.com.br', 
-    pass: 'efesios1-3' 
+    user: process.env.EMAIL, 
+    pass: process.env.PASSWORD_EMAIL
   },
 });
 
