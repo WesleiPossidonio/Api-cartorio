@@ -75,25 +75,10 @@ class RequerimentController {
       where: { numero_do_protocolo },
     })
 
-    const dataRequerimentNumberCnpj = await Requeriment.findOne({
-      where: { cnpj },
-    })
-
-    const dataRequerimentInstitutionName = await Requeriment.findOne({
-      where: { nome_da_instituicao },
-    })
-
     const oneOfDateVerification =
-      dataRequerimentProtocolNumber ||
-      dataRequerimentNumberCnpj ||
-      dataRequerimentInstitutionName
+      dataRequerimentProtocolNumber 
 
-    const dateVerificayionAll =
-      dataRequerimentProtocolNumber &&
-      dataRequerimentNumberCnpj &&
-      dataRequerimentInstitutionName
-
-    if (oneOfDateVerification || dateVerificayionAll) {
+    if (oneOfDateVerification) {
       return response
         .status(409)
         .json({ error: 'this requirement already exists' })
