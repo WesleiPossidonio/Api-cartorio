@@ -25,12 +25,10 @@ module.exports = {
       nome_da_instituicao: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
       cnpj: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
       nome_do_representante: {
         type: Sequelize.STRING,
