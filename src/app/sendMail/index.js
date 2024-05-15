@@ -49,9 +49,8 @@ export const sendMail = async (request, response) => {
 
     <mj-section background-color="#d1d1d1" background-repeat="repeat" padding="20px" display="flex" align-itens="center">
       <mj-column> 
-        <mj-image src="https://imgbly.com/ib/gxPjbmr9kN.png" width="180px"></mj-image>
+          <mj-image src="https://imgbly.com/ib/gxPjbmr9kN.png" width="180px"></mj-image>
       </mj-column>
-
       <mj-column> 
         <mj-text line-height="1.6" margin-top="15px" font-size="14px">
           <h3>
@@ -87,6 +86,7 @@ export const sendMail = async (request, response) => {
         
         <mj-text line-height="1.8">
           <h3 margin-botton="1rem" class="Title-list">Lista de Exigências Pendentes:</h3>
+          
           <p>
             ${
               itens_da_lista_pendetes.lista_e_edital === 'Pendente'
