@@ -81,7 +81,7 @@ class RequerimentController {
     if (oneOfDateVerification) {
       return response
         .status(409)
-        .json({ error: 'this requirement already exists' })
+        .json({ error: 'this requirement number protocol already exists' })
     }
 
     const requeriment = await Requeriment.create({
