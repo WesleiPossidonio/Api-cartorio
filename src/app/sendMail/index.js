@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
   },
 })
 
-export const sendMail = async (request, response) => {
+export const sendMailRequeriments = async (request, response) => {
   const schema = Yup.object().shape({
     nome_da_instituicao: Yup.string().required(),
     numero_do_protocolo: Yup.string().required(),

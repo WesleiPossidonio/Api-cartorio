@@ -1,61 +1,95 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('not_listed_requeriments', {
+    await queryInterface.createTable('requirement', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      exigencias_nao_listadas_id: {
+      exigencias_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        primaryKey: true,
-        autoIncrement: true,
         references: {
-          model: 'requeriments',
+          model: 'association_data',
           key: 'id',
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
-      primeira_exigencia: {
+      declaracao_sindical: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      estado_da_primeira_exigencia: {
+      lista_e_edital: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      segunda_exigencia: {
+      assinatura_do_advogado: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      estado_da_segunda_exigencia: {
+      declaracao_criminal: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      terceira_exigencia: {
+      declaracao_de_desimpedimento: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      estado_da_terceira_exigencia: {
+      livro_rasao: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      quarta_exigencia: {
+      requisitos_estatuto: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      estado_da_quarta_exigencia: {
+      ppe: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      quinta_exigencia: {
+      requisitos_criacao_de_estatuto: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      estado_da_quinta_exigencia: {
+      dissolucao_ou_exticao: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      fundacoes: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      requisitos_de_estatutos_fundadores: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      reconhecimento_de_firma: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      preechimento_completo: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      oab: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      documentacao_de_identificacao: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      campo_de_assinatura: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      retificacao_de_redacao: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      informacao_divergente: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -71,6 +105,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('not_listed_requeriments')
+    await queryInterface.dropTable('requirement')
   },
 }

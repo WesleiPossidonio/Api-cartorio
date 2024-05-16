@@ -9,7 +9,8 @@ class UserController {
       name: Yup.string().required(),
       email: Yup.string().email().required(),
       password: Yup.string().required().min(6),
-      admin: Yup.boolean(),
+      admin: Yup.boolean().required(),
+      update_number: Yup.string().optional(),
       registration: Yup.string().required(),
     })
 
@@ -19,7 +20,8 @@ class UserController {
       return response.status(400).json({ error: err.errors })
     }
 
-    const { name, email, password, admin, registration } = request.body
+    const { name, email, password, admin, registration, update_number } =
+      request.body
 
     const emailUserExists = await User.findOne({
       where: { email },
@@ -44,6 +46,7 @@ class UserController {
       password,
       admin,
       registration,
+      update_number,
     })
 
     return response.status(201).json()
@@ -51,6 +54,7 @@ class UserController {
 
   async update(request, response) {
     const schema = Yup.object().shape({
+      update_number: Yup.string().required(),
       password: Yup.string().required().min(6),
     })
 
@@ -60,18 +64,17 @@ class UserController {
       return response.status(400).json({ error: err.errors })
     }
 
-    const { id } = request.params
-    const { password } = request.body
+    const { password, update_number } = request.body
 
-    const userExists = await User.findOne({
-      where: { id },
+    const verificationNumber = await User.findOne({
+      where: { update_number },
     })
 
-    if (!userExists) {
-      return response.status(400).json({ error: 'User not found' })
+    if (!verificationNumber) {
+      return response.status(400).json({ error: 'Invalid update number' })
     }
 
-    await User.update({ password }, { where: { id } })
+    await User.update({ password }, { where: { update_number } })
 
     return response.status(200).json()
   }

@@ -4,13 +4,7 @@ class Requeriment extends Model {
   static init(sequelize) {
     super.init(
       {
-        numero_do_protocolo: Sequelize.INTEGER,
-        nome_da_instituicao: Sequelize.STRING,
-        estado_do_requerimento: Sequelize.STRING,
-        cnpj: Sequelize.STRING,
-        nome_do_representante: Sequelize.STRING,
-        email_do_representante: Sequelize.STRING,
-        telefone_contato: Sequelize.STRING,
+        exigencias_id: Sequelize.INTEGER,
         declaracao_sindical: Sequelize.STRING,
         lista_e_edital: Sequelize.STRING,
         assinatura_do_advogado: Sequelize.STRING,
@@ -30,20 +24,19 @@ class Requeriment extends Model {
         informacao_divergente: Sequelize.STRING,
         requisitos_criacao_de_estatuto: Sequelize.STRING,
         requisitos_de_estatutos_fundadores: Sequelize.STRING,
-        data_da_recepcao: Sequelize.STRING,
-        data_atualizacao: Sequelize.STRING,
       },
       {
         sequelize,
+        tableName: 'requirement',
       }
     )
     return this
   }
 
   static associate(models) {
-    this.hasOne(models.NotListedRequeriment, {
-      foreignKey: 'exigencias_nao_listadas_id',
-      as: 'exigencias_nao_listadas',
+    this.belongsTo(models.AssociationData, {
+      foreignKey: 'exigencias_id',
+      as: 'DadosAssociacao',
     })
   }
 }

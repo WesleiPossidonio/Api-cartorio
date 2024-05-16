@@ -2,11 +2,11 @@ import Sequelize from 'sequelize'
 import User from '../app/models/User'
 
 import configDataBase from '../config/database'
+
+import AssociationData from '../app/models/AssociationData'
 import Requeriment from '../app/models/Requeriment'
 
-import NotListedRequeriment from '../app/models/RequerimentNotListed'
-
-const models = [User, Requeriment, NotListedRequeriment]
+const models = [User, AssociationData, Requeriment]
 
 class Database {
   constructor() {

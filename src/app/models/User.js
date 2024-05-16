@@ -11,6 +11,7 @@ class User extends Model {
         password_hash: Sequelize.STRING,
         admin: Sequelize.BOOLEAN,
         registration: Sequelize.STRING,
+        update_number: Sequelize.STRING,
       },
       {
         sequelize,
