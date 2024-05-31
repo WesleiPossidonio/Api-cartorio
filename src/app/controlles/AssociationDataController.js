@@ -7,12 +7,10 @@ class AssociationDataController {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
       numero_do_protocolo: Yup.number().required(),
-      estado_do_requerimento: Yup.string().required(),
       cnpj: Yup.string().required(),
       nome_do_representante: Yup.string().required(),
       email_do_representante: Yup.string().email().required(),
       telefone_contato: Yup.string().required(),
-      data_da_recepcao: Yup.string().required(),
     })
 
     try {
@@ -24,7 +22,6 @@ class AssociationDataController {
     const {
       nome_da_instituicao,
       numero_do_protocolo,
-      estado_do_requerimento,
       cnpj,
       nome_do_representante,
       email_do_representante,
@@ -47,7 +44,6 @@ class AssociationDataController {
     const requeriment = await AssociationData.create({
       nome_da_instituicao,
       numero_do_protocolo,
-      estado_do_requerimento,
       cnpj,
       nome_do_representante,
       email_do_representante,
@@ -59,7 +55,6 @@ class AssociationDataController {
       id: requeriment.id,
       nome_da_instituicao,
       numero_do_protocolo,
-      estado_do_requerimento,
       cnpj,
       nome_do_representante,
       email_do_representante,
@@ -96,6 +91,7 @@ class AssociationDataController {
               'informacao_divergente',
               'requisitos_de_estatutos_fundadores',
               'requisitos_criacao_de_estatuto',
+              'estado_do_requerimento',
             ],
           },
         ],
@@ -112,7 +108,6 @@ class AssociationDataController {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().optional(),
       numero_do_protocolo: Yup.number().optional(),
-      estado_do_requerimento: Yup.string().optional(),
       cnpj: Yup.string().optional(),
       nome_do_representante: Yup.string().optional(),
       email_do_representante: Yup.string().email().optional(),
@@ -140,7 +135,6 @@ class AssociationDataController {
     const {
       nome_da_instituicao,
       numero_do_protocolo,
-      estado_do_requerimento,
       cnpj,
       nome_do_representante,
       email_do_representante,
@@ -153,7 +147,7 @@ class AssociationDataController {
       {
         nome_da_instituicao,
         numero_do_protocolo,
-        estado_do_requerimento,
+
         cnpj,
         nome_do_representante,
         email_do_representante,
@@ -167,7 +161,6 @@ class AssociationDataController {
     return response.status(201).json({
       nome_da_instituicao,
       numero_do_protocolo,
-      estado_do_requerimento,
       cnpj,
       nome_do_representante,
       email_do_representante,

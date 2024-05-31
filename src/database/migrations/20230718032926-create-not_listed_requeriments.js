@@ -93,6 +93,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      estado_do_requerimento: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

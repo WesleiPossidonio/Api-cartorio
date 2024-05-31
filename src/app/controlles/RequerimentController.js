@@ -25,6 +25,7 @@ class RequerimentController {
       informacao_divergente: Yup.string().required(),
       requisitos_criacao_de_estatuto: Yup.string().required(),
       requisitos_de_estatutos_fundadores: Yup.string().required(),
+      estado_do_requerimento: Yup.string().required(),
     })
 
     try {
@@ -54,6 +55,7 @@ class RequerimentController {
       informacao_divergente,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
+      estado_do_requerimento,
     } = request.body
 
     const requeriment = await Requeriment.create({
@@ -77,6 +79,7 @@ class RequerimentController {
       informacao_divergente,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
+      estado_do_requerimento,
     })
 
     return response.status(201).json({
@@ -101,6 +104,7 @@ class RequerimentController {
       informacao_divergente,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
+      estado_do_requerimento,
     })
   }
 
@@ -126,6 +130,7 @@ class RequerimentController {
       informacao_divergente: Yup.string().optional(),
       requisitos_criacao_de_estatuto: Yup.string().optional(),
       requisitos_de_estatutos_fundadores: Yup.string().optional(),
+      estado_do_requerimento: Yup.string().optional(),
     })
 
     try {
@@ -165,6 +170,7 @@ class RequerimentController {
       informacao_divergente,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
+      estado_do_requerimento,
     } = request.body
 
     await Requeriment.update(
@@ -189,11 +195,34 @@ class RequerimentController {
         informacao_divergente,
         requisitos_de_estatutos_fundadores,
         requisitos_criacao_de_estatuto,
+        estado_do_requerimento,
       },
       { where: { id } }
     )
 
-    return response.json({ message: 'status was update sucessfully' })
+    return response.status(201).json({
+      exigencias_id,
+      declaracao_sindical,
+      lista_e_edital,
+      assinatura_do_advogado,
+      declaracao_criminal,
+      declaracao_de_desimpedimento,
+      livro_rasao,
+      ppe,
+      requisitos_estatuto,
+      dissolucao_ou_exticao,
+      fundacoes,
+      reconhecimento_de_firma,
+      preechimento_completo,
+      oab,
+      documentacao_de_identificacao,
+      campo_de_assinatura,
+      retificacao_de_redacao,
+      informacao_divergente,
+      requisitos_de_estatutos_fundadores,
+      requisitos_criacao_de_estatuto,
+      estado_do_requerimento,
+    })
   }
 }
 

@@ -5,7 +5,7 @@ import SessionsController from './app/controlles/SessionsController'
 
 import authMiddlewares from './app/meddlewares/auth'
 
-import { sendMailRequeriments } from './app/sendMail'
+import { sendMailAssociation, sendMailRequeriments } from './app/sendMail'
 import ConfirmEmail from './app/controlles/ConfirmEmail'
 import AssociationDataController from './app/controlles/AssociationDataController'
 import RequerimentController from './app/controlles/RequerimentController'
@@ -29,5 +29,6 @@ routes.put('/updateRequeriment/:id', RequerimentController.update)
 routes.patch('/updatePassword/:id', UserController.update)
 
 routes.post('/sendMailRequeriments', sendMailRequeriments)
+routes.post('/sendMailAssociation', sendMailAssociation)
 
 export default routes
