@@ -10,8 +10,6 @@ class AssociationData extends Model {
         nome_do_representante: Sequelize.STRING,
         email_do_representante: Sequelize.STRING,
         telefone_contato: Sequelize.STRING,
-        data_da_recepcao: Sequelize.STRING,
-        data_atualizacao: Sequelize.STRING,
       },
       {
         sequelize,

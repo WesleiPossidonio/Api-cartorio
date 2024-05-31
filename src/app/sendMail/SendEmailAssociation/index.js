@@ -149,5 +149,6 @@ export const sendMailAssociation = async (request, response) => {
     return response.status(201)
   } catch (error) {
     console.error('Erro ao enviar o email:', error)
+    return response.status(500).json({ error: 'Erro ao enviar o e-mail' })
   }
 }

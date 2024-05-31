@@ -26,7 +26,6 @@ class AssociationDataController {
       nome_do_representante,
       email_do_representante,
       telefone_contato,
-      data_da_recepcao,
     } = request.body
 
     const dataRequerimentProtocolNumber = await AssociationData.findOne({
@@ -48,7 +47,6 @@ class AssociationDataController {
       nome_do_representante,
       email_do_representante,
       telefone_contato,
-      data_da_recepcao,
     })
 
     return response.status(201).json({
@@ -59,7 +57,6 @@ class AssociationDataController {
       nome_do_representante,
       email_do_representante,
       telefone_contato,
-      data_da_recepcao,
     })
   }
 
@@ -112,8 +109,6 @@ class AssociationDataController {
       nome_do_representante: Yup.string().optional(),
       email_do_representante: Yup.string().email().optional(),
       telefone_contato: Yup.string().optional(),
-      data_da_recepcao: Yup.string().optional(),
-      data_atualizacao: Yup.string().optional(),
     })
 
     try {
@@ -139,8 +134,6 @@ class AssociationDataController {
       nome_do_representante,
       email_do_representante,
       telefone_contato,
-      data_da_recepcao,
-      data_atualizacao,
     } = request.body
 
     await AssociationData.update(
@@ -152,8 +145,6 @@ class AssociationDataController {
         nome_do_representante,
         email_do_representante,
         telefone_contato,
-        data_atualizacao,
-        data_da_recepcao,
       },
       { where: { id } }
     )
@@ -165,8 +156,6 @@ class AssociationDataController {
       nome_do_representante,
       email_do_representante,
       telefone_contato,
-      data_atualizacao,
-      data_da_recepcao,
     })
   }
 }

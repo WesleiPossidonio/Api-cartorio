@@ -9,10 +9,6 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      data_da_recepcao: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       numero_do_protocolo: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -37,10 +33,6 @@ module.exports = {
       telefone_contato: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      data_atualizacao: {
-        type: Sequelize.STRING,
-        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,

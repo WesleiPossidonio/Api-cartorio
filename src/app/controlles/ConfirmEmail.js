@@ -63,7 +63,7 @@ class ConfirmEmail {
                   <h3 color="#000" >Clique no botão para atualizar a sua senha</h3>
               </mj-text>
               <mj-button background-color="#006EAF" 
-                href="https://project-cartorio.vercel.app/atualizar-lista" padding="20px"> 
+                href="https://project-cartorio.vercel.app/Atualizar-Senha" padding="20px"> 
                 Clique Aqui! 
               </mj-button>
             </mj-column>

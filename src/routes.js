@@ -14,9 +14,9 @@ const routes = new Router()
 
 routes.post('/sessions', SessionsController.store)
 routes.post('/confirmMail', ConfirmEmail.store)
-routes.post('/users', UserController.store)
-routes.use(authMiddlewares)
 
+routes.use(authMiddlewares)
+routes.post('/users', UserController.store)
 routes.put('/users/:id', UserController.update)
 
 routes.post('/associationData', AssociationDataController.store)
