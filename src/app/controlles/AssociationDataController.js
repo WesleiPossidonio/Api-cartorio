@@ -63,6 +63,7 @@ class AssociationDataController {
   async index(request, response) {
     try {
       const requirements = await AssociationData.findAll({
+        order: [['createdAt', 'ASC']],
         include: [
           {
             model: Requeriment,
