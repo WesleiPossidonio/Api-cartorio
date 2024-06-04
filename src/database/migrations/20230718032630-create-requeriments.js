@@ -34,6 +34,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      sobre_exigencia: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
