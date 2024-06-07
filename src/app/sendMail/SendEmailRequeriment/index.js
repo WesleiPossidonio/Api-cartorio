@@ -92,7 +92,13 @@ export const sendMailRequeriments = async (request, response) => {
         </mj-text>
         
         <mj-text line-height="1.8">
-          <h3 margin-botton="1rem" class="Title-list">Lista de Exigências Pendentes:</h3>
+          <h3 margin-botton="1rem" class="Title-list">
+          ${
+            Object.values(itens_da_lista_pendetes).includes('Pendente')
+              ? 'Listas Pendentes'
+              : 'Lista de Exigencias Concluída com Sucesso!!!'
+          }
+          </h3>
           
           <p>
             ${
