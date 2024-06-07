@@ -49,7 +49,7 @@ class ConfirmEmail {
         <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
           <mj-section background-color="#d1d1d1" background-repeat="repeat" padding="20px" display="flex" align-items="center">
             <mj-column>
-                <mj-image src="https://imgbly.com/ib/gxPjbmr9kN.png" width="180px"></mj-image>
+                <mj-image src="https://imgbly.com/ib/eBA6SgxbZC.png" width="180px"></mj-image>
             </mj-column>
             <mj-column>
               <mj-text line-height="1.6" margin-top="15px" font-size="14px">
@@ -63,9 +63,9 @@ class ConfirmEmail {
           <mj-section background-color="#fff" background-repeat="repeat" background-size="auto" padding="0px 0px 20px 0px" align-items="center" text-align="center" vertical-align="top">
             <mj-column>
               <mj-text>
-                  <h1 color="#000" margin-bottom="1rem" class="Title-list">Atualização de Senha</h1>
+                  <p color="#000" margin-bottom="1rem" class="Title-list">Atualização de Senha</p>
                   <h2 color="#000" margin-bottom="1rem" class="Title-list">Numero de Verificação: ${verificationNumber}</h2>
-                  <h3 color="#000" >Clique no botão para atualizar a sua senha</h3>
+                  <p color="#000" >Clique no botão para atualizar a sua senha</p>
               </mj-text>
               <mj-button background-color="#006EAF" 
                 href="https://project-cartorio.vercel.app/Atualizar-Senha" padding="20px"> 

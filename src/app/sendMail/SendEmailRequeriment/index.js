@@ -56,7 +56,7 @@ export const sendMailRequeriments = async (request, response) => {
 
     <mj-section background-color="#d1d1d1" background-repeat="repeat" padding="20px" display="flex" align-itens="center">
       <mj-column> 
-          <mj-image src="https://imgbly.com/ib/gxPjbmr9kN.png" width="180px"></mj-image>
+          <mj-image src="https://imgbly.com/ib/eBA6SgxbZC.png" width="180px"></mj-image>
       </mj-column>
       <mj-column> 
         <mj-text line-height="1.6" margin-top="15px" font-size="14px">
