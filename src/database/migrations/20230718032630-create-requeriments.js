@@ -22,6 +22,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      cpf: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       nome_do_representante: {
         type: Sequelize.STRING,
         allowNull: false,

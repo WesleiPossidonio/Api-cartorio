@@ -7,6 +7,7 @@ class AssociationData extends Model {
         numero_do_protocolo: Sequelize.INTEGER,
         nome_da_instituicao: Sequelize.STRING,
         cnpj: Sequelize.STRING,
+        cpf: Sequelize.STRING,
         nome_do_representante: Sequelize.STRING,
         email_do_representante: Sequelize.STRING,
         telefone_contato: Sequelize.STRING,

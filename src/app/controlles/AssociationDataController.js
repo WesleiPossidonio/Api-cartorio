@@ -7,7 +7,8 @@ class AssociationDataController {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
       numero_do_protocolo: Yup.number().required(),
-      cnpj: Yup.string().required(),
+      cnpj: Yup.string().optional(),
+      cpf: Yup.string().optional(),
       nome_do_representante: Yup.string().required(),
       email_do_representante: Yup.string().email().required(),
       telefone_contato: Yup.string().required(),
@@ -28,6 +29,7 @@ class AssociationDataController {
       email_do_representante,
       telefone_contato,
       sobre_exigencia,
+      cpf,
     } = request.body
 
     const dataRequerimentProtocolNumber = await AssociationData.findOne({
@@ -46,6 +48,7 @@ class AssociationDataController {
       nome_da_instituicao,
       numero_do_protocolo,
       cnpj,
+      cpf,
       nome_do_representante,
       email_do_representante,
       telefone_contato,
