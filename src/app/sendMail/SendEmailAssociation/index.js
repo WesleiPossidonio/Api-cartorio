@@ -26,6 +26,7 @@ export const sendMailAssociation = async (request, response) => {
     telefone_contato: Yup.string().required(),
     name: Yup.string().required(),
     registration: Yup.string().required(),
+    sobre_exigencia: Yup.string().required(),
   })
 
   try {
@@ -44,6 +45,7 @@ export const sendMailAssociation = async (request, response) => {
     telefone_contato,
     name,
     registration,
+    sobre_exigencia,
   } = request.body
 
   const mjmlCode = `
@@ -74,7 +76,7 @@ export const sendMailAssociation = async (request, response) => {
           <p>
             <strong>Prezado ${nome_do_representante}</strong> <br/> 
             Espero que esteja bem. Entramos em contato para fornecer informações
-            importantes sobre o inicio do seu processo.
+            importantes sobre o inicio do seu processo de ${sobre_exigencia}.
           </p>
         </mj-text>
 
