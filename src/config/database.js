@@ -2,7 +2,7 @@ const dotenv = require('dotenv')
 const pg = require('pg')
 dotenv.config()
 
-module.exports = {
+export default {
   dialect: 'postgres',
   dialectModule: pg,
   host: process.env.DB_HOSTNAME,
