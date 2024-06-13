@@ -87,13 +87,11 @@ export const sendMailRequeriments = async (request, response) => {
         <mj-text>
           <h3>Sobre a Instituição</h3>
           <p><strong> Nome da Instituição:</strong> ${nome_da_instituicao}</p>
-          <p>
-            ${
-              cnpj !== 'Não Selecionado'
-                ? (<strong> CNPJ:</strong>)`${cnpj}`
-                : (<strong> CPF:</strong>)`${cpf}`
-            }
-          </p>
+          ${
+            cnpj !== 'Não Selecionado'
+              ? `<strong> CNPJ:</strong>``${cnpj}`
+              : `<strong> CPF:</strong>) ``${cpf}`
+          }
           <p><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
           <p><strong>Email do Representante:</strong> ${email_do_representante}</p>
           <p><strong>Tel do Representante:</strong> ${telefone_contato}</p>

@@ -88,8 +88,8 @@ export const sendMailAssociation = async (request, response) => {
           <p>
             ${
               cnpj !== 'Não Selecionado'
-                ? (<strong> CNPJ:</strong>)`${cnpj}`
-                : (<strong> CPF:</strong>)`${cpf}`
+                ? `<strong> CNPJ:</strong>``${cnpj}`
+                : `<strong> CPF:</strong>) ``${cpf}`
             }
           </p>
           <p><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
