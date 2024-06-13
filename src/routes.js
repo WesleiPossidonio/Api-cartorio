@@ -1,14 +1,17 @@
 import { Router } from 'express'
 
-import UserController from './app/controlles/UserController'
-import SessionsController from './app/controlles/SessionsController'
+import UserController from './app/controlles/UserController.js'
+import SessionsController from './app/controlles/SessionsController.js'
 
-import authMiddlewares from './app/meddlewares/auth'
+import authMiddlewares from './app/meddlewares/auth.js'
 
-import { sendMailAssociation, sendMailRequeriments } from './app/sendMail'
-import ConfirmEmail from './app/controlles/ConfirmEmail'
-import AssociationDataController from './app/controlles/AssociationDataController'
-import RequerimentController from './app/controlles/RequerimentController'
+import {
+  sendMailAssociation,
+  sendMailRequeriments,
+} from './app/sendMail/index.js'
+import ConfirmEmail from './app/controlles/ConfirmEmail.js'
+import AssociationDataController from './app/controlles/AssociationDataController.js'
+import RequerimentController from './app/controlles/RequerimentController.js'
 
 const routes = new Router()
 

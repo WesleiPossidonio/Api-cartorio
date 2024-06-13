@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
-import AssociationData from '../models/AssociationData'
-import Requeriment from '../models/Requeriment'
+import AssociationData from '../models/AssociationData.js'
+import Requeriment from '../models/Requeriment.js'
 
 class AssociationDataController {
   async store(request, response) {

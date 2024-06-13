@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-import Requeriment from '../models/Requeriment'
+import Requeriment from '../models/Requeriment.js'
 
 class RequerimentController {
   async store(request, response) {

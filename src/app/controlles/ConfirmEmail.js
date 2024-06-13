@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import User from '../models/User'
+import User from '../models/User.js'
 import mjml2html from 'mjml'
 import nodemailer from 'nodemailer'
 
