@@ -1,2 +1,2 @@
-export * from './SendEmailAssociation/index.js'
-export * from './SendEmailRequeriment/index.js'
+export * from './SendEmailAssociation/index'
+export * from './SendEmailRequeriment/index'
