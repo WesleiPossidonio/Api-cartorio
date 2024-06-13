@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import User from '../app/models/User.js'
 
-import configDataBase from '../config/database.js'
+import configDataBase from '../config/database'
 
 import AssociationData from '../app/models/AssociationData.js'
 import Requeriment from '../app/models/Requeriment.js'
