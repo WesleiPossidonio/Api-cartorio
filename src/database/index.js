@@ -1,10 +1,10 @@
 import Sequelize from 'sequelize'
-import User from '../app/models/User'
+import User from '../app/models/User.js'
 
-import configDataBase from '../config/database'
+import configDataBase from '../config/database.js'
 
-import AssociationData from '../app/models/AssociationData'
-import Requeriment from '../app/models/Requeriment'
+import AssociationData from '../app/models/AssociationData.js'
+import Requeriment from '../app/models/Requeriment.js'
 
 const models = [User, AssociationData, Requeriment]
 
