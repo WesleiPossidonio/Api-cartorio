@@ -20,6 +20,7 @@ export const sendMailAssociation = async (request, response) => {
     nome_da_instituicao: Yup.string().required(),
     numero_do_protocolo: Yup.string().required(),
     cnpj: Yup.string().required(),
+    cof: Yup.string().required(),
     nome_do_representante: Yup.string().required(),
     email_do_representante: Yup.string().email(),
     data_da_recepcao: Yup.string().required(),
@@ -46,6 +47,7 @@ export const sendMailAssociation = async (request, response) => {
     name,
     registration,
     sobre_exigencia,
+    cpf,
   } = request.body
 
   const mjmlCode = `
@@ -83,7 +85,18 @@ export const sendMailAssociation = async (request, response) => {
         <mj-text>
           <h3>Sobre a Instituição</h3>
           <p><strong> Nome da Instituição:</strong> ${nome_da_instituicao}</p>
-          <p><strong> CNPJ:</strong> ${cnpj}</p>
+                ${
+                  cnpj !== 'Não Selecionado' ? (
+                    <p>
+                      <strong> CNPJ:</strong> ${cnpj}
+                    </p>
+                  ) : (
+                    <p>
+                      <strong> CPF:</strong> ${cpf}
+                    </p>
+                  )
+                }
+          
           <p><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
           <p><strong>Email do Representante:</strong> ${email_do_representante}</p>
           <p><strong>Tel do Representante:</strong> ${telefone_contato}</p>
@@ -153,6 +166,7 @@ export const sendMailAssociation = async (request, response) => {
 
   try {
     await transporter.sendMail(mailOptions)
+    console.log('Email Enviado')
     return response.status(201)
   } catch (error) {
     console.error('Erro ao enviar o email:', error)

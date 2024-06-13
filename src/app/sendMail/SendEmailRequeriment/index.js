@@ -20,6 +20,7 @@ export const sendMailRequeriments = async (request, response) => {
     nome_da_instituicao: Yup.string().required(),
     numero_do_protocolo: Yup.string().required(),
     cnpj: Yup.string().required(),
+    cof: Yup.string().required(),
     nome_do_representante: Yup.string().required(),
     email_do_representante: Yup.string().email(),
     itens_da_lista_pendetes: Yup.object().required(),
@@ -48,6 +49,7 @@ export const sendMailRequeriments = async (request, response) => {
     name,
     registration,
     sobre_exigencia,
+    cpf,
   } = request.body
 
   const mjmlCode = `
@@ -85,7 +87,18 @@ export const sendMailRequeriments = async (request, response) => {
         <mj-text>
           <h3>Sobre a Instituição</h3>
           <p><strong> Nome da Instituição:</strong> ${nome_da_instituicao}</p>
-          <p><strong> CNPJ:</strong> ${cnpj}</p>
+          ${
+            cnpj !== 'Não Selecionado' ? (
+              <p>
+                <strong> CNPJ:</strong> ${cnpj}
+              </p>
+            ) : (
+              <p>
+                <strong> CPF:</strong> ${cpf}
+              </p>
+            )
+          }
+          
           <p><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
           <p><strong>Email do Representante:</strong> ${email_do_representante}</p>
           <p><strong>Tel do Representante:</strong> ${telefone_contato}</p>
@@ -99,8 +112,6 @@ export const sendMailRequeriments = async (request, response) => {
               : 'Lista de Exigencias Concluída com Sucesso!!!'
           }
           </h3>
-          
-          <p>
             ${
               itens_da_lista_pendetes.lista_e_edital === 'Pendente'
                 ? `<p margin-bottom="10px">
@@ -109,9 +120,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
-
-          <p>
+      
             ${
               itens_da_lista_pendetes.declaracao_sindical === 'Pendente'
                 ? `<p margin-bottom="10px"> 
@@ -121,9 +130,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
 
-          <p>
             ${
               itens_da_lista_pendetes.assinatura_do_advogado === 'Pendente'
                 ? `<p margin-bottom="10px">
@@ -133,9 +140,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
-
-          <p>
+ 
             ${
               itens_da_lista_pendetes.declaracao_criminal === 'Pendente'
                 ? `<p margin-bottom="10px">
@@ -145,9 +150,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
-
-          <p>
+  
             ${
               itens_da_lista_pendetes.requisitos_estatuto === 'Pendente'
                 ? `<p margin-bottom="10px"> 
@@ -157,9 +160,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
 
-          <p>
             ${
               itens_da_lista_pendetes.declaracao_de_desimpedimento ===
               'Pendente'
@@ -170,9 +171,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
 
-          <p>
             ${
               itens_da_lista_pendetes.livro_rasao === 'Pendente'
                 ? `<p margin-bottom="10px">
@@ -182,9 +181,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
-
-          <p>
+      
             ${
               itens_da_lista_pendetes.requisitos_criacao_de_estatuto ===
               'Pendente'
@@ -194,9 +191,7 @@ export const sendMailRequeriments = async (request, response) => {
             `
                 : ''
             }
-          </p>
-
-          <p>
+          
             ${
               itens_da_lista_pendetes.ppe === 'Pendente'
                 ? `<p margin-bottom="10px"> 
@@ -205,9 +200,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
-      
-          <p>
+          
             ${
               itens_da_lista_pendetes.dissolucao_ou_exticao === 'Pendente'
                 ? `<p margin-bottom="10px">
@@ -220,7 +213,7 @@ export const sendMailRequeriments = async (request, response) => {
             } 
           </p>
 
-          <p>
+          
             ${
               itens_da_lista_pendetes.fundacoes === 'Pendente'
                 ? ` <p margin-bottom="10px">
@@ -230,9 +223,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
-
-          <p>
+          
             ${
               itens_da_lista_pendetes.reconhecimento_de_firma === 'Pendente'
                 ? ` <p margin-bottom="10px">
@@ -241,9 +232,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
-
-          <p>
+          
           ${
             itens_da_lista_pendetes.preechimento_completo === 'Pendente'
               ? ` <p margin-bottom="10px">
@@ -252,9 +241,7 @@ export const sendMailRequeriments = async (request, response) => {
             `
               : ''
           }
-          </p>
-             
-          <p>
+          
             ${
               itens_da_lista_pendetes.oab === 'Pendente'
                 ? ` <p margin-bottom="10px">
@@ -263,9 +250,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
-              
-          <p>
+          
             ${
               itens_da_lista_pendetes.documentacao_de_identificacao ===
               'Pendente'
@@ -275,9 +260,7 @@ export const sendMailRequeriments = async (request, response) => {
               `
                 : ''
             }
-          </p>
-             
-          <p>
+          
           ${
             itens_da_lista_pendetes.requisitos_de_estatutos_fundadores ===
             'Pendente'
@@ -288,32 +271,26 @@ export const sendMailRequeriments = async (request, response) => {
             `
               : ''
           }
-          </p>
-             
-          <p>
-            ${
-              itens_da_lista_pendetes.requisitos_criacao_de_estatuto ===
-              'Pendente'
-                ? ` <p margin-bottom="10px">
-                  Apresentar os requisitos obrigatórios para criação do estatuto;
-                  (Lei 10.406/2002 Art. 54)
-                </p>
-              `
-                : ''
-            }
-          </p>
-             
-          <p>
-            ${
-              itens_da_lista_pendetes.retificacao_de_redacao === 'Pendente'
-                ? `<p margin-bottom="10px">
+          
+          ${
+            itens_da_lista_pendetes.requisitos_criacao_de_estatuto ===
+            'Pendente'
+              ? ` <p margin-bottom="10px">
+                Apresentar os requisitos obrigatórios para criação do estatuto;
+                (Lei 10.406/2002 Art. 54)
+              </p>
+            `
+              : ''
+          }
+        
+          ${
+            itens_da_lista_pendetes.retificacao_de_redacao === 'Pendente'
+              ? `<p margin-bottom="10px">
                   Retificar redação do documento apresentado:
                </p>`
-                : ''
-            }
-          </p>
-           
-          <p>
+              : ''
+          }
+       
             ${
               itens_da_lista_pendetes.campo_de_assinatura === 'Pendente'
                 ? `<p margin-bottom="10px">
@@ -322,7 +299,7 @@ export const sendMailRequeriments = async (request, response) => {
                `
                 : ''
             }
-          </p>
+          
         </mj-text>
 
         <mj-text>

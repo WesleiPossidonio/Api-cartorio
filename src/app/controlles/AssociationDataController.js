@@ -64,6 +64,7 @@ class AssociationDataController {
       email_do_representante,
       telefone_contato,
       sobre_exigencia,
+      cpf,
     })
   }
 
@@ -114,6 +115,7 @@ class AssociationDataController {
       nome_da_instituicao: Yup.string().optional(),
       numero_do_protocolo: Yup.number().optional(),
       cnpj: Yup.string().optional(),
+      cpf: Yup.string().optional(),
       nome_do_representante: Yup.string().optional(),
       email_do_representante: Yup.string().email().optional(),
       telefone_contato: Yup.string().optional(),
@@ -144,6 +146,7 @@ class AssociationDataController {
       email_do_representante,
       telefone_contato,
       sobre_exigencia,
+      cpf,
     } = request.body
 
     await AssociationData.update(
@@ -155,6 +158,7 @@ class AssociationDataController {
         nome_do_representante,
         email_do_representante,
         telefone_contato,
+        cpf,
       },
       { where: { id } }
     )
