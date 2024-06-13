@@ -1,6 +1,6 @@
-import mjml2html from 'mjml'
 import nodemailer from 'nodemailer'
 import * as Yup from 'yup'
+import mjml2html from 'mjml'
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
