@@ -5,7 +5,7 @@ import SessionsController from './app/controlles/SessionsController'
 
 import authMiddlewares from './app/meddlewares/auth'
 
-import { sendMailAssociation, sendMailRequeriments } from './app/sendMail/index'
+import { sendMailRequeriments, sendMailAssociation } from './app/sendMail'
 import ConfirmEmail from './app/controlles/ConfirmEmail'
 import AssociationDataController from './app/controlles/AssociationDataController'
 import RequerimentController from './app/controlles/RequerimentController'
