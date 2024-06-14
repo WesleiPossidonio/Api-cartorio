@@ -1,6 +1,15 @@
-import * as Yup from 'yup'
+import * as Yup from 'yup';
+import validator from 'validator';
+import Requeriment from '../models/Requeriment';
 
-import Requeriment from '../models/Requeriment'
+// Função de sanitização reutilizável
+const sanitizeInput = (data) => {
+  const sanitizedData = {};
+  Object.keys(data).forEach((key) => {
+    sanitizedData[key] = typeof data[key] === 'string' ? validator.escape(data[key]) : data[key];
+  });
+  return sanitizedData;
+};
 
 class RequerimentController {
   async store(request, response) {
@@ -26,12 +35,13 @@ class RequerimentController {
       requisitos_criacao_de_estatuto: Yup.string().required(),
       requisitos_de_estatutos_fundadores: Yup.string().required(),
       estado_do_requerimento: Yup.string().required(),
-    })
+    });
 
     try {
-      await schema.validateSync(request.body, { abortEarly: false })
+      const sanitizedData = sanitizeInput(request.body);
+      await schema.validateSync(sanitizedData, { abortEarly: false });
     } catch (err) {
-      return response.status(400).json({ error: err.errors })
+      return response.status(400).json({ error: err.errors });
     }
 
     const {
@@ -56,7 +66,7 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
       estado_do_requerimento,
-    } = request.body
+    } = sanitizeInput(request.body);
 
     const requeriment = await Requeriment.create({
       exigencias_id,
@@ -80,7 +90,7 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
       estado_do_requerimento,
-    })
+    });
 
     return response.status(201).json({
       id: requeriment.id,
@@ -105,7 +115,7 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
       estado_do_requerimento,
-    })
+    });
   }
 
   async update(request, response) {
@@ -131,22 +141,23 @@ class RequerimentController {
       requisitos_criacao_de_estatuto: Yup.string().optional(),
       requisitos_de_estatutos_fundadores: Yup.string().optional(),
       estado_do_requerimento: Yup.string().optional(),
-    })
+    });
 
     try {
-      await schema.validateSync(request.body, { abortEarly: false })
+      const sanitizedData = sanitizeInput(request.body);
+      await schema.validateSync(sanitizedData, { abortEarly: false });
     } catch (err) {
-      return response.status(400).json({ error: err.errors })
+      return response.status(400).json({ error: err.errors });
     }
 
-    const { id } = request.params
+    const { id } = request.params;
 
     const userExists = await Requeriment.findOne({
       where: { id },
-    })
+    });
 
     if (!userExists) {
-      return response.status(400).json({ error: 'User not found' })
+      return response.status(400).json({ error: 'User not found' });
     }
 
     const {
@@ -171,7 +182,7 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
       estado_do_requerimento,
-    } = request.body
+    } = sanitizeInput(request.body);
 
     await Requeriment.update(
       {
@@ -198,7 +209,7 @@ class RequerimentController {
         estado_do_requerimento,
       },
       { where: { id } }
-    )
+    );
 
     return response.status(201).json({
       exigencias_id,
@@ -222,8 +233,8 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
       estado_do_requerimento,
-    })
+    });
   }
 }
 
-export default new RequerimentController()
+export default new RequerimentController();

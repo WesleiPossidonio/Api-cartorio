@@ -1,7 +1,8 @@
-import * as Yup from 'yup'
-import User from '../models/User'
-import mjml2html from 'mjml'
-import nodemailer from 'nodemailer'
+import * as Yup from 'yup';
+import validator from 'validator';
+import User from '../models/User';
+import mjml2html from 'mjml';
+import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -14,35 +15,45 @@ const transporter = nodemailer.createTransport({
     refreshToken: process.env.REFRESH_TOKEN,
     accessToken: process.env.ACCESS_TOKEN,
   },
-})
+});
+
+// Função de sanitização reutilizável
+const sanitizeInput = (data) => {
+  return {
+    email: data.email ? validator.normalizeEmail(data.email) : undefined,
+  };
+};
 
 class ConfirmEmail {
   async store(request, response) {
     const schema = Yup.object().shape({
       email: Yup.string().email().required(),
-    })
+    });
 
     const emailOrPasswordIncorrect = () => {
-      return response.status(400).json({ error: 'Email incorrect' })
+      return response.status(400).json({ error: 'Email incorrect' });
+    };
+
+    // Sanitização dos dados de entrada
+    const sanitizedData = sanitizeInput(request.body);
+
+    if (!(await schema.isValid(sanitizedData))) {
+      return emailOrPasswordIncorrect();
     }
 
-    if (!(await schema.isValid(request.body))) {
-      return emailOrPasswordIncorrect()
-    }
-
-    const { email } = request.body
+    const { email } = sanitizedData;
 
     const user = await User.findOne({
       where: { email },
-    })
+    });
 
     if (!user) {
-      return emailOrPasswordIncorrect()
+      return emailOrPasswordIncorrect();
     }
 
-    const verificationNumber = Math.floor(Math.random() * 40001) + 10000
+    const verificationNumber = Math.floor(Math.random() * 40001) + 10000;
 
-    await user.update({ update_number: verificationNumber })
+    await user.update({ update_number: verificationNumber });
 
     const mjmlCode = `
       <mjml version="3.3.3">
@@ -91,15 +102,15 @@ class ConfirmEmail {
           </mj-section>
         </mj-body>
       </mjml>
-    `
+    `;
 
-    let html
+    let html;
     try {
-      const { html: convertedHtml } = mjml2html(mjmlCode)
-      html = convertedHtml
+      const { html: convertedHtml } = mjml2html(mjmlCode);
+      html = convertedHtml;
     } catch (error) {
-      console.error('Erro ao converter o MJML em HTML:', error)
-      return response.status(500).json({ error: 'Internal server error' })
+      console.error('Erro ao converter o MJML em HTML:', error);
+      return response.status(500).json({ error: 'Internal server error' });
     }
 
     const mailOptions = {
@@ -107,16 +118,16 @@ class ConfirmEmail {
       to: email,
       subject: 'Atualização de Senha',
       html,
-    }
+    };
 
     try {
-      await transporter.sendMail(mailOptions)
-      return response.status(200).json({ message: 'Email sent successfully' })
+      await transporter.sendMail(mailOptions);
+      return response.status(200).json({ message: 'Email sent successfully' });
     } catch (error) {
-      console.error('Erro ao enviar o email:', error)
-      return response.status(500).json({ error: 'Error sending email' })
+      console.error('Erro ao enviar o email:', error);
+      return response.status(500).json({ error: 'Error sending email' });
     }
   }
 }
 
-export default new ConfirmEmail()
+export default new ConfirmEmail();
