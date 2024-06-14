@@ -20,7 +20,7 @@ export const sendMailRequeriments = async (request, response) => {
     nome_da_instituicao: Yup.string().required(),
     numero_do_protocolo: Yup.string().required(),
     cnpj: Yup.string().required(),
-    cof: Yup.string().required(),
+    cpf: Yup.string().required(),
     nome_do_representante: Yup.string().required(),
     email_do_representante: Yup.string().email(),
     itens_da_lista_pendetes: Yup.object().required(),
@@ -80,7 +80,7 @@ export const sendMailRequeriments = async (request, response) => {
           <p>
             <strong>Prezado ${nome_do_representante}</strong> <br/> 
             Espero que esteja bem. Entramos em contato para fornecer orientações
-            importantes sobre os documentos necessários para a análise do seu processo de ${sobre_exigencia}..
+            importantes sobre os documentos necessários para a análise do seu processo de ${sobre_exigencia}.
           </p>
         </mj-text>
 
@@ -89,8 +89,8 @@ export const sendMailRequeriments = async (request, response) => {
           <p><strong> Nome da Instituição:</strong> ${nome_da_instituicao}</p>
           ${
             cnpj !== 'Não Selecionado'
-              ? `<strong> CNPJ:</strong>``${cnpj}`
-              : `<strong> CPF:</strong>) ``${cpf}`
+              ? `<strong> CNPJ:</strong> ${cnpj}`
+              : `<strong> CPF:</strong> ${cpf}`
           }
           <p><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
           <p><strong>Email do Representante:</strong> ${email_do_representante}</p>
@@ -102,132 +102,39 @@ export const sendMailRequeriments = async (request, response) => {
             ${
               Object.values(itens_da_lista_pendetes).includes('Pendente')
                 ? 'Listas Pendentes'
-                : 'Lista de Exigencias Concluída com Sucesso!!!'
+                : 'Lista de Exigências Concluída com Sucesso!!!'
             }
           </h3>
 
-          <p margin-bottom="10px">
-           ${
-             itens_da_lista_pendetes.lista_e_edital === 'Pendente' &&
-             'Apresentar lista de presença e edital; (CNCGJ Art. 951)'
-           }
-          </p>
-           
-          <p margin-bottom="10px"> 
-           ${
-             itens_da_lista_pendetes.declaracao_sindical === 'Pendente' &&
-             'Apresentar declaração emitida pelo Ministério do Trabalho referente a unicidade sindical e da base territorial (CNCGJ Art. 935 § 4º)'
-           }
-          </p>
-            
-          <p margin-bottom="10px">
-           ${
-             itens_da_lista_pendetes.assinatura_do_advogado === 'Pendente' &&
-             'Colher assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)'
-           }
-          </p>
-
-          <p margin-bottom="10px">  ${
-            itens_da_lista_pendetes.declaracao_criminal === 'Pendente' &&
-            'Apresentar declaração de desimpedimento e/ou certidão criminal; (CNCGJ Art. 932 § 1º)'
-          }
-          </p>
-  
-          <p margin-bottom="10px"> ${
-            itens_da_lista_pendetes.requisitos_estatuto === 'Pendente' &&
-            'Apresentar cópia do estatuto registrado no Distrito Federal Obs:para diretórios de partidos políticos); (CNCGJ Art. 945)'
-          }
-          </p>
-   
-          <p margin-bottom="10px"> ${
-            itens_da_lista_pendetes.declaracao_de_desimpedimento ===
-              'Pendente' &&
-            'Apresentar declaração de desimpedimento;(contratos e averbações de sociedade simples, ME, EPP); (CNCGJ)'
-          }
-          </p>
-   
-          <p margin-bottom="10px"> ${
-            itens_da_lista_pendetes.livro_rasao === 'Pendente' &&
-            ' Apresentar livro razão ou contábil anteriormente registrado; (CNCGJ Art. 960 § 1º)'
-          }
-          </p>
-            
-          <p margin-bottom="10px"> ${
-            itens_da_lista_pendetes.requisitos_criacao_de_estatuto ===
-              'Pendente' &&
-            'Apresentar os requisitos obrigatórios no Estatuto: relação de documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120 / Lei 10.406 Art.46)'
-          }    
-          </p>
-           
-          <p margin-bottom="10px"> ${
-            itens_da_lista_pendetes.ppe === 'Pendente' &&
-            'Apresentar declaração de pessoa politicamente exposta (PPE)'
-          }
-          </p>
-        
-          <p margin-bottom="10px"> ${
-            itens_da_lista_pendetes.dissolucao_ou_exticao === 'Pendente' &&
-            ' No caso de dissolução ou extinção apresentar o documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)'
-          }
-          </p>
-              
-          <p margin-bottom="10px"> ${
-            itens_da_lista_pendetes.fundacoes === 'Pendente' &&
-            ' Nos atos referentes a fundações, exigir-se-á aprovação prévia do Ministério Público; (CNCGJ Art. 941)'
-          }</p>
-       
-           <p margin-bottom="10px"> ${
-             itens_da_lista_pendetes.reconhecimento_de_firma === 'Pendente' &&
-             ' Apresentar reconhecimento de firme no requerimento do DBE;'
-           }
-           </p>
-     
-           <p margin-bottom="10px">
-             ${
-               itens_da_lista_pendetes.preechimento_completo === 'Pendente' &&
-               'Preencher todos os campos do formulário/requerimento'
-             }
-            </p>
-       
-            <p margin-bottom="10px"> ${
-              itens_da_lista_pendetes.oab === 'Pendente' &&
-              'Apresentar cópia da OAB do representante jurídico do ato apresentado;'
-            }
-            </p>
-     
-            <p margin-bottom="10px">
-            ${
-              itens_da_lista_pendetes.documentacao_de_identificacao ===
-                'Pendente' &&
-              'Apresentar cópia simples do documento de identificação;'
-            }
-            </p>
-            
-            <p margin-bottom="10px"> ${
-              itens_da_lista_pendetes.requisitos_de_estatutos_fundadores ===
-                'Pendente' &&
-              'Apresentar os requisitos obrigatórios no Estatuto: relação de documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120  / Lei 10.406 Art. 46)'
-            }
-            </p>
-        
-            <p margin-bottom="10px"> ${
-              itens_da_lista_pendetes.requisitos_criacao_de_estatuto ===
-                'Pendente' &&
-              'Apresentar os requisitos obrigatórios para criação do estatuto; (Lei 10.406/2002 Art. 54)'
-            }
-            </p>
-         
-            <p margin-bottom="10px"> ${
-              itens_da_lista_pendetes.retificacao_de_redacao === 'Pendente' &&
-              'Retificar redação do documento apresentado:'
-            }
-            </p>
-             
-            <p margin-bottom="10px"> ${
-              itens_da_lista_pendetes.campo_de_assinatura === 'Pendente' &&
-              'Preencher todos os campos de assinatura;'
-            }  
-            </p>
+          ${Object.keys(itens_da_lista_pendetes).map(key => `
+            ${itens_da_lista_pendetes[key] === 'Pendente' ? `
+              <p margin-bottom="10px"> 
+                ${
+                  {
+                    lista_e_edital: 'Apresentar lista de presença e edital; (CNCGJ Art. 951)',
+                    declaracao_sindical: 'Apresentar declaração emitida pelo Ministério do Trabalho referente a unicidade sindical e da base territorial (CNCGJ Art. 935 § 4º)',
+                    assinatura_do_advogado: 'Colher assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)',
+                    declaracao_criminal: 'Apresentar declaração de desimpedimento e/ou certidão criminal; (CNCGJ Art. 932 § 1º)',
+                    requisitos_estatuto: 'Apresentar cópia do estatuto registrado no Distrito Federal Obs:para diretórios de partidos políticos); (CNCGJ Art. 945)',
+                    declaracao_de_desimpedimento: 'Apresentar declaração de desimpedimento;(contratos e averbações de sociedade simples, ME, EPP); (CNCGJ)',
+                    livro_rasao: 'Apresentar livro razão ou contábil anteriormente registrado; (CNCGJ Art. 960 § 1º)',
+                    requisitos_criacao_de_estatuto: 'Apresentar os requisitos obrigatórios no Estatuto: relação de documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120 / Lei 10.406 Art.46)',
+                    ppe: 'Apresentar declaração de pessoa politicamente exposta (PPE)',
+                    dissolucao_ou_exticao: 'No caso de dissolução ou extinção apresentar o documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)',
+                    fundacoes: 'Nos atos referentes a fundações, exigir-se-á aprovação prévia do Ministério Público; (CNCGJ Art. 941)',
+                    reconhecimento_de_firma: 'Apresentar reconhecimento de firme no requerimento do DBE;',
+                    preechimento_completo: 'Preencher todos os campos do formulário/requerimento',
+                    oab: 'Apresentar cópia da OAB do representante jurídico do ato apresentado;',
+                    documentacao_de_identificacao: 'Apresentar cópia simples do documento de identificação;',
+                    requisitos_de_estatutos_fundadores: 'Apresentar os requisitos obrigatórios no Estatuto: relação de documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120  / Lei 10.406 Art. 46)',
+                    requisitos_criacao_de_estatuto: 'Apresentar os requisitos obrigatórios para criação do estatuto; (Lei 10.406/2002 Art. 54)',
+                    retificacao_de_redacao: 'Retificar redação do documento apresentado:',
+                    campo_de_assinatura: 'Preencher todos os campos de assinatura;',
+                  }[key]
+                }
+              </p>
+            ` : ''}
+          `).join('')}
         </mj-text>
 
         <mj-text>
@@ -243,8 +150,8 @@ export const sendMailRequeriments = async (request, response) => {
         <mj-text color="#000" line-height="1.8">
           <h3 class="Title-list">Prazos Importantes: </h3>
           <p color="#000"><strong>- Prazo para análise 15 dias</strong></p>
-          <p color="#000"><strong>- Cumprimento da exigencia 30 dias.</strong></p>
-          <p color="#000"><strong>- Prazo para registro 30 dias satifesta as exigencias necessárias</p>
+          <p color="#000"><strong>- Cumprimento da exigência 30 dias.</strong></p>
+          <p color="#000"><strong>- Prazo para registro 30 dias satisfeitas as exigências necessárias</strong></p>
         </mj-text>
 
         <mj-text color="#000" line-height="1.8">
@@ -252,7 +159,7 @@ export const sendMailRequeriments = async (request, response) => {
             Se surgirem dúvidas ou se precisar de mais informações, por favor, não hesite em nos contatar via WhatsApp.
           </strong>
         </mj-text>
-        <mj-button background-color="#25D366" href="https://wa.me/5522999796222" paddimg="20px"> Enviar Menssagem </mj-button>
+        <mj-button background-color="#25D366" href="https://wa.me/5522999796222" padding="20px"> Enviar Mensagem </mj-button>
 
       </mj-column>
     </mj-section>
@@ -304,5 +211,6 @@ export const sendMailRequeriments = async (request, response) => {
     })
   } catch (error) {
     console.error('Erro ao enviar o email:', error)
+    return response.status(500).json({ error: 'Erro ao enviar o email' })
   }
 }
