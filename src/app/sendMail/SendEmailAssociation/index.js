@@ -1,6 +1,6 @@
-import mjml2html from 'mjml';
-import nodemailer from 'nodemailer';
-import * as Yup from 'yup';
+import mjml2html from 'mjml'
+import nodemailer from 'nodemailer'
+import * as Yup from 'yup'
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
     refreshToken: process.env.REFRESH_TOKEN,
     accessToken: process.env.ACCESS_TOKEN,
   },
-});
+})
 
 export const sendMailAssociation = async (request, response) => {
   const schema = Yup.object().shape({
@@ -28,12 +28,12 @@ export const sendMailAssociation = async (request, response) => {
     name: Yup.string().required(),
     registration: Yup.string().required(),
     sobre_exigencia: Yup.string().required(),
-  });
+  })
 
   try {
-    await schema.validateSync(request.body, { abortEarly: false });
+    await schema.validateSync(request.body, { abortEarly: false })
   } catch (err) {
-    return response.status(400).json({ error: err.errors });
+    return response.status(400).json({ error: err.errors })
   }
 
   const {
@@ -48,7 +48,7 @@ export const sendMailAssociation = async (request, response) => {
     registration,
     sobre_exigencia,
     cpf,
-  } = request.body;
+  } = request.body
 
   const mjmlCode = `
     <mjml>
@@ -135,15 +135,15 @@ export const sendMailAssociation = async (request, response) => {
         </mj-section>
       </mj-body>
     </mjml>
-  `;
+  `
 
-  let html;
+  let html
   try {
-    const { html: convertedHtml } = mjml2html(mjmlCode);
-    html = convertedHtml;
+    const { html: convertedHtml } = mjml2html(mjmlCode)
+    html = convertedHtml
   } catch (error) {
-    console.error('Erro ao converter o MJML em HTML:', error);
-    return response.status(500).json({ error: 'Erro interno do servidor' });
+    console.error('Erro ao converter o MJML em HTML:', error)
+    return response.status(500).json({ error: 'Erro interno do servidor' })
   }
 
   const mailOptions = {
@@ -151,14 +151,14 @@ export const sendMailAssociation = async (request, response) => {
     to: email_do_representante,
     subject: `Exigência 1º Ofício ${numero_do_protocolo} - ${nome_do_representante}`,
     html,
-  };
+  }
 
   try {
-    await transporter.sendMail(mailOptions);
-    console.log('Email enviado');
-    return response.status(201).json({ message: 'Email enviado com sucesso' });
+    await transporter.sendMail(mailOptions)
+    console.log('Email enviado')
+    return response.status(201).json({ message: 'Email enviado com sucesso' })
   } catch (error) {
-    console.error('Erro ao enviar o email:', error);
-    return response.status(500).json({ error: 'Erro ao enviar o e-mail' });
+    console.error('Erro ao enviar o email:', error)
+    return response.status(500).json({ error: 'Erro ao enviar o e-mail' })
   }
-};
+}

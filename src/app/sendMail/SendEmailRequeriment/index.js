@@ -106,35 +106,58 @@ export const sendMailRequeriments = async (request, response) => {
             }
           </h3>
 
-          ${Object.keys(itens_da_lista_pendetes).map(key => `
-            ${itens_da_lista_pendetes[key] === 'Pendente' ? `
+          ${Object.keys(itens_da_lista_pendetes)
+            .map(
+              (key) => `
+            ${
+              itens_da_lista_pendetes[key] === 'Pendente'
+                ? `
               <p margin-bottom="10px"> 
                 ${
                   {
-                    lista_e_edital: 'Apresentar lista de presença e edital; (CNCGJ Art. 951)',
-                    declaracao_sindical: 'Apresentar declaração emitida pelo Ministério do Trabalho referente a unicidade sindical e da base territorial (CNCGJ Art. 935 § 4º)',
-                    assinatura_do_advogado: 'Colher assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)',
-                    declaracao_criminal: 'Apresentar declaração de desimpedimento e/ou certidão criminal; (CNCGJ Art. 932 § 1º)',
-                    requisitos_estatuto: 'Apresentar cópia do estatuto registrado no Distrito Federal Obs:para diretórios de partidos políticos); (CNCGJ Art. 945)',
-                    declaracao_de_desimpedimento: 'Apresentar declaração de desimpedimento;(contratos e averbações de sociedade simples, ME, EPP); (CNCGJ)',
-                    livro_rasao: 'Apresentar livro razão ou contábil anteriormente registrado; (CNCGJ Art. 960 § 1º)',
-                    requisitos_criacao_de_estatuto: 'Apresentar os requisitos obrigatórios no Estatuto: relação de documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120 / Lei 10.406 Art.46)',
+                    lista_e_edital:
+                      'Apresentar lista de presença e edital; (CNCGJ Art. 951)',
+                    declaracao_sindical:
+                      'Apresentar declaração emitida pelo Ministério do Trabalho referente a unicidade sindical e da base territorial (CNCGJ Art. 935 § 4º)',
+                    assinatura_do_advogado:
+                      'Colher assinatura do advogado no ato apresentado para registro; (Lei 8.906 Art. 1º §2º / CNCGJ Artigo 944 § 3º)',
+                    declaracao_criminal:
+                      'Apresentar declaração de desimpedimento e/ou certidão criminal; (CNCGJ Art. 932 § 1º)',
+                    requisitos_estatuto:
+                      'Apresentar cópia do estatuto registrado no Distrito Federal Obs:para diretórios de partidos políticos); (CNCGJ Art. 945)',
+                    declaracao_de_desimpedimento:
+                      'Apresentar declaração de desimpedimento;(contratos e averbações de sociedade simples, ME, EPP); (CNCGJ)',
+                    livro_rasao:
+                      'Apresentar livro razão ou contábil anteriormente registrado; (CNCGJ Art. 960 § 1º)',
                     ppe: 'Apresentar declaração de pessoa politicamente exposta (PPE)',
-                    dissolucao_ou_exticao: 'No caso de dissolução ou extinção apresentar o documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)',
-                    fundacoes: 'Nos atos referentes a fundações, exigir-se-á aprovação prévia do Ministério Público; (CNCGJ Art. 941)',
-                    reconhecimento_de_firma: 'Apresentar reconhecimento de firme no requerimento do DBE;',
-                    preechimento_completo: 'Preencher todos os campos do formulário/requerimento',
+                    dissolucao_ou_exticao:
+                      'No caso de dissolução ou extinção apresentar o documento: (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)',
+                    fundacoes:
+                      'Nos atos referentes a fundações, exigir-se-á aprovação prévia do Ministério Público; (CNCGJ Art. 941)',
+                    reconhecimento_de_firma:
+                      'Apresentar reconhecimento de firme no requerimento do DBE;',
+                    preechimento_completo:
+                      'Preencher todos os campos do formulário/requerimento',
                     oab: 'Apresentar cópia da OAB do representante jurídico do ato apresentado;',
-                    documentacao_de_identificacao: 'Apresentar cópia simples do documento de identificação;',
-                    requisitos_de_estatutos_fundadores: 'Apresentar os requisitos obrigatórios no Estatuto: relação de documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120  / Lei 10.406 Art. 46)',
-                    requisitos_criacao_de_estatuto: 'Apresentar os requisitos obrigatórios para criação do estatuto; (Lei 10.406/2002 Art. 54)',
-                    retificacao_de_redacao: 'Retificar redação do documento apresentado:',
-                    campo_de_assinatura: 'Preencher todos os campos de assinatura;',
+                    documentacao_de_identificacao:
+                      'Apresentar cópia simples do documento de identificação;',
+                    requisitos_de_estatutos_fundadores:
+                      'Apresentar os requisitos obrigatórios no Estatuto: relação de documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120  / Lei 10.406 Art. 46)',
+                    requisitos_criacao_de_estatuto:
+                      'Apresentar os requisitos obrigatórios para criação do estatuto; (Lei 10.406/2002 Art. 54)',
+                    retificacao_de_redacao:
+                      'Retificar redação do documento apresentado:',
+                    campo_de_assinatura:
+                      'Preencher todos os campos de assinatura;',
                   }[key]
                 }
               </p>
-            ` : ''}
-          `).join('')}
+            `
+                : ''
+            }
+          `
+            )
+            .join('')}
         </mj-text>
 
         <mj-text>
