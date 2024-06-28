@@ -66,8 +66,11 @@ class UserController {
 
   async update(request, response) {
     const schema = Yup.object().shape({
-      update_number: Yup.string().required(),
-      password: Yup.string().required().min(6),
+      name: Yup.string().optional(),
+      email: Yup.string().email().optional(),
+      password: Yup.string().optional().min(6),
+      update_number: Yup.string().optional(),
+      registration: Yup.string().optional(),
     })
 
     const sanitizedBody = sanitizeInput(request.body)
@@ -78,7 +81,7 @@ class UserController {
       return response.status(400).json({ error: err.errors })
     }
 
-    const { password, update_number } = sanitizedBody
+    const { password, update_number, name, email, registration } = sanitizedBody
 
     const verificationNumber = await User.findOne({
       where: { update_number },
@@ -88,7 +91,10 @@ class UserController {
       return response.status(400).json({ error: 'Invalid update number' })
     }
 
-    await User.update({ password }, { where: { update_number } })
+    await User.update(
+      { password, name, email, registration },
+      { where: { update_number } }
+    )
 
     return response.status(200).json()
   }
