@@ -66,10 +66,10 @@ class UserController {
 
   async update(request, response) {
     const schema = Yup.object().shape({
+      update_number: Yup.string().optional(),
+      password: Yup.string().optional().min(6),
       name: Yup.string().optional(),
       email: Yup.string().email().optional(),
-      password: Yup.string().optional().min(6),
-      update_number: Yup.string().optional(),
       registration: Yup.string().optional(),
     })
 
@@ -82,21 +82,36 @@ class UserController {
     }
 
     const { password, update_number, name, email, registration } = sanitizedBody
+    const { id } = request.params
 
-    const verificationNumber = await User.findOne({
-      where: { update_number },
+    if (update_number !== undefined) {
+      const verificationNumber = await User.findOne({
+        where: { update_number },
+      })
+
+      if (!verificationNumber) {
+        return response.status(400).json({ error: 'Invalid update number' })
+      }
+
+      await User.update({ password }, { where: { update_number } })
+
+      return response.status(200).json('Senha atualizada')
+    }
+
+    const verificationUser = await User.findOne({
+      where: { id },
     })
 
-    if (!verificationNumber) {
-      return response.status(400).json({ error: 'Invalid update number' })
+    if (!verificationUser) {
+      return response.status(400).json({ error: 'Usuário não encontrado' })
     }
 
     await User.update(
       { password, name, email, registration },
-      { where: { update_number } }
+      { where: { id } }
     )
 
-    return response.status(200).json()
+    return response.status(200).json('Senha atualizada')
   }
 }
 
