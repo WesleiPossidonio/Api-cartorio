@@ -38,7 +38,7 @@ class ConfirmEmail {
     const sanitizedData = sanitizeInput(request.body)
 
     if (!(await schema.isValid(sanitizedData))) {
-      return emailOrPasswordIncorrect()
+      return response.status(400).json({ error: 'Email incorrect' })
     }
 
     const { email } = sanitizedData

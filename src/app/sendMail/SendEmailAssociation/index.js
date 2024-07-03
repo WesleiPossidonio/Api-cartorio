@@ -19,8 +19,7 @@ export const sendMailAssociation = async (request, response) => {
   const schema = Yup.object().shape({
     nome_da_instituicao: Yup.string().required(),
     numero_do_protocolo: Yup.string().required(),
-    cnpj: Yup.string().required(),
-    cpf: Yup.string().required(),
+    cnpj_cpf: Yup.string().required(),
     nome_do_representante: Yup.string().required(),
     email_do_representante: Yup.string().email().required(),
     data_da_recepcao: Yup.string().required(),
@@ -39,7 +38,7 @@ export const sendMailAssociation = async (request, response) => {
   const {
     nome_da_instituicao,
     numero_do_protocolo,
-    cnpj,
+    cnpj_cpf,
     nome_do_representante,
     email_do_representante,
     data_da_recepcao,
@@ -47,7 +46,6 @@ export const sendMailAssociation = async (request, response) => {
     name,
     registration,
     sobre_exigencia,
-    cpf,
   } = request.body
 
   const mjmlCode = `
@@ -85,11 +83,7 @@ export const sendMailAssociation = async (request, response) => {
               <h3>Sobre a Instituição</h3>
               <p><strong>Nome da Instituição:</strong> ${nome_da_instituicao}</p>
               <p>
-                ${
-                  cnpj !== 'Não Selecionado'
-                    ? `<strong>CNPJ:</strong> ${cnpj}`
-                    : `<strong>CPF:</strong> ${cpf}`
-                }
+              <strong>CNPJ ou CPF:</strong>${cnpj_cpf}
               </p>
               <p><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
               <p><strong>Email do Representante:</strong> ${email_do_representante}</p>

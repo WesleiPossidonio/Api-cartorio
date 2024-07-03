@@ -12,8 +12,7 @@ const sanitizeInput = (data) => {
     numero_do_protocolo: data.numero_do_protocolo
       ? validator.toInt(data.numero_do_protocolo.toString())
       : undefined,
-    cnpj: data.cnpj ? validator.escape(data.cnpj) : undefined,
-    cpf: data.cpf ? validator.escape(data.cpf) : undefined,
+    cnpj_cpf: data.cnpj_cpf ? validator.escape(data.cnpj_cpf) : undefined,
     nome_do_representante: data.nome_do_representante
       ? validator.escape(data.nome_do_representante)
       : undefined,
@@ -34,8 +33,7 @@ class AssociationDataController {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
       numero_do_protocolo: Yup.number().required(),
-      cnpj: Yup.string().optional(),
-      cpf: Yup.string().optional(),
+      cnpj_cpf: Yup.string().required(),
       nome_do_representante: Yup.string().required(),
       email_do_representante: Yup.string().email().required(),
       telefone_contato: Yup.string().required(),
@@ -54,8 +52,7 @@ class AssociationDataController {
     const {
       nome_da_instituicao,
       numero_do_protocolo,
-      cnpj,
-      cpf,
+      cnpj_cpf,
       nome_do_representante,
       email_do_representante,
       telefone_contato,
@@ -76,8 +73,7 @@ class AssociationDataController {
       const requeriment = await AssociationData.create({
         nome_da_instituicao,
         numero_do_protocolo,
-        cnpj,
-        cpf,
+        cnpj_cpf,
         nome_do_representante,
         email_do_representante,
         telefone_contato,
@@ -88,8 +84,7 @@ class AssociationDataController {
         id: requeriment.id,
         nome_da_instituicao,
         numero_do_protocolo,
-        cnpj,
-        cpf,
+        cnpj_cpf,
         nome_do_representante,
         email_do_representante,
         telefone_contato,
@@ -146,8 +141,7 @@ class AssociationDataController {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().optional(),
       numero_do_protocolo: Yup.number().optional(),
-      cnpj: Yup.string().optional(),
-      cpf: Yup.string().optional(),
+      cnpj_cpf: Yup.string().optional(),
       nome_do_representante: Yup.string().optional(),
       email_do_representante: Yup.string().email().optional(),
       telefone_contato: Yup.string().optional(),
@@ -176,8 +170,7 @@ class AssociationDataController {
     const {
       nome_da_instituicao,
       numero_do_protocolo,
-      cnpj,
-      cpf,
+      cnpj_cpf,
       nome_do_representante,
       email_do_representante,
       telefone_contato,
@@ -189,8 +182,8 @@ class AssociationDataController {
         nome_da_instituicao,
         numero_do_protocolo,
         sobre_exigencia,
-        cnpj,
-        cpf,
+        cnpj_cpf,
+
         nome_do_representante,
         email_do_representante,
         telefone_contato,
@@ -201,8 +194,7 @@ class AssociationDataController {
     return response.status(201).json({
       nome_da_instituicao,
       numero_do_protocolo,
-      cnpj,
-      cpf,
+      cnpj_cpf,
       nome_do_representante,
       email_do_representante,
       telefone_contato,

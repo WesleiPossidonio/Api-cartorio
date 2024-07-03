@@ -19,8 +19,7 @@ export const sendMailRequeriments = async (request, response) => {
   const schema = Yup.object().shape({
     nome_da_instituicao: Yup.string().required(),
     numero_do_protocolo: Yup.string().required(),
-    cnpj: Yup.string().required(),
-    cpf: Yup.string().required(),
+    cnpj_cpf: Yup.string().required(),
     nome_do_representante: Yup.string().required(),
     email_do_representante: Yup.string().email(),
     itens_da_lista_pendetes: Yup.object().required(),
@@ -40,7 +39,7 @@ export const sendMailRequeriments = async (request, response) => {
   const {
     nome_da_instituicao,
     numero_do_protocolo,
-    cnpj,
+    cnpj_cpf,
     nome_do_representante,
     email_do_representante,
     itens_da_lista_pendetes,
@@ -49,7 +48,6 @@ export const sendMailRequeriments = async (request, response) => {
     name,
     registration,
     sobre_exigencia,
-    cpf,
   } = request.body
 
   const mjmlCode = `
@@ -87,11 +85,9 @@ export const sendMailRequeriments = async (request, response) => {
         <mj-text>
           <h3>Sobre a Instituição</h3>
           <p><strong> Nome da Instituição:</strong> ${nome_da_instituicao}</p>
-          ${
-            cnpj !== 'Não Selecionado'
-              ? `<strong> CNPJ:</strong> ${cnpj}`
-              : `<strong> CPF:</strong> ${cpf}`
-          }
+           <p>
+              <strong>CNPJ ou CPF:</strong>${cnpj_cpf}
+              </p>
           <p><strong>Nome do Representante:</strong> ${nome_do_representante}</p>
           <p><strong>Email do Representante:</strong> ${email_do_representante}</p>
           <p><strong>Tel do Representante:</strong> ${telefone_contato}</p>
@@ -224,14 +220,7 @@ export const sendMailRequeriments = async (request, response) => {
 
   try {
     await transporter.sendMail(mailOptions)
-    return response.status(201).json({
-      nome_da_instituicao,
-      numero_do_protocolo,
-      cnpj,
-      nome_do_representante,
-      email_do_representante,
-      itens_da_lista_pendetes,
-    })
+    return response.status(201).json('Email enviado com sucesso!')
   } catch (error) {
     console.error('Erro ao enviar o email:', error)
     return response.status(500).json({ error: 'Erro ao enviar o email' })
