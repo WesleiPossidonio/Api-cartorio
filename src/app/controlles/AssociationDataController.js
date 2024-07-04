@@ -8,7 +8,7 @@ const sanitizeInput = (data) => {
   const sanitizeCnpjCpf = (cnpjCpf) => {
     if (!cnpjCpf) return undefined
     // eslint-disable-next-line no-useless-escape
-    return cnpjCpf.replace(/[^0-9a-zA-Z\/]/g, '')
+    return cnpjCpf.replace(/[^0-9a-zA-Z\/\.\-]/g, '')
   }
   return {
     nome_da_instituicao: data.nome_da_instituicao
