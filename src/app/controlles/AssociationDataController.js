@@ -5,6 +5,11 @@ import Requeriment from '../models/Requeriment'
 
 // Função de sanitização reutilizável
 const sanitizeInput = (data) => {
+  const sanitizeCnpjCpf = (cnpjCpf) => {
+    if (!cnpjCpf) return undefined
+    // eslint-disable-next-line no-useless-escape
+    return cnpjCpf.replace(/[^0-9a-zA-Z\/]/g, '')
+  }
   return {
     nome_da_instituicao: data.nome_da_instituicao
       ? validator.escape(data.nome_da_instituicao)
@@ -12,7 +17,7 @@ const sanitizeInput = (data) => {
     numero_do_protocolo: data.numero_do_protocolo
       ? validator.toInt(data.numero_do_protocolo.toString())
       : undefined,
-    cnpj_cpf: data.cnpj_cpf ? validator.escape(data.cnpj_cpf) : undefined,
+    cnpj_cpf: sanitizeCnpjCpf(data.cnpj_cpf),
     nome_do_representante: data.nome_do_representante
       ? validator.escape(data.nome_do_representante)
       : undefined,
