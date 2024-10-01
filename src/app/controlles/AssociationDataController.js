@@ -102,7 +102,7 @@ class AssociationDataController {
 
   async index(request, response) {
     try {
-      const requirements = await AssociationData.findAll({
+      const associations = await AssociationData.findAll({
         order: [['createdAt', 'ASC']],
         include: [
           {
@@ -130,12 +130,28 @@ class AssociationDataController {
               'requisitos_de_estatutos_fundadores',
               'requisitos_criacao_de_estatuto',
               'estado_do_requerimento',
+              'observations_lista_e_edital',
+              'observations_assinatura_do_advogado',
+              'observations_declaracao_criminal',
+              'observations_declaracao_de_desimpedimento',
+              'observations_livro_rasao',
+              'observations_requisitos_estatuto',
+              'observations_ppe',
+              'observations_requisitos_criacao_de_estatuto',
+              'observations_dissolucao_ou_exticao',
+              'observations_fundacoes',
+              'observations_reconhecimento_de_firma',
+              'observations_oab',
+              'observations_documentacao_de_identificacao',
+              'observations_requisitos_de_estatutos_fundadores',
+              'observations_campo_de_assinatura',
+              'observations_retificacao_de_redacao',
             ],
           },
         ],
       })
 
-      response.status(200).json(requirements)
+      response.status(200).json(associations)
     } catch (error) {
       console.log(error)
       response.status(500).send('Internal server error')
