@@ -54,16 +54,9 @@ export const sendMailRequeriments = async (request, response) => {
   <mjml version="3.3.3">
   <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
 
-    <mj-section background-color="#d1d1d1" background-repeat="repeat" padding="20px" display="flex" align-itens="center">
-      <mj-column> 
-          <mj-image src="https://imgbly.com/ib/eBA6SgxbZC.png" width="180px"></mj-image>
-      </mj-column>
-      <mj-column> 
-        <mj-text line-height="1.6" margin-top="15px" font-size="14px">
-          <h3>
-            Cartório <br/> 1º Ofício de Justiça de Macaé
-          </h3>
-        </mj-text>
+    <mj-section background-color="#f2f2f2" padding="20px 0" text-align="center">
+      <mj-column>
+        <mj-image object-fit="cover" padding="0" src="https://i.imgur.com/BReyDw0l.jpg" width="100%"></mj-image>
       </mj-column>
     </mj-section>
 
