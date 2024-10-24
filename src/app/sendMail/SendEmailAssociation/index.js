@@ -49,14 +49,23 @@ export const sendMailAssociation = async (request, response) => {
   } = request.body
 
   const mjmlCode = `
+
+  <mj-style>
+    .full-width-image img {
+      width: 100% !important;
+      height: auto !important;
+     }
+  </mj-style>
+
     <mjml>
       <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
-        <mj-section background-color="#f2f2f2" padding="20px 0" text-align="center">
-          <mj-column>
-            <mj-image object-fit="cover" padding="0" src="https://i.imgur.com/BReyDw0l.jpg" width="100%"></mj-image>
+      <mj-section background-color="#f2f2f2" padding="0" text-align="center" full-width="full-width">
+        <mj-section background-color="#f2f2f2" padding="0" text-align="center">
+          <mj-column padding="0">
+            <mj-image src="https://i.imgur.com/BReyDw0l.jpg" fluid-on-mobile="true" padding="0" css-class="full-width-image"></mj-image>
           </mj-column>
         </mj-section>
-
+        
         <mj-section background-color="#ffffff" padding="20px 0" text-align="center">
           <mj-column>
             <mj-text>
