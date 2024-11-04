@@ -142,46 +142,7 @@ class RequerimentController {
       observations_retificacao_de_redacao,
     })
 
-    return response.status(201).json({
-      id: requeriment.id,
-      exigencias_id,
-      declaracao_sindical,
-      lista_e_edital,
-      assinatura_do_advogado,
-      declaracao_criminal,
-      declaracao_de_desimpedimento,
-      livro_rasao,
-      ppe,
-      requisitos_estatuto,
-      dissolucao_ou_exticao,
-      fundacoes,
-      reconhecimento_de_firma,
-      preechimento_completo,
-      oab,
-      documentacao_de_identificacao,
-      campo_de_assinatura,
-      retificacao_de_redacao,
-      informacao_divergente,
-      requisitos_de_estatutos_fundadores,
-      requisitos_criacao_de_estatuto,
-      estado_do_requerimento,
-      observations_lista_e_edital,
-      observations_assinatura_do_advogado,
-      observations_declaracao_criminal,
-      observations_declaracao_de_desimpedimento,
-      observations_livro_rasao,
-      observations_requisitos_estatuto,
-      observations_ppe,
-      observations_requisitos_criacao_de_estatuto,
-      observations_dissolucao_ou_exticao,
-      observations_fundacoes,
-      observations_reconhecimento_de_firma,
-      observations_oab,
-      observations_documentacao_de_identificacao,
-      observations_requisitos_de_estatutos_fundadores,
-      observations_campo_de_assinatura,
-      observations_retificacao_de_redacao,
-    })
+    return response.status(201).json(requeriment)
   }
 
   async update(request, response) {
@@ -282,7 +243,7 @@ class RequerimentController {
       observations_retificacao_de_redacao,
     } = sanitizeInput(request.body)
 
-    await Requeriment.update(
+    const updateRequeriment = await Requeriment.update(
       {
         exigencias_id,
         declaracao_sindical,
@@ -325,45 +286,7 @@ class RequerimentController {
       { where: { id } }
     )
 
-    return response.status(201).json({
-      exigencias_id,
-      declaracao_sindical,
-      lista_e_edital,
-      assinatura_do_advogado,
-      declaracao_criminal,
-      declaracao_de_desimpedimento,
-      livro_rasao,
-      ppe,
-      requisitos_estatuto,
-      dissolucao_ou_exticao,
-      fundacoes,
-      reconhecimento_de_firma,
-      preechimento_completo,
-      oab,
-      documentacao_de_identificacao,
-      campo_de_assinatura,
-      retificacao_de_redacao,
-      informacao_divergente,
-      requisitos_de_estatutos_fundadores,
-      requisitos_criacao_de_estatuto,
-      estado_do_requerimento,
-      observations_lista_e_edital,
-      observations_assinatura_do_advogado,
-      observations_declaracao_criminal,
-      observations_declaracao_de_desimpedimento,
-      observations_livro_rasao,
-      observations_requisitos_estatuto,
-      observations_ppe,
-      observations_requisitos_criacao_de_estatuto,
-      observations_dissolucao_ou_exticao,
-      observations_fundacoes,
-      observations_reconhecimento_de_firma,
-      observations_oab,
-      observations_documentacao_de_identificacao,
-      observations_requisitos_de_estatutos_fundadores,
-      observations_campo_de_assinatura,
-      observations_retificacao_de_redacao,
-    })
+    return response.status(201).json(updateRequeriment)
   }
 }
 

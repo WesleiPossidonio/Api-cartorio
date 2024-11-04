@@ -50,6 +50,8 @@ export const sendMailRequeriments = async (request, response) => {
     sobre_exigencia,
   } = request.body
 
+  console.log(itens_da_lista_pendetes)
+
   const mjmlCode = `
     <mj-style>
       .full-width-image img {
@@ -145,7 +147,90 @@ export const sendMailRequeriments = async (request, response) => {
                             'Sem observações'
                               ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.observations_requisitos_estatuto}`
                               : ''),
-                          // Adicionar mais itens de acordo com a lista fornecida
+                          declaracao_de_desimpedimento:
+                            'Apresentar declaração de desimpedimento; (contratos e averbações de sociedade simples, ME, EPP); (CNCGJ) (CNCGJ Art. 938)' +
+                              itens_da_lista_pendetes.observations_declaracao_de_desimpedimento !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.observations_declaracao_de_desimpedimento}`
+                              : '',
+                          livro_rasao:
+                            'Apresentar livro razão ou contábil anteriormente registrado; (CNCGJ Art. 960 § 1º)' +
+                              itens_da_lista_pendetes.livro_rasao !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.livro_rasao}`
+                              : '',
+                          ppe:
+                            'Apresentar declaração de pessoa politicamente exposta (PPE) (Provimento CNJ 88/2019)' +
+                              itens_da_lista_pendetes.ppe !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.ppe}`
+                              : '',
+                          dissolucao_ou_exticao:
+                            'No caso de dissolução ou extinção apresentar o documento; (liquidação, divisão de cotas de sócios, inexistência de ativo e passivo, guarda dos livros etc.) (CNCGJ Art. 953)' +
+                              itens_da_lista_pendetes.dissolucao_ou_exticao !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.dissolucao_ou_exticao}`
+                              : '',
+                          fundacoes:
+                            'Nos atos referentes a fundações, exigir-se-á aprovação prévia do Ministério Público; (CNCGJ Art. 941)' +
+                              itens_da_lista_pendetes.fundacoes !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.fundacoes}`
+                              : '',
+                          reconhecimento_de_firma:
+                            'Apresentar reconhecimento de firme no requerimento do DBE' +
+                              itens_da_lista_pendetes.reconhecimento_de_firma !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.reconhecimento_de_firma}`
+                              : '',
+                          oab:
+                            'Apresentar cópia da OAB do representante jurídico do ato apresentado' +
+                              itens_da_lista_pendetes.oab !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.oab}`
+                              : '',
+                          documentacao_de_identificacao:
+                            'Apresentar cópia simples do documento de identificação' +
+                              itens_da_lista_pendetes.documentacao_de_identificacao !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.documentacao_de_identificacao}`
+                              : '',
+                          campo_de_assinatura:
+                            'Preencher todos os campos de assinatura;' +
+                              itens_da_lista_pendetes.campo_de_assinatura !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.campo_de_assinatura}`
+                              : '',
+                          retificacao_de_redacao:
+                            'Retificar redação do documento apresentado;' +
+                              itens_da_lista_pendetes.retificacao_de_redacao !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.retificacao_de_redacao}`
+                              : '',
+                          informacao_divergente:
+                            'Informações Adicionais:' +
+                              itens_da_lista_pendetes.informacao_divergente !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.informacao_divergente}`
+                              : '',
+                          requisitos_de_estatutos_fundadores:
+                            'Apresentar os requisitos obrigatórios no Estatuto: relação de documentos de fundadores; ( CNCGJ Art. 945 / Lei 6.015 no Art. 120  / Lei 10.406 Art. 46)' +
+                              itens_da_lista_pendetes.requisitos_de_estatutos_fundadores !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.requisitos_de_estatutos_fundadores}`
+                              : '',
+                          requisitos_criacao_de_estatuto:
+                            'Apresentar os requisitos obrigatórios para criação do estatuto; (Lei 10.406/2002 Art. 54)' +
+                              itens_da_lista_pendetes.requisitos_criacao_de_estatuto !==
+                            'Sem observações'
+                              ? `<br/> <strong>Obs:</strong> ${itens_da_lista_pendetes.requisitos_criacao_de_estatuto}`
+                              : '',
+                          estado_do_requerimento:
+                            '' +
+                              itens_da_lista_pendetes.estado_do_requerimento !==
+                            'Sem observações'
+                              ? ''
+                              : '',
                         }[key]
                       }
                     </p>

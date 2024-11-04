@@ -65,17 +65,17 @@ class AssociationDataController {
     } = sanitizedData
 
     try {
-      const dataRequerimentProtocolNumber = await AssociationData.findOne({
+      const dataAssociationProtocolNumber = await AssociationData.findOne({
         where: { numero_do_protocolo },
       })
 
-      if (dataRequerimentProtocolNumber) {
+      if (dataAssociationProtocolNumber) {
         return response
           .status(409)
           .json({ error: 'this number protocol already exists' })
       }
 
-      const requeriment = await AssociationData.create({
+      const association = await AssociationData.create({
         nome_da_instituicao,
         numero_do_protocolo,
         cnpj_cpf,
@@ -85,16 +85,7 @@ class AssociationDataController {
         sobre_exigencia,
       })
 
-      return response.status(201).json({
-        id: requeriment.id,
-        nome_da_instituicao,
-        numero_do_protocolo,
-        cnpj_cpf,
-        nome_do_representante,
-        email_do_representante,
-        telefone_contato,
-        sobre_exigencia,
-      })
+      return response.status(201).json(association)
     } catch (error) {
       return response.status(500).json({ error: 'Internal server error' })
     }
@@ -146,6 +137,7 @@ class AssociationDataController {
               'observations_requisitos_de_estatutos_fundadores',
               'observations_campo_de_assinatura',
               'observations_retificacao_de_redacao',
+              'observations_declaracao_sindical',
             ],
           },
         ],
