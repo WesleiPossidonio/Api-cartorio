@@ -1,8 +1,9 @@
 import * as Yup from 'yup'
-import validator from 'validator'
 import User from '../models/User'
 import mjml2html from 'mjml'
 import nodemailer from 'nodemailer'
+import jwt from 'jsonwebtoken'
+import authConfig from '../../config/auth'
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -17,61 +18,45 @@ const transporter = nodemailer.createTransport({
   },
 })
 
-// Função de sanitização reutilizável
-const sanitizeInput = (data) => {
-  return {
-    email: data.email ? validator.normalizeEmail(data.email) : undefined,
-  }
-}
-
 class ConfirmEmail {
   async store(request, response) {
     const schema = Yup.object().shape({
       email: Yup.string().email().required(),
     })
 
-    const emailOrPasswordIncorrect = () => {
+    // Validação dos dados de entrada diretamente
+    if (!(await schema.isValid(request.body))) {
       return response.status(400).json({ error: 'Email incorrect' })
     }
 
-    // Sanitização dos dados de entrada
-    const sanitizedData = sanitizeInput(request.body)
-
-    if (!(await schema.isValid(sanitizedData))) {
-      return response.status(400).json({ error: 'Email incorrect' })
-    }
-
-    const { email } = sanitizedData
+    const { email } = request.body
 
     const user = await User.findOne({
-      where: { email },
+      where: { email: email.toLowerCase() },
     })
 
     if (!user) {
-      return emailOrPasswordIncorrect()
+      return response.status(400).json({ error: 'Email incorrect' })
     }
 
     const verificationNumber = Math.floor(Math.random() * 40001) + 10000
-
     await user.update({ update_number: verificationNumber })
 
     const mjmlCode = `
+      <mj-style>
+        .full-width-image img {
+        width: 100% !important;
+        height: auto !important;
+        }
+      </mj-style>
       <mjml version="3.3.3">
         <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
-          <mj-section background-color="#d1d1d1" background-repeat="repeat" padding="20px" display="flex" align-items="center">
-            <mj-column>
-                <mj-image src="https://imgbly.com/ib/eBA6SgxbZC.png" width="180px"></mj-image>
-            </mj-column>
-            <mj-column>
-              <mj-text line-height="1.6" margin-top="15px" font-size="14px">
-                <h3>
-                  Cartório <br/> 1º Ofício de Justiça de Macaé
-                </h3>
-              </mj-text>
+          <mj-section background-color="#f2f2f2" padding="0" text-align="center">
+            <mj-column padding="0">
+              <mj-image src="https://i.imgur.com/BReyDw0l.jpg" fluid-on-mobile="true" padding="0" css-class="full-width-image"></mj-image>
             </mj-column>
           </mj-section>
-
-          <mj-section background-color="#fff" background-repeat="repeat" background-size="auto" padding="0px 0px 20px 0px" align-items="center" text-align="center" vertical-align="top">
+          <mj-section background-color="#fff" padding="0px 0px 20px 0px" align-items="center" text-align="center">
             <mj-column>
               <mj-text>
                   <p color="#000" margin-bottom="1rem" class="Title-list">Atualização de Senha</p>
@@ -79,25 +64,18 @@ class ConfirmEmail {
                   <p color="#000" >Clique no botão para atualizar a sua senha</p>
               </mj-text>
               <mj-button background-color="#006EAF" 
-                href="https://project-cartorio.vercel.app/Atualizar-Senha" padding="20px"> 
+                href="https://sistema1oficio.vercel.app/Atualizar-Senha" padding="20px"> 
                 Clique Aqui! 
               </mj-button>
             </mj-column>
           </mj-section>
-
-          <mj-section background-color="#55575d" background-repeat="repeat" padding="20px 0" text-align="center" vertical-align="top">
+          <mj-section background-color="#55575d" padding="20px 0" text-align="center">
               <mj-column>
-                  <mj-text align="center" color="#000" font-family="Arial, sans-serif" font-size="13px" line-height="22px">
-                      <p color="#000"><strong>Rua Pereira de Souza, nº 104 - Centro, Macaé, RJ CEP:27.913-110</strong></p>
-                      <p color="#000"><strong>Tel: (22) 2106-1902  WhatsApp: (22) 99979.6222</strong></p>
-                      <p color="#000"><strong>E-mail: rtd-pj@macae1oficio.com.br</p>
+                  <mj-text align="center" color="#000" font-size="13px" line-height="22px">
+                      <p><strong>Rua Pereira de Souza, nº 104 - Centro, Macaé, RJ CEP:27.913-110</strong></p>
+                      <p><strong>Tel: (22) 2106-1902  WhatsApp: (22) 99979.6222</strong></p>
+                      <p><strong>E-mail: rtd-pj@macae1oficio.com.br</p>
                   </mj-text>
-              </mj-column>
-          </mj-section>
-      
-          <mj-section background-repeat="repeat" background-size="auto" padding="20px 0px 20px 0px" text-align="center" vertical-align="top">
-              <mj-column>
-                  <mj-text align="center" color="#55575d" font-family="Arial, sans-serif" font-size="11px" line-height="22px" padding="0px 20px"></mj-text>
               </mj-column>
           </mj-section>
         </mj-body>
@@ -122,7 +100,11 @@ class ConfirmEmail {
 
     try {
       await transporter.sendMail(mailOptions)
-      return response.status(200).json({ message: 'Email sent successfully' })
+      return response.status(200).json({
+        token: jwt.sign({ id: user.id }, authConfig.secret, {
+          expiresIn: authConfig.expiresIn,
+        }),
+      })
     } catch (error) {
       console.error('Erro ao enviar o email:', error)
       return response.status(500).json({ error: 'Error sending email' })

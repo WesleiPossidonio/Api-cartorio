@@ -201,7 +201,7 @@ class AssociationDataController {
         email_do_representante,
         telefone_contato,
       },
-      { where: { id } }
+      { where: { id } },
     )
 
     return response.status(201).json({

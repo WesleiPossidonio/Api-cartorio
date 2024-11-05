@@ -283,7 +283,7 @@ class RequerimentController {
         observations_campo_de_assinatura,
         observations_retificacao_de_redacao,
       },
-      { where: { id } }
+      { where: { id } },
     )
 
     return response.status(201).json(updateRequeriment)

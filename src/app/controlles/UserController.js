@@ -61,7 +61,7 @@ class UserController {
       update_number,
     })
 
-    return response.status(201).json()
+    return response.status(201).json({ message: 'User created successfully' })
   }
 
   async update(request, response) {
@@ -82,9 +82,9 @@ class UserController {
     }
 
     const { password, update_number, name, email, registration } = sanitizedBody
-    const { id } = request.params
+    const { id } = request.params // Assumindo que `id` seja passado na URL (ex: /users/:id)
 
-    if (update_number !== undefined) {
+    if (update_number) {
       const verificationNumber = await User.findOne({
         where: { update_number },
       })
@@ -95,7 +95,9 @@ class UserController {
 
       await User.update({ password }, { where: { update_number } })
 
-      return response.status(200).json('Senha atualizada')
+      return response
+        .status(200)
+        .json({ message: 'Password updated successfully' })
     }
 
     const verificationUser = await User.findOne({
@@ -103,15 +105,15 @@ class UserController {
     })
 
     if (!verificationUser) {
-      return response.status(400).json({ error: 'Usuário não encontrado' })
+      return response.status(404).json({ error: 'User not found' })
     }
 
     await User.update(
       { password, name, email, registration },
-      { where: { id } }
+      { where: { id } },
     )
 
-    return response.status(200).json('Senha atualizada')
+    return response.status(200).json({ message: 'User updated successfully' })
   }
 }
 
