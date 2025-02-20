@@ -1,5 +1,5 @@
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up (queryInterface, Sequelize) {
     await queryInterface.createTable('requirement', {
       id: {
         type: Sequelize.INTEGER,
@@ -90,6 +90,10 @@ module.exports = {
         allowNull: false,
       },
       informacao_divergente: {
+        type: Sequelize.JSONB,
+        allowNull: false,
+      },
+      requerimento_eletronico_rcpj: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -108,7 +112,7 @@ module.exports = {
     })
   },
 
-  async down(queryInterface) {
+  async down (queryInterface) {
     await queryInterface.dropTable('requirement')
   },
 }

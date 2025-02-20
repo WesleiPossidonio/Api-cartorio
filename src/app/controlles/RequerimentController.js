@@ -13,7 +13,7 @@ const sanitizeInput = (data) => {
 }
 
 class RequerimentController {
-  async store(request, response) {
+  async store (request, response) {
     const schema = Yup.object().shape({
       exigencias_id: Yup.number().required(),
       declaracao_sindical: Yup.string().required(),
@@ -32,10 +32,14 @@ class RequerimentController {
       documentacao_de_identificacao: Yup.string().required(),
       campo_de_assinatura: Yup.string().required(),
       retificacao_de_redacao: Yup.string().required(),
-      informacao_divergente: Yup.string().required(),
+      informacao_divergente: Yup.object().shape({
+        info: Yup.string().required(),
+        state: Yup.string().required(),
+      }),
       requisitos_criacao_de_estatuto: Yup.string().required(),
       requisitos_de_estatutos_fundadores: Yup.string().required(),
       estado_do_requerimento: Yup.string().required(),
+      requerimento_eletronico_rcpj: Yup.string().required(),
       observations_declaracao_sindical: Yup.string().optional(),
       observations_lista_e_edital: Yup.string().optional(),
       observations_assinatura_do_advogado: Yup.string().optional(),
@@ -53,6 +57,7 @@ class RequerimentController {
       observations_requisitos_de_estatutos_fundadores: Yup.string().optional(),
       observations_campo_de_assinatura: Yup.string().optional(),
       observations_retificacao_de_redacao: Yup.string().optional(),
+      observations_requerimento_eletronico_rcpj: Yup.string().optional(),
     })
 
     try {
@@ -84,6 +89,7 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
       estado_do_requerimento,
+      requerimento_eletronico_rcpj,
       observations_lista_e_edital,
       observations_assinatura_do_advogado,
       observations_declaracao_criminal,
@@ -100,6 +106,7 @@ class RequerimentController {
       observations_requisitos_de_estatutos_fundadores,
       observations_campo_de_assinatura,
       observations_retificacao_de_redacao,
+      observations_requerimento_eletronico_rcpj,
     } = sanitizeInput(request.body)
 
     const requeriment = await Requeriment.create({
@@ -120,6 +127,7 @@ class RequerimentController {
       documentacao_de_identificacao,
       campo_de_assinatura,
       retificacao_de_redacao,
+      requerimento_eletronico_rcpj,
       informacao_divergente,
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
@@ -140,12 +148,13 @@ class RequerimentController {
       observations_requisitos_de_estatutos_fundadores,
       observations_campo_de_assinatura,
       observations_retificacao_de_redacao,
+      observations_requerimento_eletronico_rcpj
     })
 
     return response.status(201).json(requeriment)
   }
 
-  async update(request, response) {
+  async update (request, response) {
     const schema = Yup.object().shape({
       exigencias_id: Yup.number().required(),
       declaracao_sindical: Yup.string().optional(),
@@ -161,10 +170,14 @@ class RequerimentController {
       reconhecimento_de_firma: Yup.string().optional(),
       preechimento_completo: Yup.string().optional(),
       oab: Yup.string().optional(),
+      requerimento_eletronico_rcpj: Yup.string().optional(),
       documentacao_de_identificacao: Yup.string().optional(),
       campo_de_assinatura: Yup.string().optional(),
       retificacao_de_redacao: Yup.string().optional(),
-      informacao_divergente: Yup.string().optional(),
+      informacao_divergente: Yup.object().shape({
+        info: Yup.string().required(),
+        state: Yup.string().required(),
+      }),
       requisitos_criacao_de_estatuto: Yup.string().optional(),
       requisitos_de_estatutos_fundadores: Yup.string().optional(),
       estado_do_requerimento: Yup.string().optional(),
@@ -184,6 +197,7 @@ class RequerimentController {
       observations_requisitos_de_estatutos_fundadores: Yup.string().optional(),
       observations_campo_de_assinatura: Yup.string().optional(),
       observations_retificacao_de_redacao: Yup.string().optional(),
+      observations_requerimento_eletronico_rcpj: Yup.string().optional(),
     })
 
     try {
@@ -195,7 +209,7 @@ class RequerimentController {
 
     const { id } = request.params
 
-    const userExists = await Requeriment.findOne({
+    const userExists = await Requeriment.findByPk({
       where: { id },
     })
 
@@ -225,6 +239,7 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores,
       requisitos_criacao_de_estatuto,
       estado_do_requerimento,
+      requerimento_eletronico_rcpj,
       observations_lista_e_edital,
       observations_assinatura_do_advogado,
       observations_declaracao_criminal,
@@ -241,6 +256,7 @@ class RequerimentController {
       observations_requisitos_de_estatutos_fundadores,
       observations_campo_de_assinatura,
       observations_retificacao_de_redacao,
+      observations_requerimento_eletronico_rcpj
     } = sanitizeInput(request.body)
 
     const updateRequeriment = await Requeriment.update(
@@ -257,6 +273,7 @@ class RequerimentController {
         dissolucao_ou_exticao,
         fundacoes,
         reconhecimento_de_firma,
+        requerimento_eletronico_rcpj,
         preechimento_completo,
         oab,
         documentacao_de_identificacao,
@@ -282,6 +299,7 @@ class RequerimentController {
         observations_requisitos_de_estatutos_fundadores,
         observations_campo_de_assinatura,
         observations_retificacao_de_redacao,
+        observations_requerimento_eletronico_rcpj
       },
       { where: { id } },
     )

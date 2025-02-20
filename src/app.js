@@ -2,7 +2,6 @@ import express from 'express'
 import routes from './routes'
 import cors from 'cors'
 import './database/index'
-
 class App {
   constructor() {
     this.app = express()
@@ -11,7 +10,7 @@ class App {
     this.routes()
   }
 
-  middlewares() {
+  middlewares () {
     this.app.use(express.json())
 
     this.app.use(
@@ -21,11 +20,11 @@ class App {
     )
   }
 
-  routes() {
+  routes () {
     this.app.use(routes)
   }
 
-  checkOrigin(origin, callback) {
+  checkOrigin (origin, callback) {
     const allowedOrigins = [
       'http://localhost:5173',
       'https://project-cartorio.vercel.app',

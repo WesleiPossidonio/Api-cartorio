@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up (queryInterface, Sequelize) {
     await queryInterface.addColumn(
       'requirement',
       'observations_declaracao_sindical',
@@ -156,9 +156,19 @@ module.exports = {
         defaultValue: 'Sem observações',
       }
     )
+
+    await queryInterface.addColumn(
+      'requirement',
+      'observations_requerimento_eletronico_rcpj',
+      {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        defaultValue: 'Sem observações',
+      }
+    )
   },
 
-  async down(queryInterface, Sequelize) {
+  async down (queryInterface, Sequelize) {
     await queryInterface.removeColumn(
       'requirement',
       'observations_declaracao_sindical'
@@ -230,6 +240,11 @@ module.exports = {
     await queryInterface.removeColunm(
       'requirement',
       'observations_retificacao_de_redacao'
+    )
+
+    await queryInterface.removeColunm(
+      'requirement',
+      'observations_requerimento_eletronico_rcpj'
     )
   },
 }

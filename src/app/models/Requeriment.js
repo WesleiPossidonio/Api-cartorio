@@ -1,7 +1,7 @@
 import { Sequelize, Model } from 'sequelize'
 
 class Requeriment extends Model {
-  static init(sequelize) {
+  static init (sequelize) {
     super.init(
       {
         exigencias_id: Sequelize.INTEGER,
@@ -21,10 +21,11 @@ class Requeriment extends Model {
         documentacao_de_identificacao: Sequelize.STRING,
         campo_de_assinatura: Sequelize.STRING,
         retificacao_de_redacao: Sequelize.STRING,
-        informacao_divergente: Sequelize.TEXT,
+        informacao_divergente: Sequelize.JSONB,
         requisitos_criacao_de_estatuto: Sequelize.STRING,
         requisitos_de_estatutos_fundadores: Sequelize.STRING,
         estado_do_requerimento: Sequelize.STRING,
+        requerimento_eletronico_rcpj: Sequelize.STRING,
         observations_declaracao_sindical: Sequelize.TEXT,
         observations_lista_e_edital: Sequelize.TEXT,
         observations_assinatura_do_advogado: Sequelize.TEXT,
@@ -42,6 +43,7 @@ class Requeriment extends Model {
         observations_requisitos_de_estatutos_fundadores: Sequelize.TEXT,
         observations_campo_de_assinatura: Sequelize.TEXT,
         observations_retificacao_de_redacao: Sequelize.TEXT,
+        observations_requerimento_eletronico_rcpj: Sequelize.TEXT,
       },
       {
         sequelize,
@@ -51,7 +53,7 @@ class Requeriment extends Model {
     return this
   }
 
-  static associate(models) {
+  static associate (models) {
     this.belongsTo(models.AssociationData, {
       foreignKey: 'exigencias_id',
       as: 'DadosAssociacao',
