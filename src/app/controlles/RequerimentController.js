@@ -209,7 +209,7 @@ class RequerimentController {
 
     const { id } = request.params
 
-    const userExists = await Requeriment.findByPk({
+    const userExists = await Requeriment.findOne({
       where: { id },
     })
 
