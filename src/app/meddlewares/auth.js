@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken'
 import authConfig from '../../config/auth'
 
 export default (request, response, next) => {
-  const authToken = request.cookies['token']  // Nome do cookie que armazena o token
+  const authToken = request.cookies['token']
+  console.log(authToken)  // Nome do cookie que armazena o token
 
   if (!authToken) {
     return response.status(401).json({ error: 'Token not provided' })
