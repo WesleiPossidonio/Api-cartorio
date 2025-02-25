@@ -195,6 +195,8 @@ class AssociationDataController {
       status_association,
     } = sanitizedData
 
+    console.log(`Status =>`, status_association)
+
     await AssociationData.update(
       {
         nome_da_instituicao,
