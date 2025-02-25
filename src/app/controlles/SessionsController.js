@@ -15,7 +15,7 @@ const sanitizeInput = (data) => {
 }
 
 class SessionController {
-  async store(request, response) {
+  async store (request, response) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       password: Yup.string().required(),
@@ -47,17 +47,40 @@ class SessionController {
       return nameOrPasswordIncorrect()
     }
 
+    const token = jwt.sign({ id: users.id }, authConfig.secret, {
+      expiresIn: authConfig.expiresIn,
+    })
+
+    response.cookie('token', token, {
+      httpOnly: true, // Impede acesso via JavaScript (XSS)
+      secure: process.env.NODE_ENV === 'production', // Ativa apenas em HTTPS
+      sameSite: 'Strict', // Evita CSRF
+      maxAge: 24 * 60 * 60 * 1000, // Expira em 1 dia
+    })
+
     return response.json({
-      id: users.id,
       name: users.name,
       admin: users.admin,
       email: users.email,
       registration: users.registration,
-      token: jwt.sign({ id: users.id }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
     })
   }
+
+  async index (request, response) {
+    const token = request.cookies['token']
+
+    if (!token) {
+      return response.status(401).json({ error: 'Token not provided' });
+    }
+
+    try {
+      const decoded = jwt.verify(token, authConfig.secret);
+      response.status(200).json({ message: 'Authenticated', userId: decoded.id });
+    } catch {
+      return response.status(401).json({ error: 'Token is invalid or expired' });
+    }
+  }
+
 }
 
 export default new SessionController()

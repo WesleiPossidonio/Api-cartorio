@@ -1,26 +1,19 @@
-import Jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import authConfig from '../../config/auth'
 
 export default (request, response, next) => {
-  const authToken = request.headers.authorization
+  const authToken = request.cookies['token']  // Nome do cookie que armazena o token
 
   if (!authToken) {
     return response.status(401).json({ error: 'Token not provided' })
   }
 
-  const token = authToken.split(' ')[1]
-
   try {
-    Jwt.verify(token, authConfig.secret, function (err, decoded) {
-      if (err) {
-        throw new Error()
-      }
-
-      request.userId = decoded.id
-      request.userName = decoded.name
-    })
+    const decoded = jwt.verify(authToken, authConfig.secret)
+    request.userId = decoded.id
+    request.userName = decoded.name
+    return next()
   } catch {
     return response.status(401).json({ error: 'Token is invalid' })
   }
-  return next()
 }

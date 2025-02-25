@@ -1,6 +1,7 @@
 import express from 'express'
 import routes from './routes'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 import './database/index'
 class App {
   constructor() {
@@ -11,11 +12,13 @@ class App {
   }
 
   middlewares () {
+    this.app.use(cookieParser())
     this.app.use(express.json())
 
     this.app.use(
       cors({
         origin: (origin, callback) => this.checkOrigin(origin, callback),
+        credentials: true, // Permite o envio de cookies
       })
     )
   }

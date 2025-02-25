@@ -168,81 +168,81 @@ module.exports = {
     )
   },
 
-  async down (queryInterface, Sequelize) {
+  async down (queryInterface) {
     await queryInterface.removeColumn(
       'requirement',
       'observations_declaracao_sindical'
     )
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_lista_e_edital'
     )
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_assinatura_do_advogado'
     )
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_declaracao_criminal'
     )
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_declaracao_de_desimpedimento'
     )
 
-    await queryInterface.removeColunm('requirement', 'observations_livro_rasao')
+    await queryInterface.removeColumn('requirement', 'observations_livro_rasao')
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_requisitos_estatuto'
     )
 
-    await queryInterface.removeColunm('requirement', 'observations_ppe')
+    await queryInterface.removeColumn('requirement', 'observations_ppe')
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_requisitos_criacao_de_estatuto'
     )
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_dissolucao_ou_exticao'
     )
 
-    await queryInterface.removeColunm('requirement', 'observations_fundacoes')
+    await queryInterface.removeColumn('requirement', 'observations_fundacoes')
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_reconhecimento_de_firma'
     )
 
-    await queryInterface.removeColunm('requirement', 'observations_oab')
+    await queryInterface.removeColumn('requirement', 'observations_oab')
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_documentacao_de_identificacao'
     )
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_requisitos_de_estatutos_fundadores'
     )
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_campo_de_assinatura'
     )
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_retificacao_de_redacao'
     )
 
-    await queryInterface.removeColunm(
+    await queryInterface.removeColumn(
       'requirement',
       'observations_requerimento_eletronico_rcpj'
     )

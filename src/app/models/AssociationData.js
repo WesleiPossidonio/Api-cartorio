@@ -1,7 +1,7 @@
 import { Sequelize, Model } from 'sequelize'
 
 class AssociationData extends Model {
-  static init(sequelize) {
+  static init (sequelize) {
     super.init(
       {
         numero_do_protocolo: Sequelize.INTEGER,
@@ -11,6 +11,7 @@ class AssociationData extends Model {
         email_do_representante: Sequelize.STRING,
         telefone_contato: Sequelize.STRING,
         sobre_exigencia: Sequelize.STRING,
+        status_association: Sequelize.STRING,
       },
       {
         sequelize,
@@ -20,7 +21,7 @@ class AssociationData extends Model {
     return this
   }
 
-  static associate(models) {
+  static associate (models) {
     this.hasOne(models.Requeriment, {
       foreignKey: 'exigencias_id',
       as: 'exigencias',

@@ -34,7 +34,7 @@ const sanitizeInput = (data) => {
 }
 
 class AssociationDataController {
-  async store(request, response) {
+  async store (request, response) {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
       numero_do_protocolo: Yup.number().required(),
@@ -43,6 +43,7 @@ class AssociationDataController {
       email_do_representante: Yup.string().email().required(),
       telefone_contato: Yup.string().required(),
       sobre_exigencia: Yup.string().required(),
+      status_association: Yup.string().optional(),
     })
 
     // Sanitização dos dados de entrada
@@ -62,6 +63,7 @@ class AssociationDataController {
       email_do_representante,
       telefone_contato,
       sobre_exigencia,
+      status_association
     } = sanitizedData
 
     try {
@@ -83,15 +85,16 @@ class AssociationDataController {
         email_do_representante,
         telefone_contato,
         sobre_exigencia,
+        status_association
       })
 
       return response.status(201).json(association)
     } catch (error) {
-      return response.status(500).json({ error: 'Internal server error' })
+      return response.status(500).json({ error: 'Internal server error', errorValue: error.value })
     }
   }
 
-  async index(request, response) {
+  async index (request, response) {
     try {
       const associations = await AssociationData.findAll({
         order: [['createdAt', 'ASC']],
@@ -150,7 +153,7 @@ class AssociationDataController {
     }
   }
 
-  async update(request, response) {
+  async update (request, response) {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().optional(),
       numero_do_protocolo: Yup.number().optional(),
@@ -159,6 +162,7 @@ class AssociationDataController {
       email_do_representante: Yup.string().email().optional(),
       telefone_contato: Yup.string().optional(),
       sobre_exigencia: Yup.string().optional(),
+      status_association: Yup.string().optional(),
     })
 
     // Sanitização dos dados de entrada
@@ -188,6 +192,7 @@ class AssociationDataController {
       email_do_representante,
       telefone_contato,
       sobre_exigencia,
+      status_association,
     } = sanitizedData
 
     await AssociationData.update(
@@ -196,7 +201,7 @@ class AssociationDataController {
         numero_do_protocolo,
         sobre_exigencia,
         cnpj_cpf,
-
+        status_association,
         nome_do_representante,
         email_do_representante,
         telefone_contato,
@@ -212,6 +217,7 @@ class AssociationDataController {
       email_do_representante,
       telefone_contato,
       sobre_exigencia,
+      status_association,
     })
   }
 }

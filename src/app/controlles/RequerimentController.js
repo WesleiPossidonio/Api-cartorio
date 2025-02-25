@@ -175,8 +175,8 @@ class RequerimentController {
       campo_de_assinatura: Yup.string().optional(),
       retificacao_de_redacao: Yup.string().optional(),
       informacao_divergente: Yup.object().shape({
-        info: Yup.string().required(),
-        state: Yup.string().required(),
+        info: Yup.string().opcional(),
+        state: Yup.string().opcional(),
       }),
       requisitos_criacao_de_estatuto: Yup.string().optional(),
       requisitos_de_estatutos_fundadores: Yup.string().optional(),
@@ -209,12 +209,12 @@ class RequerimentController {
 
     const { id } = request.params
 
-    const userExists = await Requeriment.findOne({
+    const requirementExists = await Requeriment.findOne({
       where: { id },
     })
 
-    if (!userExists) {
-      return response.status(400).json({ error: 'User not found' })
+    if (!requirementExists) {
+      return response.status(400).json({ error: 'Requirement not found' })
     }
 
     const {
