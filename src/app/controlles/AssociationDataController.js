@@ -30,6 +30,9 @@ const sanitizeInput = (data) => {
     sobre_exigencia: data.sobre_exigencia
       ? validator.escape(data.sobre_exigencia)
       : undefined,
+    status_association: data.status_association
+      ? validator.escape(data.status_association)
+      : undefined,
   }
 }
 
@@ -195,7 +198,7 @@ class AssociationDataController {
       status_association,
     } = sanitizedData
 
-    console.log(`Status =>`, status_association)
+    if (status_association !== 'Concluido') console.log("errorrr", status_association)
 
     await AssociationData.update(
       {
