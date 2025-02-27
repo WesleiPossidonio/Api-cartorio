@@ -54,7 +54,7 @@ class SessionController {
     response.cookie('token', token, {
       httpOnly: true, // Impede acesso via JavaScript (XSS)
       secure: process.env.NODE_ENV === 'production', // Ativa apenas em HTTPS
-      sameSite: 'lax', // Evita CSRF
+      sameSite: 'none', // Evita CSRF
       maxAge: 24 * 60 * 60 * 1000, // Expira em 1 dia
     })
 
