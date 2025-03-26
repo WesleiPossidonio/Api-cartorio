@@ -52,10 +52,10 @@ class SessionController {
     })
 
     response.cookie('token', token, {
-      httpOnly: true, // Impede acesso via JavaScript (XSS)
-      secure: process.env.NODE_ENV === 'production', // Ativa apenas em HTTPS
-      sameSite: 'none', // Evita CSRF
-      maxAge: 24 * 60 * 60 * 1000, // Expira em 1 dia
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production' ? true : false, // Apenas em produção
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // LAX em desenvolvimento
+      maxAge: 24 * 60 * 60 * 1000,
     })
 
     return response.json({
