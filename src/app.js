@@ -12,9 +12,8 @@ class App {
   }
 
   middlewares () {
-    this.app.use(cookieParser())
     this.app.use(express.json())
-
+    this.app.use(cookieParser())
     this.app.use(
       cors({
         origin: (origin, callback) => this.checkOrigin(origin, callback),
