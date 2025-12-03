@@ -4,15 +4,17 @@ import User from '../models/User'
 import * as Yup from 'yup'
 
 // Função de sanitização reutilizável
+// Função de sanitização reutilizável
 const sanitizeInput = (data) => {
   const sanitizedData = {}
   Object.keys(data).forEach((key) => {
     sanitizedData[key] =
-      typeof data[key] === 'string' ? validator.escape(data[key]) : data[key]
+      typeof data[key] === 'string' && key !== 'registration'
+        ? validator.escape(data[key])
+        : data[key]
   })
   return sanitizedData
 }
-
 class UserController {
   async store (request, response) {
     const schema = Yup.object().shape({
