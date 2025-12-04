@@ -31,6 +31,7 @@ class App {
       'http://localhost:5173',
       'https://project-cartorio.vercel.app',
       'https://sistema1oficio.vercel.app',
+      'https://sistema1oficio.vercel.app/'
     ]
 
     if (!origin || allowedOrigins.includes(origin)) {
