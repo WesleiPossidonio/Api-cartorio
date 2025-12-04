@@ -33,8 +33,8 @@ class RequerimentController {
       campo_de_assinatura: Yup.string().required(),
       retificacao_de_redacao: Yup.string().required(),
       informacao_divergente: Yup.object().shape({
-        info: Yup.string().required(),
-        state: Yup.string().required(),
+        info: Yup.string().optional(),
+        state: Yup.string().optional(),
       }),
       requisitos_criacao_de_estatuto: Yup.string().required(),
       requisitos_de_estatutos_fundadores: Yup.string().required(),
