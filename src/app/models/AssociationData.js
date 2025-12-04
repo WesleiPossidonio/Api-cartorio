@@ -4,6 +4,11 @@ class AssociationData extends Model {
   static init (sequelize) {
     super.init(
       {
+        id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
         numero_do_protocolo: Sequelize.INTEGER,
         nome_da_instituicao: Sequelize.STRING,
         cnpj_cpf: Sequelize.STRING,
@@ -18,6 +23,7 @@ class AssociationData extends Model {
         tableName: 'association_data',
       }
     )
+
     return this
   }
 
