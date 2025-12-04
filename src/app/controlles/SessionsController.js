@@ -59,7 +59,6 @@ class SessionController {
     })
 
     return response.json({
-      token: token,
       name: users.name,
       admin: users.admin,
       email: users.email,
