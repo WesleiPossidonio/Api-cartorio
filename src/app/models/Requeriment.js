@@ -4,17 +4,7 @@ class Requeriment extends Model {
   static init (sequelize) {
     super.init(
       {
-        id: {
-          type: Sequelize.INTEGER,
-          primaryKey: true,
-          autoIncrement: true,
-        },
-
-        association_id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-        },
-
+        exigencias_id: Sequelize.INTEGER,
         declaracao_sindical: Sequelize.STRING,
         lista_e_edital: Sequelize.STRING,
         assinatura_do_advogado: Sequelize.STRING,
@@ -36,7 +26,6 @@ class Requeriment extends Model {
         requisitos_de_estatutos_fundadores: Sequelize.STRING,
         estado_do_requerimento: Sequelize.STRING,
         requerimento_eletronico_rcpj: Sequelize.STRING,
-
         observations_declaracao_sindical: Sequelize.TEXT,
         observations_lista_e_edital: Sequelize.TEXT,
         observations_assinatura_do_advogado: Sequelize.TEXT,
@@ -61,7 +50,6 @@ class Requeriment extends Model {
         tableName: 'requirement',
       }
     )
-
     return this
   }
 
