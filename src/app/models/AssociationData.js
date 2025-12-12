@@ -28,11 +28,12 @@ class AssociationData extends Model {
   }
 
   static associate (models) {
-    this.hasOne(models.Requeriment, {
+    this.hasMany(models.Requeriment, {
       foreignKey: 'exigencias_id',
-      as: 'exigencias',
-    })
+      as: 'exigencias',   // esse NOME precisa ser igual ao include
+    });
   }
+
 }
 
 export default AssociationData
