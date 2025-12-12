@@ -21,6 +21,7 @@ class AssociationData extends Model {
       {
         sequelize,
         tableName: 'association_data',
+        underscored: true,
       }
     )
 
@@ -30,8 +31,8 @@ class AssociationData extends Model {
   static associate (models) {
     this.hasMany(models.Requeriment, {
       foreignKey: 'exigencias_id',
-      as: 'exigencias',   // esse NOME precisa ser igual ao include
-    });
+      as: 'exigencias',
+    })
   }
 
 }

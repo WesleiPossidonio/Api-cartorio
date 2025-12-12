@@ -57,6 +57,7 @@ class Requeriment extends Model {
     this.belongsTo(models.AssociationData, {
       foreignKey: 'exigencias_id',
       as: 'DadosAssociacao',
+      underscored: true,
     })
   }
 }
