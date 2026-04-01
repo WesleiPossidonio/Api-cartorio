@@ -14,10 +14,10 @@ const sanitizeInput = (data) => {
 }
 
 class RequerimentController {
-  async store (request, response) {
+  async store(request, response) {
     const schema = Yup.object().shape({
       exigencias_id: Yup.number().required(),
-      declaracao_sindical: Yup.string().required(),
+      documento_inelegivel: Yup.string().required(),
       lista_e_edital: Yup.string().required(),
       assinatura_do_advogado: Yup.string().required(),
       declaracao_criminal: Yup.string().required(),
@@ -41,24 +41,40 @@ class RequerimentController {
       requisitos_de_estatutos_fundadores: Yup.string().required(),
       estado_do_requerimento: Yup.string().required(),
       requerimento_eletronico_rcpj: Yup.string().required(),
-      observations_declaracao_sindical: Yup.string().nullable().notRequired(),
+      observations_documento_inelegivel: Yup.string().nullable().notRequired(),
       observations_lista_e_edital: Yup.string().nullable().notRequired(),
-      observations_assinatura_do_advogado: Yup.string().nullable().notRequired(),
+      observations_assinatura_do_advogado: Yup.string()
+        .nullable()
+        .notRequired(),
       observations_declaracao_criminal: Yup.string().nullable().notRequired(),
-      observations_declaracao_de_desimpedimento: Yup.string().nullable().notRequired(),
+      observations_declaracao_de_desimpedimento: Yup.string()
+        .nullable()
+        .notRequired(),
       observations_livro_rasao: Yup.string().nullable().notRequired(),
       observations_requisitos_estatuto: Yup.string().nullable().notRequired(),
       observations_ppe: Yup.string().nullable().notRequired(),
-      observations_requisitos_criacao_de_estatuto: Yup.string().nullable().notRequired(),
+      observations_requisitos_criacao_de_estatuto: Yup.string()
+        .nullable()
+        .notRequired(),
       observations_dissolucao_ou_exticao: Yup.string().nullable().notRequired(),
       observations_fundacoes: Yup.string().nullable().notRequired(),
-      observations_reconhecimento_de_firma: Yup.string().nullable().notRequired(),
+      observations_reconhecimento_de_firma: Yup.string()
+        .nullable()
+        .notRequired(),
       observations_oab: Yup.string().nullable().notRequired(),
-      observations_documentacao_de_identificacao: Yup.string().nullable().notRequired(),
-      observations_requisitos_de_estatutos_fundadores: Yup.string().nullable().notRequired(),
+      observations_documentacao_de_identificacao: Yup.string()
+        .nullable()
+        .notRequired(),
+      observations_requisitos_de_estatutos_fundadores: Yup.string()
+        .nullable()
+        .notRequired(),
       observations_campo_de_assinatura: Yup.string().nullable().notRequired(),
-      observations_retificacao_de_redacao: Yup.string().nullable().notRequired(),
-      observations_requerimento_eletronico_rcpj: Yup.string().nullable().notRequired(),
+      observations_retificacao_de_redacao: Yup.string()
+        .nullable()
+        .notRequired(),
+      observations_requerimento_eletronico_rcpj: Yup.string()
+        .nullable()
+        .notRequired(),
     })
 
     try {
@@ -70,7 +86,7 @@ class RequerimentController {
 
     const {
       exigencias_id,
-      declaracao_sindical,
+      documento_inelegivel,
       lista_e_edital,
       assinatura_do_advogado,
       declaracao_criminal,
@@ -112,7 +128,7 @@ class RequerimentController {
 
     const requeriment = await Requeriment.create({
       exigencias_id,
-      declaracao_sindical,
+      documento_inelegivel,
       lista_e_edital,
       assinatura_do_advogado,
       declaracao_criminal,
@@ -149,16 +165,16 @@ class RequerimentController {
       observations_requisitos_de_estatutos_fundadores,
       observations_campo_de_assinatura,
       observations_retificacao_de_redacao,
-      observations_requerimento_eletronico_rcpj
+      observations_requerimento_eletronico_rcpj,
     })
 
     return response.status(201).json(requeriment)
   }
 
-  async update (request, response) {
+  async update(request, response) {
     const schema = Yup.object().shape({
       exigencias_id: Yup.number().required(),
-      declaracao_sindical: Yup.string().nullable(),
+      documento_inelegivel: Yup.string().nullable(),
       lista_e_edital: Yup.string().nullable(),
       assinatura_do_advogado: Yup.string().nullable(),
       declaracao_criminal: Yup.string().nullable(),
@@ -225,11 +241,13 @@ class RequerimentController {
       })
 
       if (!associationExists) {
-        return response.status(400).json({ error: 'Association update not found' })
+        return response
+          .status(400)
+          .json({ error: 'Association update not found' })
       }
 
       await associationExists.update({
-        status_association: "concluído",
+        status_association: 'concluído',
       })
     }
 
@@ -239,7 +257,6 @@ class RequerimentController {
 
     return response.status(200).json(updated)
   }
-
 }
 
 export default new RequerimentController()

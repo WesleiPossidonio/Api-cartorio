@@ -1,11 +1,11 @@
 import { Sequelize, Model } from 'sequelize'
 
 class Requeriment extends Model {
-  static init (sequelize) {
+  static init(sequelize) {
     super.init(
       {
         exigencias_id: Sequelize.INTEGER,
-        declaracao_sindical: Sequelize.STRING,
+        documento_inelegivel: Sequelize.STRING,
         lista_e_edital: Sequelize.STRING,
         assinatura_do_advogado: Sequelize.STRING,
         declaracao_criminal: Sequelize.STRING,
@@ -26,7 +26,7 @@ class Requeriment extends Model {
         requisitos_de_estatutos_fundadores: Sequelize.STRING,
         estado_do_requerimento: Sequelize.STRING,
         requerimento_eletronico_rcpj: Sequelize.STRING,
-        observations_declaracao_sindical: Sequelize.TEXT,
+        observations_documento_inelegivel: Sequelize.TEXT,
         observations_lista_e_edital: Sequelize.TEXT,
         observations_assinatura_do_advogado: Sequelize.TEXT,
         observations_declaracao_criminal: Sequelize.TEXT,
@@ -48,12 +48,12 @@ class Requeriment extends Model {
       {
         sequelize,
         tableName: 'requirement',
-      }
+      },
     )
     return this
   }
 
-  static associate (models) {
+  static associate(models) {
     this.belongsTo(models.AssociationData, {
       foreignKey: 'exigencias_id',
       as: 'DadosAssociacao',
