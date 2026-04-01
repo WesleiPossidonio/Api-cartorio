@@ -106,7 +106,7 @@ class AssociationDataController {
         include: [
           {
             model: Requeriment,
-            as: 'exigencias',
+            as: 'exigencia', // singular
             attributes: [
               'id',
               'documento_inelegivel',

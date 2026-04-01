@@ -1,7 +1,7 @@
 import { Sequelize, Model } from 'sequelize'
 
 class AssociationData extends Model {
-  static init (sequelize) {
+  static init(sequelize) {
     super.init(
       {
         id: {
@@ -22,19 +22,18 @@ class AssociationData extends Model {
         sequelize,
         tableName: 'association_data',
         underscored: true,
-      }
+      },
     )
 
     return this
   }
 
-  static associate (models) {
-    this.hasMany(models.Requeriment, {
+  static associate(models) {
+    this.hasOne(models.Requeriment, {
       foreignKey: 'exigencias_id',
-      as: 'exigencias',
+      as: 'exigencia',
     })
   }
-
 }
 
 export default AssociationData
