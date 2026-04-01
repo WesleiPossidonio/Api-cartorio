@@ -37,7 +37,7 @@ const sanitizeInput = (data) => {
 }
 
 class AssociationDataController {
-  async store (request, response) {
+  async store(request, response) {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
       numero_do_protocolo: Yup.number().required(),
@@ -66,7 +66,7 @@ class AssociationDataController {
       email_do_representante,
       telefone_contato,
       sobre_exigencia,
-      status_association
+      status_association,
     } = sanitizedData
 
     try {
@@ -88,16 +88,18 @@ class AssociationDataController {
         email_do_representante,
         telefone_contato,
         sobre_exigencia,
-        status_association
+        status_association,
       })
 
       return response.status(201).json(association)
     } catch (error) {
-      return response.status(500).json({ error: 'Internal server error', errorValue: error.value })
+      return response
+        .status(500)
+        .json({ error: 'Internal server error', errorValue: error.value })
     }
   }
 
-  async index (request, response) {
+  async index(request, response) {
     try {
       const associations = await AssociationData.findAll({
         order: [['createdAt', 'ASC']],
@@ -107,7 +109,7 @@ class AssociationDataController {
             as: 'exigencias',
             attributes: [
               'id',
-              'declaracao_sindical',
+              'documento_inelegivel',
               'lista_e_edital',
               'assinatura_do_advogado',
               'declaracao_criminal',
@@ -143,7 +145,7 @@ class AssociationDataController {
               'observations_requisitos_de_estatutos_fundadores',
               'observations_campo_de_assinatura',
               'observations_retificacao_de_redacao',
-              'observations_declaracao_sindical',
+              'observations_documento_inelegivel',
             ],
           },
         ],
@@ -156,7 +158,7 @@ class AssociationDataController {
     }
   }
 
-  async update (request, response) {
+  async update(request, response) {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().optional(),
       numero_do_protocolo: Yup.number().optional(),
@@ -198,7 +200,8 @@ class AssociationDataController {
       status_association,
     } = sanitizedData
 
-    if (status_association !== 'Concluido') console.log("errorrr", status_association)
+    if (status_association !== 'Concluido')
+      console.log('errorrr', status_association)
 
     await AssociationData.update(
       {
