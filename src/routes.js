@@ -20,7 +20,7 @@ routes.post('/confirmMail', ConfirmEmail.store)
 routes.post('/users', UserController.store)
 routes.patch('/updatePassword/:id', UserController.update)
 
-// routes.use(authMiddlewares)
+routes.use(authMiddlewares)
 
 routes.put('/users/:id', UserController.update)
 
