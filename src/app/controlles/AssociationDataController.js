@@ -201,7 +201,7 @@ class AssociationDataController {
     } = sanitizedData
 
     if (status_association !== 'Concluido')
-      console.log('errorrr', status_association)
+      console.log('error', status_association)
 
     await AssociationData.update(
       {
@@ -218,6 +218,7 @@ class AssociationDataController {
     )
 
     return response.status(201).json({
+      id,
       nome_da_instituicao,
       numero_do_protocolo,
       cnpj_cpf,
