@@ -229,6 +229,40 @@ class AssociationDataController {
       status_association,
     })
   }
+
+  async bulkUpdate(request, response) {
+    const updates = request.body
+
+    if (!Array.isArray(updates) || updates.length === 0) {
+      return response
+        .status(400)
+        .json({ error: 'Envie um array de registros para atualização.' })
+    }
+
+    try {
+      await AssociationData.bulkCreate(updates, {
+        updateOnDuplicate: [
+          'nome_da_instituicao',
+          'numero_do_protocolo',
+          'cnpj_cpf',
+          'nome_do_representante',
+          'email_do_representante',
+          'telefone_contato',
+          'sobre_exigencia',
+          'status_association',
+        ],
+      })
+
+      return response.json({
+        message: 'Atualização em massa realizada com sucesso',
+      })
+    } catch (error) {
+      return response.status(500).json({
+        error: 'Erro ao atualizar registros',
+        details: error.message,
+      })
+    }
+  }
 }
 
 export default new AssociationDataController()

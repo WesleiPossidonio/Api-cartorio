@@ -4,7 +4,6 @@ import User from '../models/User'
 import * as Yup from 'yup'
 
 // Função de sanitização reutilizável
-// Função de sanitização reutilizável
 const sanitizeInput = (data) => {
   const sanitizedData = {}
   Object.keys(data).forEach((key) => {
@@ -16,7 +15,7 @@ const sanitizeInput = (data) => {
   return sanitizedData
 }
 class UserController {
-  async store (request, response) {
+  async store(request, response) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
@@ -66,7 +65,7 @@ class UserController {
     return response.status(201).json({ message: 'User created successfully' })
   }
 
-  async update (request, response) {
+  async update(request, response) {
     const schema = Yup.object().shape({
       update_number: Yup.string().optional(),
       password: Yup.string().optional().min(6),
@@ -96,11 +95,11 @@ class UserController {
       }
 
       const user = await User.findOne({
-        where: { update_number }
+        where: { update_number },
       })
 
       if (password) user.password = password
-      await user.save();
+      await user.save()
 
       return response
         .status(200)
@@ -120,7 +119,7 @@ class UserController {
     if (registration) verificationUser.registration = registration
     if (password) verificationUser.password = password
 
-    await verificationUser.save();
+    await verificationUser.save()
     return response.status(200).json({ message: 'User updated successfully' })
   }
 }

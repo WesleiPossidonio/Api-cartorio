@@ -15,9 +15,8 @@ const routes = new Router()
 
 routes.post('/sessions', SessionsController.store)
 routes.get('/check-auth', SessionsController.index)
-routes.post('/confirmMail', ConfirmEmail.store)
-
-routes.post('/users', UserController.store)
+routes.post('/confirmMail', ConfirmEmail.store) +
+  routes.post('/users', UserController.store)
 routes.patch('/updatePassword/:id', UserController.update)
 
 routes.use(authMiddlewares)
@@ -33,5 +32,5 @@ routes.put('/updateRequeriment/:id', RequerimentController.update)
 
 routes.post('/sendMailRequeriments', sendMailRequeriments)
 routes.post('/sendMailAssociation', sendMailAssociation)
-
+routes.put('/bulkUpdate', AssociationDataController.bulkUpdate)
 export default routes
