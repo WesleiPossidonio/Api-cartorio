@@ -15,14 +15,12 @@ const routes = new Router()
 
 routes.post('/sessions', SessionsController.store)
 routes.get('/check-auth', SessionsController.index)
-routes.post('/confirmMail', ConfirmEmail.store) +
-  routes.post('/users', UserController.store)
+routes.post('/confirmMail', ConfirmEmail.store)
+routes.post('/users', UserController.store)
 routes.patch('/updatePassword/:id', UserController.update)
 
 routes.use(authMiddlewares)
-
 routes.put('/users/:id', UserController.update)
-
 routes.post('/associationData', AssociationDataController.store)
 routes.get('/associationList', AssociationDataController.index)
 routes.put('/association/:id', AssociationDataController.update)

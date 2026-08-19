@@ -2,7 +2,7 @@ import Jwt from 'jsonwebtoken'
 import authConfig from '../../config/auth'
 
 export default (request, response, next) => {
-  const authToken = request.cookies['token']
+  const authToken = request.cookies.token
 
   console.log('Auth Token:', authToken)
 
