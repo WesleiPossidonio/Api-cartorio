@@ -17,7 +17,6 @@ class AssociationData extends Model {
         telefone_contato: Sequelize.STRING,
         sobre_exigencia: Sequelize.STRING,
         status_association: Sequelize.STRING,
-        possui_exigencias: Sequelize.BOOLEAN,
       },
       {
         sequelize,

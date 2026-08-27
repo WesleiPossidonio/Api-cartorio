@@ -47,7 +47,6 @@ class AssociationDataController {
       email_do_representante: Yup.string().email().required(),
       telefone_contato: Yup.string().required(),
       sobre_exigencia: Yup.string().required(),
-      possui_exigencias: Yup.boolean().required(),
       status_association: Yup.string().optional(),
     })
 
