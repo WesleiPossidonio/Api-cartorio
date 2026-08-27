@@ -1,15 +1,17 @@
 import * as Yup from 'yup'
 import validator from 'validator'
 import AssociationData from '../models/AssociationData'
-import Requeriment from '../models/Requeriment'
+import AssociationDataService from '../service/AssociationDataService'
+import AssociationDataRepository from '../repository/AssociationDataRepository'
 
-// Função de sanitização reutilizável
 const sanitizeInput = (data) => {
   const sanitizeCnpjCpf = (cnpjCpf) => {
     if (!cnpjCpf) return undefined
+
     // eslint-disable-next-line no-useless-escape
     return cnpjCpf.replace(/[^0-9a-zA-Z\/\.\-]/g, '')
   }
+
   return {
     nome_da_instituicao: data.nome_da_instituicao
       ? validator.escape(data.nome_da_instituicao)
@@ -40,22 +42,25 @@ class AssociationDataController {
   async store(request, response) {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
-      numero_do_protocolo: Yup.number().required(),
       cnpj_cpf: Yup.string().required(),
       nome_do_representante: Yup.string().required(),
       email_do_representante: Yup.string().email().required(),
       telefone_contato: Yup.string().required(),
       sobre_exigencia: Yup.string().required(),
+      possui_exigencias: Yup.boolean().required(),
       status_association: Yup.string().optional(),
     })
 
-    // Sanitização dos dados de entrada
     const sanitizedData = sanitizeInput(request.body)
 
     try {
-      await schema.validateSync(sanitizedData, { abortEarly: false })
+      await schema.validateSync(sanitizedData, {
+        abortEarly: false,
+      })
     } catch (err) {
-      return response.status(400).json({ error: err.errors })
+      return response.status(400).json({
+        error: err.errors,
+      })
     }
 
     const {
@@ -70,17 +75,7 @@ class AssociationDataController {
     } = sanitizedData
 
     try {
-      const dataAssociationProtocolNumber = await AssociationData.findOne({
-        where: { numero_do_protocolo },
-      })
-
-      if (dataAssociationProtocolNumber) {
-        return response
-          .status(409)
-          .json({ error: 'this number protocol already exists' })
-      }
-
-      const association = await AssociationData.create({
+      const association = await AssociationDataService.createAssociationData({
         nome_da_instituicao,
         numero_do_protocolo,
         cnpj_cpf,
@@ -93,68 +88,87 @@ class AssociationDataController {
 
       return response.status(201).json(association)
     } catch (error) {
-      return response
-        .status(500)
-        .json({ error: 'Internal server error', errorValue: error.value })
+      return response.status(500).json({
+        error: 'Internal server error',
+        errorValue: error.message,
+      })
     }
   }
 
   async index(request, response) {
     try {
-      const associations = await AssociationData.findAll({
-        order: [['createdAt', 'DESC']],
-        include: [
-          {
-            model: Requeriment,
-            as: 'exigencia', // singular
-            attributes: [
-              'id',
-              'documento_inelegivel',
-              'lista_e_edital',
-              'assinatura_do_advogado',
-              'declaracao_criminal',
-              'declaracao_de_desimpedimento',
-              'livro_rasao',
-              'ppe',
-              'requisitos_estatuto',
-              'dissolucao_ou_exticao',
-              'fundacoes',
-              'reconhecimento_de_firma',
-              'preechimento_completo',
-              'oab',
-              'documentacao_de_identificacao',
-              'campo_de_assinatura',
-              'retificacao_de_redacao',
-              'informacao_divergente',
-              'requisitos_de_estatutos_fundadores',
-              'requisitos_criacao_de_estatuto',
-              'estado_do_requerimento',
-              'observations_lista_e_edital',
-              'observations_assinatura_do_advogado',
-              'observations_declaracao_criminal',
-              'observations_declaracao_de_desimpedimento',
-              'observations_livro_rasao',
-              'observations_requisitos_estatuto',
-              'observations_ppe',
-              'observations_requisitos_criacao_de_estatuto',
-              'observations_dissolucao_ou_exticao',
-              'observations_fundacoes',
-              'observations_reconhecimento_de_firma',
-              'observations_oab',
-              'observations_documentacao_de_identificacao',
-              'observations_requisitos_de_estatutos_fundadores',
-              'observations_campo_de_assinatura',
-              'observations_retificacao_de_redacao',
-              'observations_documento_inelegivel',
-            ],
-          },
-        ],
-      })
-
-      response.status(200).json(associations)
+      const associations = await AssociationDataService.findAll()
+      return response.status(200).json(associations)
     } catch (error) {
       console.log(error)
-      response.status(500).send('Internal server error')
+
+      return response.status(500).json({
+        error: 'Internal server error',
+      })
+    }
+  }
+
+  async pendingWithoutRequirement(request, response) {
+    const { page = 1, limit = 10, search } = request.query
+
+    try {
+      const associations =
+        await AssociationDataService.findPendingWithoutRequirement({
+          page: Number(page),
+          limit: Number(limit),
+          search: search?.trim(),
+        })
+
+      return response.status(200).json(associations)
+    } catch (error) {
+      console.log(error)
+
+      return response.status(500).json({
+        error: 'Internal server error',
+      })
+    }
+  }
+
+  async pendingRequirements(request, response) {
+    const { page = 1, limit = 10, search } = request.query
+
+    try {
+      const associations = await AssociationDataService.findPendingRequirements(
+        {
+          page: Number(page),
+          limit: Number(limit),
+          search: search?.trim(),
+        },
+      )
+
+      return response.status(200).json(associations)
+    } catch (error) {
+      console.log(error)
+
+      return response.status(500).json({
+        error: 'Internal server error',
+      })
+    }
+  }
+
+  async completedAssociations(request, response) {
+    const { page = 1, limit = 10, search } = request.query
+
+    try {
+      const associations =
+        await AssociationDataService.findCompletedAssociations({
+          page: Number(page),
+          limit: Number(limit),
+          search: search?.trim(),
+        })
+
+      return response.status(200).json(associations)
+    } catch (error) {
+      console.log(error)
+
+      return response.status(500).json({
+        error: 'Internal server error',
+      })
     }
   }
 
@@ -170,24 +184,19 @@ class AssociationDataController {
       status_association: Yup.string().optional(),
     })
 
-    // Sanitização dos dados de entrada
     const sanitizedData = sanitizeInput(request.body)
 
     try {
-      await schema.validateSync(sanitizedData, { abortEarly: false })
+      await schema.validateSync(sanitizedData, {
+        abortEarly: false,
+      })
     } catch (err) {
-      return response.status(400).json({ error: err.errors })
+      return response.status(400).json({
+        error: err.errors,
+      })
     }
 
     const { id } = request.params
-
-    const userExists = await AssociationData.findOne({
-      where: { id },
-    })
-
-    if (!userExists) {
-      return response.status(400).json({ error: 'User not found' })
-    }
 
     const {
       nome_da_instituicao,
@@ -200,25 +209,7 @@ class AssociationDataController {
       status_association,
     } = sanitizedData
 
-    if (status_association !== 'Concluido')
-      console.log('error', status_association)
-
-    await AssociationData.update(
-      {
-        nome_da_instituicao,
-        numero_do_protocolo,
-        sobre_exigencia,
-        cnpj_cpf,
-        status_association,
-        nome_do_representante,
-        email_do_representante,
-        telefone_contato,
-      },
-      { where: { id } },
-    )
-
-    return response.status(201).json({
-      id,
+    const updatedData = {
       nome_da_instituicao,
       numero_do_protocolo,
       cnpj_cpf,
@@ -227,16 +218,49 @@ class AssociationDataController {
       telefone_contato,
       sobre_exigencia,
       status_association,
-    })
+    }
+
+    try {
+      await AssociationDataService.updateAssociationData(id, updatedData)
+
+      return response.status(200).json({
+        message: 'Association updated successfully',
+      })
+    } catch (error) {
+      return response.status(500).json({
+        error: error.message,
+      })
+    }
+  }
+
+  async findById(request, response) {
+    try {
+      const { id } = request.params
+
+      const associationData = await AssociationDataRepository.findById(id)
+
+      if (!associationData) {
+        return response.status(404).json({
+          message: 'Associação não encontrada.',
+        })
+      }
+
+      return response.status(200).json(associationData)
+    } catch (error) {
+      return response.status(500).json({
+        message: 'Erro ao buscar associação.',
+        error: error.message,
+      })
+    }
   }
 
   async bulkUpdate(request, response) {
     const updates = request.body
 
     if (!Array.isArray(updates) || updates.length === 0) {
-      return response
-        .status(400)
-        .json({ error: 'Envie um array de registros para atualização.' })
+      return response.status(400).json({
+        error: 'Envie um array de registros para atualização.',
+      })
     }
 
     try {

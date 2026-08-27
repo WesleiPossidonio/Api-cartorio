@@ -1,7 +1,6 @@
-import { v4 } from 'uuid'
 import validator from 'validator'
-import User from '../models/User'
 import * as Yup from 'yup'
+import UserService from '../service/UserService'
 
 // Função de sanitização reutilizável
 const sanitizeInput = (data) => {
@@ -36,33 +35,15 @@ class UserController {
     const { name, email, password, admin, registration, update_number } =
       sanitizedBody
 
-    const emailUserExists = await User.findOne({
-      where: { email },
-    })
-
-    const nameUserExists = await User.findOne({
-      where: { name },
-    })
-
-    if (emailUserExists) {
-      return response.status(409).json({ error: 'Email user already exists' })
+    try {
+      await UserService.createUser(
+        { name, email, password, admin, registration, update_number },
+        request.userId,
+      )
+      return response.status(201).json({ message: 'User created successfully' })
+    } catch (error) {
+      return response.status(400).json({ error: error.message })
     }
-
-    if (nameUserExists) {
-      return response.status(409).json({ error: 'Name user already exists' })
-    }
-
-    await User.create({
-      id: v4(),
-      name,
-      email,
-      password,
-      admin,
-      registration,
-      update_number,
-    })
-
-    return response.status(201).json({ message: 'User created successfully' })
   }
 
   async update(request, response) {
@@ -82,45 +63,53 @@ class UserController {
       return response.status(400).json({ error: err.errors })
     }
 
-    const { password, update_number, name, email, registration } = sanitizedBody
-    const { id } = request.params // Assumindo que `id` seja passado na URL (ex: /users/:id)
+    const { password, name, email, registration } = sanitizedBody
+    const { id } = request.params
 
-    if (update_number) {
-      const verificationNumber = await User.findOne({
-        where: { update_number },
-      })
+    const dataUser = { password, name, email, registration }
+    try {
+      await UserService.updateUser(id, dataUser, request.userId)
+      return response.status(200).json({ message: 'User updated successfully' })
+    } catch (error) {
+      return response.status(400).json({ error: error.message })
+    }
+  }
 
-      if (!verificationNumber) {
-        return response.status(400).json({ error: 'Invalid update number' })
-      }
+  async updatePassword(request, response) {
+    const schema = Yup.object().shape({
+      password: Yup.string().required().min(6),
+      update_number: Yup.string().required(),
+    })
 
-      const user = await User.findOne({
-        where: { update_number },
-      })
+    const sanitizedBody = sanitizeInput(request.body)
 
-      if (password) user.password = password
-      await user.save()
+    try {
+      await schema.validateSync(sanitizedBody, { abortEarly: false })
+    } catch (err) {
+      return response.status(400).json({ error: err.errors })
+    }
 
+    const { password, update_number } = sanitizedBody
+
+    try {
+      await UserService.updatePassword(update_number, password)
       return response
         .status(200)
         .json({ message: 'Password updated successfully' })
+    } catch (error) {
+      return response.status(400).json({ error: error.message })
     }
+  }
 
-    const verificationUser = await User.findOne({
-      where: { id },
-    })
+  async delete(request, response) {
+    const { id } = request.params
 
-    if (!verificationUser) {
-      return response.status(404).json({ error: 'User not found' })
+    try {
+      await UserService.deleteUser(id, request.userId)
+      return response.status(200).json({ message: 'User deleted successfully' })
+    } catch (error) {
+      return response.status(400).json({ error: error.message })
     }
-
-    if (name) verificationUser.name = name
-    if (email) verificationUser.email = email
-    if (registration) verificationUser.registration = registration
-    if (password) verificationUser.password = password
-
-    await verificationUser.save()
-    return response.status(200).json({ message: 'User updated successfully' })
   }
 }
 

@@ -4,8 +4,6 @@ import authConfig from '../../config/auth'
 export default (request, response, next) => {
   const authToken = request.cookies.token
 
-  console.log('Auth Token:', authToken)
-
   if (!authToken) {
     return response.status(401).json({ error: 'Token not provided' })
   }

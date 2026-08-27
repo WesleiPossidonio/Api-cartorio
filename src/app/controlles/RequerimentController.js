@@ -1,7 +1,6 @@
 import * as Yup from 'yup'
 import validator from 'validator'
-import Requeriment from '../models/Requeriment'
-import Association from '../models/AssociationData'
+import RequerimentService from '../service/RequerimentService'
 
 // Função de sanitização reutilizável
 const sanitizeInput = (data) => {
@@ -12,7 +11,6 @@ const sanitizeInput = (data) => {
   })
   return sanitizedData
 }
-
 class RequerimentController {
   async store(request, response) {
     const schema = Yup.object().shape({
@@ -39,7 +37,10 @@ class RequerimentController {
       }),
       requisitos_criacao_de_estatuto: Yup.string().required(),
       requisitos_de_estatutos_fundadores: Yup.string().required(),
-      estado_do_requerimento: Yup.string().required(),
+      estado_do_requerimento: Yup.string()
+        .oneOf(['Pendente', 'Concluído'])
+        .nullable()
+        .notRequired(),
       requerimento_eletronico_rcpj: Yup.string().required(),
       observations_documento_inelegivel: Yup.string().nullable().notRequired(),
       observations_lista_e_edital: Yup.string().nullable().notRequired(),
@@ -126,49 +127,52 @@ class RequerimentController {
       observations_requerimento_eletronico_rcpj,
     } = sanitizeInput(request.body)
 
-    const requeriment = await Requeriment.create({
-      exigencias_id,
-      documento_inelegivel,
-      lista_e_edital,
-      assinatura_do_advogado,
-      declaracao_criminal,
-      declaracao_de_desimpedimento,
-      livro_rasao,
-      ppe,
-      requisitos_estatuto,
-      dissolucao_ou_exticao,
-      fundacoes,
-      reconhecimento_de_firma,
-      preechimento_completo,
-      oab,
-      documentacao_de_identificacao,
-      campo_de_assinatura,
-      retificacao_de_redacao,
-      requerimento_eletronico_rcpj,
-      informacao_divergente,
-      requisitos_de_estatutos_fundadores,
-      requisitos_criacao_de_estatuto,
-      estado_do_requerimento,
-      observations_lista_e_edital,
-      observations_assinatura_do_advogado,
-      observations_declaracao_criminal,
-      observations_declaracao_de_desimpedimento,
-      observations_livro_rasao,
-      observations_requisitos_estatuto,
-      observations_ppe,
-      observations_requisitos_criacao_de_estatuto,
-      observations_dissolucao_ou_exticao,
-      observations_fundacoes,
-      observations_reconhecimento_de_firma,
-      observations_oab,
-      observations_documentacao_de_identificacao,
-      observations_requisitos_de_estatutos_fundadores,
-      observations_campo_de_assinatura,
-      observations_retificacao_de_redacao,
-      observations_requerimento_eletronico_rcpj,
-    })
-
-    return response.status(201).json(requeriment)
+    try {
+      const createRequeriment = await RequerimentService.createRequeriment({
+        exigencias_id,
+        documento_inelegivel,
+        lista_e_edital,
+        assinatura_do_advogado,
+        declaracao_criminal,
+        declaracao_de_desimpedimento,
+        livro_rasao,
+        ppe,
+        requisitos_estatuto,
+        dissolucao_ou_exticao,
+        fundacoes,
+        reconhecimento_de_firma,
+        preechimento_completo,
+        oab,
+        documentacao_de_identificacao,
+        campo_de_assinatura,
+        retificacao_de_redacao,
+        requerimento_eletronico_rcpj,
+        informacao_divergente,
+        requisitos_de_estatutos_fundadores,
+        requisitos_criacao_de_estatuto,
+        estado_do_requerimento,
+        observations_lista_e_edital,
+        observations_assinatura_do_advogado,
+        observations_declaracao_criminal,
+        observations_declaracao_de_desimpedimento,
+        observations_livro_rasao,
+        observations_requisitos_estatuto,
+        observations_ppe,
+        observations_requisitos_criacao_de_estatuto,
+        observations_dissolucao_ou_exticao,
+        observations_fundacoes,
+        observations_reconhecimento_de_firma,
+        observations_oab,
+        observations_documentacao_de_identificacao,
+        observations_requisitos_de_estatutos_fundadores,
+        observations_campo_de_assinatura,
+        observations_retificacao_de_redacao,
+        observations_requerimento_eletronico_rcpj,
+      })
+      return response.status(201).json(createRequeriment)
+    } catch (error) {
+      return response.status(500).json({ error: error.message })
+    }
   }
 
   async update(request, response) {
@@ -179,7 +183,7 @@ class RequerimentController {
       assinatura_do_advogado: Yup.string().nullable(),
       declaracao_criminal: Yup.string().nullable(),
       declaracao_de_desimpedimento: Yup.string().nullable(),
-      livro_rasao: Yup.string().nullable(),
+      livro_razao: Yup.string().nullable(),
       ppe: Yup.string().nullable(),
       requisitos_estatuto: Yup.string().nullable(),
       dissolucao_ou_exticao: Yup.string().nullable(),
@@ -197,12 +201,11 @@ class RequerimentController {
       }),
       requisitos_criacao_de_estatuto: Yup.string().nullable(),
       requisitos_de_estatutos_fundadores: Yup.string().nullable(),
-      estado_do_requerimento: Yup.string().nullable(),
       observations_lista_e_edital: Yup.string().nullable(),
       observations_assinatura_do_advogado: Yup.string().nullable(),
       observations_declaracao_criminal: Yup.string().nullable(),
       observations_declaracao_de_desimpedimento: Yup.string().nullable(),
-      observations_livro_rasao: Yup.string().nullable(),
+      observations_livro_razao: Yup.string().nullable(),
       observations_requisitos_estatuto: Yup.string().nullable(),
       observations_ppe: Yup.string().nullable(),
       observations_requisitos_criacao_de_estatuto: Yup.string().nullable(),
@@ -219,43 +222,22 @@ class RequerimentController {
 
     try {
       const sanitizedData = sanitizeInput(request.body)
-      await schema.validate(sanitizedData, { abortEarly: false })
-    } catch (err) {
-      return response.status(400).json({ error: err.errors })
-    }
-
-    const { id } = request.params
-
-    const requirementExists = await Requeriment.findOne({ where: { id } })
-
-    if (!requirementExists) {
-      return response.status(400).json({ error: 'Requirement not found' })
-    }
-
-    const data = sanitizeInput(request.body)
-
-    // Atualiza associação se concluído
-    if (data.estado_do_requerimento === 'concluído') {
-      const associationExists = await Association.findOne({
-        where: { exigencias_id: data.exigencias_id },
+      await schema.validate(sanitizedData, {
+        abortEarly: false,
       })
 
-      if (!associationExists) {
-        return response
-          .status(400)
-          .json({ error: 'Association update not found' })
-      }
+      const { id } = request.params
+      const updated = await RequerimentService.updateRequeriment(
+        id,
+        sanitizedData,
+      )
 
-      await associationExists.update({
-        status_association: 'concluído',
+      return response.status(200).json(updated)
+    } catch (error) {
+      return response.status(400).json({
+        error: error.message,
       })
     }
-
-    await Requeriment.update(data, { where: { id } })
-
-    const updated = await Requeriment.findOne({ where: { id } })
-
-    return response.status(200).json(updated)
   }
 }
 
