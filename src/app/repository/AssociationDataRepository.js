@@ -258,22 +258,17 @@ class AssociationDataRepository {
 
     const { rows, count } = await AssociationData.findAndCountAll({
       where: {
-        [Op.or]: [
-          {
-            possui_exigencias: false,
-          },
-          {
-            possui_exigencias: true,
-            '$exigencia.estado_do_requerimento$': 'Concluído',
-          },
-        ],
+        status_association: 'Concluído',
       },
 
       include: [
         {
           model: Requeriment,
           as: 'exigencia',
-          required: false,
+          required: true,
+          where: {
+            estado_do_requerimento: 'Concluído',
+          },
           attributes: requerimentAttributes,
         },
       ],
