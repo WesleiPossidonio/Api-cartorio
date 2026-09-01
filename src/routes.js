@@ -16,6 +16,8 @@ routes.post('/users', UserController.store)
 routes.patch('/updatePassword/:id', UserController.update)
 
 routes.use(authMiddlewares)
+routes.get('/users', UserController.index)
+routes.delete('/users/:id', UserController.delete)
 routes.put('/users/:id', UserController.update)
 routes.post('/associationData', AssociationDataController.store)
 routes.get('/associationList', AssociationDataController.index)
@@ -31,6 +33,7 @@ routes.get(
   '/association/completed',
   AssociationDataController.completedAssociations,
 )
+routes.delete('/requeriment/:id', RequerimentController.delete)
 routes.get('/association/:id', AssociationDataController.findById)
 routes.put('/association/:id', AssociationDataController.update)
 routes.post('/createRequeriment', RequerimentController.store)

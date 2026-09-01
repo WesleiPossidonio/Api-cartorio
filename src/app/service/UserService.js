@@ -35,6 +35,28 @@ class UserService {
     }
   }
 
+  async findAll(filters = {}) {
+    const { page = 1, limit = 10, search } = filters
+
+    try {
+      const pagination = {
+        page: Number(page),
+        limit: Number(limit),
+      }
+
+      if (search?.trim()) {
+        return await UserRepository.findAllSearch({
+          search: search.trim(),
+          ...pagination,
+        })
+      }
+
+      return await UserRepository.findAll(pagination)
+    } catch (error) {
+      throw new Error('Error finding users: ' + error.message)
+    }
+  }
+
   async findUserById(id) {
     try {
       const user = await UserRepository.findById(id)

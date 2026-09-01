@@ -26,6 +26,10 @@ class RequerimentRepository {
     const requeriment = await Requeriment.findByPk(id)
     return requeriment
   }
+
+  async delete(id) {
+    return Requeriment.destroy({ where: { id } })
+  }
 }
 
 export default new RequerimentRepository()

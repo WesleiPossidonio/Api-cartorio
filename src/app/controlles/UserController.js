@@ -75,6 +75,26 @@ class UserController {
     }
   }
 
+  async index(request, response) {
+    const { page = 1, limit = 10, search } = request.query
+
+    try {
+      const users = await UserService.getAllUsers({
+        page: Number(page),
+        limit: Number(limit),
+        search: search?.trim(),
+      })
+
+      return response.status(200).json(users)
+    } catch (error) {
+      console.log(error)
+
+      return response.status(500).json({
+        error: 'Internal server error',
+      })
+    }
+  }
+
   async updatePassword(request, response) {
     const schema = Yup.object().shape({
       password: Yup.string().required().min(6),

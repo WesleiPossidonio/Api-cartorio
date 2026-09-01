@@ -239,6 +239,19 @@ class RequerimentController {
       })
     }
   }
+
+  async delete(request, response) {
+    const { id } = request.params
+
+    try {
+      await RequerimentService.deleteRequeriment(id)
+      return response
+        .status(200)
+        .json({ message: 'Requeriment deleted successfully' })
+    } catch (error) {
+      return response.status(400).json({ error: error.message })
+    }
+  }
 }
 
 export default new RequerimentController()

@@ -78,6 +78,10 @@ class RequerimentService {
         throw new Error('Requeriment not found')
       }
 
+      await AssociationDataRepository.update(requerimentExists.exigencias_id, {
+        status_association: 'Pendente',
+      })
+
       const deletedRowsCount = await RequerimentRepository.delete(id)
 
       return deletedRowsCount
