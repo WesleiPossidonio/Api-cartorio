@@ -15,7 +15,7 @@ const sanitizeInput = (data) => {
 }
 
 class SessionController {
-  async store (request, response) {
+  async store(request, response) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       password: Yup.string().required(),
@@ -67,21 +67,22 @@ class SessionController {
     })
   }
 
-  async index (request, response) {
+  async index(request, response) {
     const token = request.cookies['token']
 
     if (!token) {
-      return response.status(401).json({ error: 'Token not provided' });
+      return response.status(401).json({ error: 'Token not provided' })
     }
 
     try {
-      const decoded = jwt.verify(token, authConfig.secret);
-      response.status(200).json({ message: 'Authenticated', userId: decoded.id });
+      const decoded = jwt.verify(token, authConfig.secret)
+      response
+        .status(200)
+        .json({ message: 'Authenticated', userId: decoded.id })
     } catch {
-      return response.status(401).json({ error: 'Token is invalid or expired' });
+      return response.status(401).json({ error: 'Token is invalid or expired' })
     }
   }
-
 }
 
 export default new SessionController()

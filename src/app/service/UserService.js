@@ -6,7 +6,7 @@ class UserService {
       const existsAdminUser = await UserRepository.findById(userId)
       const axistsEmail = await UserRepository.findByEmail(data.email)
 
-      if (!existsAdminUser || existsAdminUser.role !== 'admin') {
+      if (!existsAdminUser || existsAdminUser.admin !== true) {
         throw new Error('Acesso negado')
       }
 
@@ -23,8 +23,14 @@ class UserService {
 
   async updateUser(id, data, userId) {
     try {
+      const findUser = await UserRepository.findById(id)
       const existsAdminUser = await UserRepository.findById(userId)
-      if (!existsAdminUser || existsAdminUser.role !== 'admin') {
+      if (id !== userId && existsAdminUser && existsAdminUser.admin === true) {
+        const updatedRowsCount = await UserRepository.update(id, data)
+        return updatedRowsCount
+      }
+
+      if (id !== userId || !findUser) {
         throw new Error('Acesso negado')
       }
 
@@ -35,8 +41,13 @@ class UserService {
     }
   }
 
-  async findAll(filters = {}) {
+  async findAll(filters = {}, userId) {
     const { page = 1, limit = 10, search } = filters
+
+    const existsAdminUser = await UserRepository.findById(userId)
+    if (!existsAdminUser || existsAdminUser.admin !== true) {
+      throw new Error('Acesso negado')
+    }
 
     try {
       const pagination = {
@@ -85,7 +96,7 @@ class UserService {
   async deleteUser(id, userId) {
     try {
       const existsAdminUser = await UserRepository.findById(userId)
-      if (!existsAdminUser || existsAdminUser.role !== 'admin') {
+      if (!existsAdminUser || existsAdminUser.admin === false) {
         throw new Error('Acesso negado')
       }
 

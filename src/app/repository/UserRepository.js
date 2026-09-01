@@ -1,19 +1,24 @@
 import User from '../models/User.js'
 import { Op, Sequelize } from 'sequelize'
 
-const searchCondition = (search) =>
-  Sequelize.where(
+const searchCondition = (search) => {
+  if (!search?.trim()) {
+    return {}
+  }
+
+  return Sequelize.where(
     Sequelize.literal(`
       to_tsvector(
         'portuguese',
-        coalesce("Users"."name", '') || ' ' ||
-        coalesce("Users"."email", '') || ' ' ||
-        coalesce("Users"."registration", '')
+        coalesce("name", '') || ' ' ||
+        coalesce("email", '') || ' ' ||
+        coalesce("registration", '')
       )
     `),
     '@@',
-    Sequelize.fn('plainto_tsquery', 'portuguese', search),
+    Sequelize.fn('plainto_tsquery', 'portuguese', search.trim()),
   )
+}
 
 class UserRepository {
   async create(data) {

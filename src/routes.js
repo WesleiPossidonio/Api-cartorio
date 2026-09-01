@@ -12,13 +12,14 @@ const routes = new Router()
 routes.post('/sessions', SessionsController.store)
 routes.get('/check-auth', SessionsController.index)
 routes.post('/confirmMail', ConfirmEmail.store)
-routes.post('/users', UserController.store)
 routes.patch('/updatePassword/:id', UserController.update)
 
 routes.use(authMiddlewares)
+routes.post('/users', UserController.store)
 routes.get('/users', UserController.index)
 routes.delete('/users/:id', UserController.delete)
 routes.put('/users/:id', UserController.update)
+
 routes.post('/associationData', AssociationDataController.store)
 routes.get('/associationList', AssociationDataController.index)
 routes.get(
@@ -34,9 +35,10 @@ routes.get(
   AssociationDataController.completedAssociations,
 )
 routes.delete('/association/:id', AssociationDataController.delete)
-routes.delete('/requeriment/:id', RequerimentController.delete)
 routes.get('/association/:id', AssociationDataController.findById)
 routes.put('/association/:id', AssociationDataController.update)
+
+routes.delete('/requeriment/:id', RequerimentController.delete)
 routes.post('/createRequeriment', RequerimentController.store)
 routes.put('/updateRequeriment/:id', RequerimentController.update)
 routes.post('/sendMailRequeriments', sendMailRequeriments)

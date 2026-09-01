@@ -77,20 +77,22 @@ class UserController {
 
   async index(request, response) {
     const { page = 1, limit = 10, search } = request.query
+    const id = request.userId
 
     try {
-      const users = await UserService.getAllUsers({
+      const users = await UserService.findAll({
         page: Number(page),
         limit: Number(limit),
         search: search?.trim(),
+        userId: id,
       })
 
       return response.status(200).json(users)
     } catch (error) {
-      console.log(error)
+      console.error('ERROR GET USERS:', error)
 
       return response.status(500).json({
-        error: 'Internal server error',
+        error: error.message,
       })
     }
   }
