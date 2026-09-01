@@ -33,6 +33,7 @@ routes.get(
   '/association/completed',
   AssociationDataController.completedAssociations,
 )
+routes.delete('/association/:id', AssociationDataController.delete)
 routes.delete('/requeriment/:id', RequerimentController.delete)
 routes.get('/association/:id', AssociationDataController.findById)
 routes.put('/association/:id', AssociationDataController.update)

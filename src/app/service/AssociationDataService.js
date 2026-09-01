@@ -136,6 +136,20 @@ class AssociationDataService {
       throw +new Error('Error finding association data: ' + error.message)
     }
   }
+
+  async deleteAssociationData(id) {
+    try {
+      const associationData = await AssociationDataRepository.findById(id)
+      if (!associationData) {
+        throw new Error('Association data not found')
+      }
+
+      const deletedRowsCount = await AssociationDataRepository.delete(id)
+      return deletedRowsCount
+    } catch (error) {
+      throw new Error('Error deleting association data: ' + error.message)
+    }
+  }
 }
 
 export default new AssociationDataService()

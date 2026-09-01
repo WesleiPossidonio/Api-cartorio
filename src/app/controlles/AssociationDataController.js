@@ -286,6 +286,31 @@ class AssociationDataController {
       })
     }
   }
+
+  async delete(request, response) {
+    const { id } = request.params
+
+    try {
+      const associationData = await AssociationDataRepository.findById(id)
+
+      if (!associationData) {
+        return response.status(404).json({
+          message: 'Associação não encontrada.',
+        })
+      }
+
+      await AssociationDataRepository.delete(id)
+
+      return response.status(200).json({
+        message: 'Associação deletada com sucesso.',
+      })
+    } catch (error) {
+      return response.status(500).json({
+        message: 'Erro ao deletar associação.',
+        error: error.message,
+      })
+    }
+  }
 }
 
 export default new AssociationDataController()
