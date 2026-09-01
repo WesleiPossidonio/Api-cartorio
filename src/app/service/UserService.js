@@ -41,8 +41,8 @@ class UserService {
     }
   }
 
-  async findAll(filters = {}, userId) {
-    const { page = 1, limit = 10, search } = filters
+  async findAll(filters = {}) {
+    const { page = 1, limit = 10, search, userId } = filters
 
     const existsAdminUser = await UserRepository.findById(userId)
     if (!existsAdminUser || existsAdminUser.admin !== true) {
