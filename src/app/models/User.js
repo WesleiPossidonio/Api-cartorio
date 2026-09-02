@@ -5,6 +5,12 @@ class User extends Model {
   static init(sequelize) {
     super.init(
       {
+        id: {
+          type: Sequelize.UUID,
+          defaultValue: Sequelize.UUIDV4,
+          allowNull: false,
+          primaryKey: true,
+        },
         name: Sequelize.STRING,
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
@@ -15,7 +21,7 @@ class User extends Model {
       },
       {
         sequelize,
-      }
+      },
     )
 
     this.addHook('beforeSave', async (user) => {
