@@ -1,5 +1,6 @@
 import AssociationDataRepository from '../repository/AssociationDataRepository.js'
 import RequerimentRepository from '../repository/RequerimentRepository.js'
+import UnlistedRequerimentsRepository from '../repository/UnlistedRequerimentsRepository.js'
 
 class RequerimentService {
   validateCompletion(data) {
@@ -38,11 +39,24 @@ class RequerimentService {
 
   async createRequeriment(data) {
     try {
-      const requeriment = await RequerimentRepository.create(data)
+      const requeriment = await RequerimentRepository.create({
+        ...data,
+        informacao_divergente: { info: '', state: '' },
+      })
 
       await AssociationDataRepository.update(data.exigencias_id, {
         status_association: 'Concluído',
       })
+
+      if (data.unlisted_requirements && data.unlisted_requirements.length > 0) {
+        const unlistedRequirementsData = data.unlisted_requirements.map(
+          (req) => ({
+            ...req,
+            requirement_id: requeriment.id,
+          }),
+        )
+        await UnlistedRequerimentsRepository.create(unlistedRequirementsData)
+      }
 
       return requeriment
     } catch (error) {
@@ -53,20 +67,43 @@ class RequerimentService {
   async updateRequeriment(id, data) {
     try {
       const requerimentExists = await RequerimentRepository.findById(id)
+      const unlistedRequirements =
+        await UnlistedRequerimentsRepository.findByRequirimentId(id)
 
       if (!requerimentExists) {
         throw new Error('Requeriment not found')
       }
 
-      const isCompleted = this.validateCompletion(data)
-      const updatedData = {
-        ...data,
-        estado_do_requerimento: isCompleted ? 'Concluído' : 'Pendente',
+      if (data.unlisted_requirements && data.unlisted_requirements > 0) {
+        await UnlistedRequerimentsRepository.update(data.unlisted_requirements)
       }
 
+      const isCompleted = this.validateCompletion(data)
+      const unlistedCompleted = unlistedRequirements.every(
+        (item) => item.status === 'Concluído',
+      )
+
+      const updatedData = {
+        ...data,
+        estado_do_requerimento:
+          isCompleted && unlistedCompleted ? 'Concluído' : 'Pendente',
+      }
       return await RequerimentRepository.update(id, updatedData)
     } catch (error) {
       throw new Error('Error updating requeriment: ' + error.message)
+    }
+  }
+
+  async updatePacthRequeriment(id, data) {
+    const requerimentExists = await RequerimentRepository.findById(id)
+    if (!requerimentExists) {
+      throw new Error('Requeriment not found')
+    }
+
+    try {
+      return await RequerimentRepository.patchUpdateRequeriment(id, data)
+    } catch (error) {
+      throw new Error('Error add requeriment: ' + error.message)
     }
   }
 

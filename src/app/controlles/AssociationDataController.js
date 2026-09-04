@@ -14,26 +14,37 @@ const sanitizeInput = (data) => {
 
   return {
     nome_da_instituicao: data.nome_da_instituicao
-      ? validator.escape(data.nome_da_instituicao)
+      ? validator.escape(data.nome_da_instituicao).toUpperCase()
       : undefined,
+
     numero_do_protocolo: data.numero_do_protocolo
       ? validator.toInt(data.numero_do_protocolo.toString())
       : undefined,
+
     cnpj_cpf: sanitizeCnpjCpf(data.cnpj_cpf),
+
     nome_do_representante: data.nome_do_representante
-      ? validator.escape(data.nome_do_representante)
+      ? validator.escape(data.nome_do_representante).toUpperCase()
       : undefined,
+
     email_do_representante: data.email_do_representante
       ? validator.normalizeEmail(data.email_do_representante)
       : undefined,
+
     telefone_contato: data.telefone_contato
       ? validator.escape(data.telefone_contato)
       : undefined,
+
     sobre_exigencia: data.sobre_exigencia
-      ? validator.escape(data.sobre_exigencia)
+      ? validator.escape(data.sobre_exigencia).toUpperCase()
       : undefined,
+
     status_association: data.status_association
       ? validator.escape(data.status_association)
+      : undefined,
+
+    data_da_recepcao: data.data_da_recepcao
+      ? validator.escape(data.data_da_recepcao)
       : undefined,
   }
 }
@@ -42,6 +53,7 @@ class AssociationDataController {
   async store(request, response) {
     const schema = Yup.object().shape({
       nome_da_instituicao: Yup.string().required(),
+      data_da_recepcao: Yup.date().required(),
       cnpj_cpf: Yup.string().required(),
       nome_do_representante: Yup.string().required(),
       email_do_representante: Yup.string().email().required(),
@@ -71,7 +83,10 @@ class AssociationDataController {
       telefone_contato,
       sobre_exigencia,
       status_association,
+      data_da_recepcao,
     } = sanitizedData
+
+    console.log(data_da_recepcao)
 
     try {
       const association = await AssociationDataService.createAssociationData({
@@ -83,6 +98,7 @@ class AssociationDataController {
         telefone_contato,
         sobre_exigencia,
         status_association,
+        data_da_recepcao,
       })
 
       return response.status(201).json(association)

@@ -5,8 +5,9 @@ import configDataBase from '../config/database'
 
 import AssociationData from '../app/models/AssociationData'
 import Requeriment from '../app/models/Requeriment'
+import UnlistedRequeriments from '../app/models/UnlistedRequeriments'
 
-const models = [User, AssociationData, Requeriment]
+const models = [User, AssociationData, Requeriment, UnlistedRequeriments]
 
 class Database {
   constructor() {
@@ -18,7 +19,7 @@ class Database {
     models
       .map((model) => model.init(this.connection))
       .map(
-        (model) => model.associate && model.associate(this.connection.models)
+        (model) => model.associate && model.associate(this.connection.models),
       )
   }
 }

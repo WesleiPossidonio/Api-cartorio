@@ -14,6 +14,11 @@ class RequerimentRepository {
     return updatedRowsCount
   }
 
+  async patchUpdateRequeriment(id, data) {
+    await Requeriment.update(data, { where: { id } })
+    return Requeriment.findByPk(id)
+  }
+
   async updateStatus(id, status) {
     const [updatedRowsCount] = await Requeriment.update(
       { estado_do_requerimento: status },

@@ -5,7 +5,18 @@ import RequerimentService from '../service/RequerimentService'
 // Função de sanitização reutilizável
 const sanitizeInput = (data) => {
   const sanitizedData = {}
+
   Object.keys(data).forEach((key) => {
+    if (key === 'unlisted_requirements') {
+      sanitizedData[key] = data[key]?.map((requirement) => ({
+        ...requirement,
+        name:
+          typeof requirement.name === 'string'
+            ? validator.escape(requirement.name).toUpperCase()
+            : requirement.name,
+      }))
+      return
+    }
     sanitizedData[key] =
       typeof data[key] === 'string' ? validator.escape(data[key]) : data[key]
   })
@@ -31,10 +42,6 @@ class RequerimentController {
       documentacao_de_identificacao: Yup.string().required(),
       campo_de_assinatura: Yup.string().required(),
       retificacao_de_redacao: Yup.string().required(),
-      informacao_divergente: Yup.object().shape({
-        info: Yup.string().nullable().notRequired(),
-        state: Yup.string().nullable().notRequired(),
-      }),
       requisitos_criacao_de_estatuto: Yup.string().required(),
       requisitos_de_estatutos_fundadores: Yup.string().required(),
       estado_do_requerimento: Yup.string()
@@ -76,6 +83,15 @@ class RequerimentController {
       observations_requerimento_eletronico_rcpj: Yup.string()
         .nullable()
         .notRequired(),
+      unlisted_requirements: Yup.array().of(
+        Yup.object()
+          .shape({
+            name: Yup.string().required(),
+            status: Yup.string().oneOf(['Pendente', 'Concluído']).required(),
+            observacao: Yup.string().nullable().notRequired(),
+          })
+          .required(),
+      ),
     })
 
     try {
@@ -125,6 +141,7 @@ class RequerimentController {
       observations_campo_de_assinatura,
       observations_retificacao_de_redacao,
       observations_requerimento_eletronico_rcpj,
+      unlisted_requirements,
     } = sanitizeInput(request.body)
 
     try {
@@ -168,6 +185,7 @@ class RequerimentController {
         observations_campo_de_assinatura,
         observations_retificacao_de_redacao,
         observations_requerimento_eletronico_rcpj,
+        unlisted_requirements,
       })
       return response.status(201).json(createRequeriment)
     } catch (error) {
@@ -195,10 +213,7 @@ class RequerimentController {
       documentacao_de_identificacao: Yup.string().nullable(),
       campo_de_assinatura: Yup.string().nullable(),
       retificacao_de_redacao: Yup.string().nullable(),
-      informacao_divergente: Yup.object().shape({
-        info: Yup.string().nullable(),
-        state: Yup.string().nullable(),
-      }),
+
       requisitos_criacao_de_estatuto: Yup.string().nullable(),
       requisitos_de_estatutos_fundadores: Yup.string().nullable(),
       observations_lista_e_edital: Yup.string().nullable(),
@@ -218,6 +233,16 @@ class RequerimentController {
       observations_campo_de_assinatura: Yup.string().nullable(),
       observations_retificacao_de_redacao: Yup.string().nullable(),
       observations_requerimento_eletronico_rcpj: Yup.string().nullable(),
+      unlisted_requirements: Yup.array().of(
+        Yup.object()
+          .shape({
+            id: Yup.number().required(),
+            name: Yup.string().nullable(),
+            status: Yup.string().oneOf(['Pendente', 'Concluído']).nullable(),
+            observacao: Yup.string().nullable().notRequired(),
+          })
+          .nullable(),
+      ),
     })
 
     try {
@@ -228,6 +253,83 @@ class RequerimentController {
 
       const { id } = request.params
       const updated = await RequerimentService.updateRequeriment(
+        id,
+        sanitizedData,
+      )
+
+      return response.status(200).json(updated)
+    } catch (error) {
+      return response.status(400).json({
+        error: error.message,
+      })
+    }
+  }
+
+  async patchUpdate(request, response) {
+    const schema = Yup.object()
+      .shape({
+        exigencias_id: Yup.number().optional(),
+        documento_inelegivel: Yup.string().nullable().optional(),
+        lista_e_edital: Yup.string().nullable().optional(),
+        assinatura_do_advogado: Yup.string().nullable().optional(),
+        declaracao_criminal: Yup.string().nullable().optional(),
+        declaracao_de_desimpedimento: Yup.string().nullable().optional(),
+        livro_razao: Yup.string().nullable().optional(),
+        ppe: Yup.string().nullable().optional(),
+        requisitos_estatuto: Yup.string().nullable().optional(),
+        dissolucao_ou_exticao: Yup.string().nullable().optional(),
+        fundacoes: Yup.string().nullable().optional(),
+        reconhecimento_de_firma: Yup.string().nullable().optional(),
+        preechimento_completo: Yup.string().nullable().optional(),
+        oab: Yup.string().nullable().optional(),
+        requerimento_eletronico_rcpj: Yup.string().nullable().optional(),
+        documentacao_de_identificacao: Yup.string().nullable().optional(),
+        campo_de_assinatura: Yup.string().nullable().optional(),
+        retificacao_de_redacao: Yup.string().nullable().optional(),
+        requisitos_criacao_de_estatuto: Yup.string().nullable().optional(),
+        requisitos_de_estatutos_fundadores: Yup.string().nullable().optional(),
+        observations_lista_e_edital: Yup.string().nullable().optional(),
+        observations_assinatura_do_advogado: Yup.string().nullable().optional(),
+        observations_declaracao_criminal: Yup.string().nullable().optional(),
+        observations_declaracao_de_desimpedimento: Yup.string()
+          .nullable()
+          .optional(),
+        observations_livro_razao: Yup.string().nullable().optional(),
+        observations_requisitos_estatuto: Yup.string().nullable().optional(),
+        observations_ppe: Yup.string().nullable().optional(),
+        observations_requisitos_criacao_de_estatuto: Yup.string()
+          .nullable()
+          .optional(),
+        observations_dissolucao_ou_exticao: Yup.string().nullable().optional(),
+        observations_fundacoes: Yup.string().nullable().optional(),
+        observations_reconhecimento_de_firma: Yup.string()
+          .nullable()
+          .optional(),
+        observations_oab: Yup.string().nullable().optional(),
+        observations_documentacao_de_identificacao: Yup.string()
+          .nullable()
+          .optional(),
+        observations_requisitos_de_estatutos_fundadores: Yup.string()
+          .nullable()
+          .optional(),
+        observations_campo_de_assinatura: Yup.string().nullable().optional(),
+        observations_retificacao_de_redacao: Yup.string().nullable().optional(),
+        observations_requerimento_eletronico_rcpj: Yup.string()
+          .nullable()
+          .optional(),
+      })
+      .noUnknown()
+
+    try {
+      const sanitizedData = sanitizeInput(request.body)
+
+      await schema.validate(sanitizedData, {
+        abortEarly: false,
+      })
+
+      const { id } = request.params
+
+      const updated = await RequerimentService.updatePacthRequeriment(
         id,
         sanitizedData,
       )

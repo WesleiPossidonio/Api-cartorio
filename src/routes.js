@@ -6,6 +6,7 @@ import { sendMailRequeriments, sendMailAssociation } from './app/sendMail'
 import AssociationDataController from './app/controlles/AssociationDataController'
 import RequerimentController from './app/controlles/RequerimentController'
 import ConfirmEmail from './app/controlles/ConfirmEmail'
+import UnlistedRequerimentsController from './app/controlles/UnlistedRequerimentsController'
 
 const routes = new Router()
 
@@ -13,9 +14,9 @@ routes.post('/sessions', SessionsController.store)
 routes.get('/check-auth', SessionsController.index)
 routes.post('/confirmMail', ConfirmEmail.store)
 routes.patch('/updatePassword/:id', UserController.update)
-
-routes.use(authMiddlewares)
 routes.post('/users', UserController.store)
+routes.use(authMiddlewares)
+
 routes.get('/users', UserController.index)
 routes.delete('/users/:id', UserController.delete)
 routes.put('/users/:id', UserController.update)
@@ -41,8 +42,14 @@ routes.put('/association/:id', AssociationDataController.update)
 routes.delete('/requeriment/:id', RequerimentController.delete)
 routes.post('/createRequeriment', RequerimentController.store)
 routes.put('/updateRequeriment/:id', RequerimentController.update)
+routes.patch('/updateRequeriment/:id', RequerimentController.patchUpdate)
 routes.post('/sendMailRequeriments', sendMailRequeriments)
 routes.post('/sendMailAssociation', sendMailAssociation)
 routes.put('/bulkUpdate', AssociationDataController.bulkUpdate)
+
+routes.delete(
+  '/unlisted-requirements/:id',
+  UnlistedRequerimentsController.delete,
+)
 
 export default routes

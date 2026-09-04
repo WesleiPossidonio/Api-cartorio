@@ -48,6 +48,19 @@ export const sendMailAssociation = async (request, response) => {
     sobre_exigencia,
   } = request.body
 
+  console.log('Dados recebidos:', {
+    nome_da_instituicao,
+    numero_do_protocolo,
+    cnpj_cpf,
+    nome_do_representante,
+    email_do_representante,
+    data_da_recepcao,
+    telefone_contato,
+    name,
+    registration,
+    sobre_exigencia,
+  })
+
   const mjmlCode = `
 
   <mj-style>

@@ -5,12 +5,19 @@ import UserService from '../service/UserService'
 // Função de sanitização reutilizável
 const sanitizeInput = (data) => {
   const sanitizedData = {}
+
   Object.keys(data).forEach((key) => {
+    if (typeof data[key] !== 'string') {
+      sanitizedData[key] = data[key]
+      return
+    }
+
     sanitizedData[key] =
-      typeof data[key] === 'string' && key !== 'registration'
-        ? validator.escape(data[key])
-        : data[key]
+      key === 'registration'
+        ? validator.escape(data[key]).toUpperCase()
+        : validator.escape(data[key])
   })
+
   return sanitizedData
 }
 class UserController {

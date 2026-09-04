@@ -59,6 +59,11 @@ class Requeriment extends Model {
       as: 'DadosAssociacao',
       underscored: true,
     })
+
+    this.hasMany(models.UnlistedRequeriments, {
+      foreignKey: 'requirement_id',
+      as: 'unlisted_requirements',
+    })
   }
 }
 

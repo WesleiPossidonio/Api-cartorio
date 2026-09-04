@@ -2,9 +2,11 @@ import { Op, Sequelize } from 'sequelize'
 
 import AssociationData from '../models/AssociationData.js'
 import Requeriment from '../models/Requeriment.js'
+import UnlistedRequeriments from '../models/UnlistedRequeriments.js'
 
 const requerimentAttributes = [
   'id',
+  'exigencias_id',
   'documento_inelegivel',
   'lista_e_edital',
   'assinatura_do_advogado',
@@ -26,8 +28,26 @@ const requerimentAttributes = [
   'requisitos_criacao_de_estatuto',
   'estado_do_requerimento',
   'requerimento_eletronico_rcpj',
-]
 
+  'observations_documento_inelegivel',
+  'observations_lista_e_edital',
+  'observations_assinatura_do_advogado',
+  'observations_declaracao_criminal',
+  'observations_declaracao_de_desimpedimento',
+  'observations_livro_rasao',
+  'observations_requisitos_estatuto',
+  'observations_ppe',
+  'observations_requisitos_criacao_de_estatuto',
+  'observations_dissolucao_ou_exticao',
+  'observations_fundacoes',
+  'observations_reconhecimento_de_firma',
+  'observations_oab',
+  'observations_documentacao_de_identificacao',
+  'observations_requisitos_de_estatutos_fundadores',
+  'observations_campo_de_assinatura',
+  'observations_retificacao_de_redacao',
+  'observations_requerimento_eletronico_rcpj',
+]
 const searchCondition = (search) =>
   Sequelize.where(
     Sequelize.literal(`
@@ -172,9 +192,7 @@ class AssociationDataRepository {
 
   async findPendingRequirements(filters) {
     const { page = 1, limit = 10 } = filters
-
     const offset = (page - 1) * limit
-
     const { rows, count } = await AssociationData.findAndCountAll({
       where: {
         status_association: 'Concluído',
@@ -189,20 +207,23 @@ class AssociationDataRepository {
             estado_do_requerimento: 'Pendente',
           },
           attributes: requerimentAttributes,
+          include: [
+            {
+              model: UnlistedRequeriments,
+              as: 'unlisted_requirements',
+            },
+          ],
         },
       ],
 
       order: [['createdAt', 'DESC']],
-
       limit,
       offset,
-
       distinct: true,
     })
 
     return {
       associationDataList: rows,
-
       pagination: {
         page,
         limit,
@@ -231,6 +252,12 @@ class AssociationDataRepository {
             estado_do_requerimento: 'Pendente',
           },
           attributes: requerimentAttributes,
+          include: [
+            {
+              model: UnlistedRequeriments,
+              as: 'unlisted_requirements',
+            },
+          ],
         },
       ],
 
@@ -253,9 +280,7 @@ class AssociationDataRepository {
 
   async findCompletedAssociations(filters) {
     const { page = 1, limit = 10 } = filters
-
     const offset = (page - 1) * limit
-
     const { rows, count } = await AssociationData.findAndCountAll({
       where: {
         status_association: 'Concluído',
@@ -270,14 +295,18 @@ class AssociationDataRepository {
             estado_do_requerimento: 'Concluído',
           },
           attributes: requerimentAttributes,
+          include: [
+            {
+              model: UnlistedRequeriments,
+              as: 'unlisted_requirements',
+            },
+          ],
         },
       ],
 
       order: [['createdAt', 'DESC']],
-
       limit,
       offset,
-
       distinct: true,
     })
 
@@ -311,6 +340,12 @@ class AssociationDataRepository {
             estado_do_requerimento: 'Concluído',
           },
           attributes: requerimentAttributes,
+          include: [
+            {
+              model: UnlistedRequeriments,
+              as: 'unlisted_requirements',
+            },
+          ],
         },
       ],
 
@@ -339,6 +374,12 @@ class AssociationDataRepository {
           model: Requeriment,
           as: 'exigencia',
           attributes: requerimentAttributes,
+          include: [
+            {
+              model: UnlistedRequeriments,
+              as: 'unlisted_requirements',
+            },
+          ],
         },
       ],
     })
@@ -357,24 +398,25 @@ class AssociationDataRepository {
         include: [
           {
             model: Requeriment,
-
             as: 'exigencia',
-
             attributes: requerimentAttributes,
+            include: [
+              {
+                model: UnlistedRequeriments,
+                as: 'unlisted_requirements',
+              },
+            ],
           },
         ],
 
         order: [['createdAt', 'DESC']],
-
         limit,
         offset,
-
         distinct: true,
       })
 
     return {
       associations,
-
       pagination: {
         page,
         limit,
