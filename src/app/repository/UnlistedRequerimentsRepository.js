@@ -35,6 +35,14 @@ class UnlistedRequerimentsRepository {
     return results
   }
 
+  async updateById(id, data) {
+    const [updatedRowsCount] = await UnlistedRequeriments.update(data, {
+      where: { id },
+    })
+
+    return updatedRowsCount
+  }
+
   async delete(id) {
     return UnlistedRequeriments.destroy({ where: { id } })
   }

@@ -86,8 +86,6 @@ class AssociationDataController {
       data_da_recepcao,
     } = sanitizedData
 
-    console.log(data_da_recepcao)
-
     try {
       const association = await AssociationDataService.createAssociationData({
         nome_da_instituicao,

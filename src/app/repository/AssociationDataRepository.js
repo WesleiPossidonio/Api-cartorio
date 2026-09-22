@@ -48,6 +48,7 @@ const requerimentAttributes = [
   'observations_retificacao_de_redacao',
   'observations_requerimento_eletronico_rcpj',
 ]
+
 const searchCondition = (search) =>
   Sequelize.where(
     Sequelize.literal(`

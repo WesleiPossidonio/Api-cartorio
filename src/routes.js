@@ -1,4 +1,5 @@
 import { Router } from 'express'
+
 import UserController from './app/controlles/UserController'
 import SessionsController from './app/controlles/SessionsController'
 import authMiddlewares from './app/meddlewares/auth'
@@ -14,9 +15,10 @@ routes.post('/sessions', SessionsController.store)
 routes.get('/check-auth', SessionsController.index)
 routes.post('/confirmMail', ConfirmEmail.store)
 routes.patch('/updatePassword/:id', UserController.update)
-routes.post('/users', UserController.store)
+
 routes.use(authMiddlewares)
 
+routes.post('/users', UserController.store)
 routes.get('/users', UserController.index)
 routes.delete('/users/:id', UserController.delete)
 routes.put('/users/:id', UserController.update)
@@ -43,10 +45,16 @@ routes.delete('/requeriment/:id', RequerimentController.delete)
 routes.post('/createRequeriment', RequerimentController.store)
 routes.put('/updateRequeriment/:id', RequerimentController.update)
 routes.patch('/updateRequeriment/:id', RequerimentController.patchUpdate)
+
 routes.post('/sendMailRequeriments', sendMailRequeriments)
 routes.post('/sendMailAssociation', sendMailAssociation)
+
 routes.put('/bulkUpdate', AssociationDataController.bulkUpdate)
 
+routes.patch(
+  '/unlisted-requirements/:id',
+  UnlistedRequerimentsController.updateById,
+)
 routes.delete(
   '/unlisted-requirements/:id',
   UnlistedRequerimentsController.delete,

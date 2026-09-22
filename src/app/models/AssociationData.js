@@ -9,6 +9,7 @@ class AssociationData extends Model {
           primaryKey: true,
           autoIncrement: true,
         },
+        data_da_recepcao: Sequelize.STRING,
         numero_do_protocolo: Sequelize.INTEGER,
         nome_da_instituicao: Sequelize.STRING,
         cnpj_cpf: Sequelize.STRING,
