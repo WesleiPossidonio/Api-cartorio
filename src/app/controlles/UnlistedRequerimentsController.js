@@ -3,6 +3,41 @@ import * as Yup from 'yup'
 import UnlistedRequerimentsService from '../service/UnlistedRequerimentsService'
 
 class UnlistedRequerimentsController {
+  async store(request, response) {
+    const schema = Yup.object({
+      requirement_id: Yup.number().integer().required(),
+      name: Yup.string().trim().required(),
+      status: Yup.string().oneOf(['Pendente', 'Concluído']).required(),
+      observacao: Yup.string().nullable(),
+    }).noUnknown()
+
+    try {
+      const validatedData = await schema.validate(request.body, {
+        abortEarly: false,
+        stripUnknown: true,
+      })
+
+      const unlistedRequirement =
+        await UnlistedRequerimentsService.createOne(validatedData)
+
+      return response.status(201).json({
+        message: 'Unlisted requirement created successfully',
+        data: unlistedRequirement,
+      })
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        return response.status(400).json({
+          error: 'Validation error',
+          details: error.errors,
+        })
+      }
+
+      return response.status(400).json({
+        error: error.message,
+      })
+    }
+  }
+
   async delete(request, response) {
     const { id } = request.params
 
@@ -24,7 +59,6 @@ class UnlistedRequerimentsController {
       .of(
         Yup.object({
           id: Yup.number().integer().required(),
-          requirement_id: Yup.number().integer().nullable(),
           name: Yup.string().required(),
           status: Yup.string().oneOf(['Pendente', 'Concluído']).required(),
           observacao: Yup.string().nullable(),
@@ -32,15 +66,15 @@ class UnlistedRequerimentsController {
       )
       .required()
 
-    const { data } = request.body
-
     try {
+      const { data } = request.body
+
       const validatedData = await schema.validate(data, {
         abortEarly: false,
         stripUnknown: true,
       })
 
-      await UnlistedRequerimentsService.update(validatedData)
+      await UnlistedRequerimentsService.updateUnlistedRequirement(validatedData)
 
       return response.status(200).json({
         message: 'Unlisted requirements updated successfully',

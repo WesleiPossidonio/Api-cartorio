@@ -5,6 +5,10 @@ class UnlistedRequerimentsRepository {
     return await UnlistedRequeriments.bulkCreate(data)
   }
 
+  async createOne(data) {
+    return await UnlistedRequeriments.create(data)
+  }
+
   async findAll() {
     return await UnlistedRequeriments.findAll()
   }

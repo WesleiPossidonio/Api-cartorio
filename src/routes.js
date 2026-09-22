@@ -51,6 +51,7 @@ routes.post('/sendMailAssociation', sendMailAssociation)
 
 routes.put('/bulkUpdate', AssociationDataController.bulkUpdate)
 
+routes.post('/unlisted-requirements', UnlistedRequerimentsController.store)
 routes.patch(
   '/unlisted-requirements/:id',
   UnlistedRequerimentsController.updateById,

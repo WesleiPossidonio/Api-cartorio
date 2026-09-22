@@ -3,6 +3,17 @@ const {
 } = require('../repository/UnlistedRequerimentsRepository')
 
 class UnlistedRequerimentsService {
+  async createOne(data) {
+    try {
+      const unlistedRequirement =
+        await UnlistedRequerimentsRepository.createOne(data)
+
+      return unlistedRequirement
+    } catch (error) {
+      throw new Error('Error creating unlisted requirement: ' + error.message)
+    }
+  }
+
   async deleteUnlistedRequirement(id) {
     try {
       const unlistedRequirementExists =
@@ -20,7 +31,11 @@ class UnlistedRequerimentsService {
 
   async updateUnlistedRequirement(data) {
     try {
-      await UnlistedRequerimentsRepository.update(data)
+      if (!data) {
+        throw new Error('Data is required')
+      }
+
+      return await UnlistedRequerimentsRepository.update(data)
     } catch (error) {
       throw new Error('Error updating unlisted requirements: ' + error.message)
     }
@@ -34,8 +49,6 @@ class UnlistedRequerimentsService {
       if (!unlistedRequirementExists) {
         throw new Error('Unlisted requirement not found')
       }
-
-      console.log(data)
 
       return await UnlistedRequerimentsRepository.updateById(id, data)
     } catch (error) {
